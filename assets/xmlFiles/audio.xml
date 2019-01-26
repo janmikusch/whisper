@@ -4,6 +4,6 @@
 		<item name="testSound" file="testSound.wav" />
 	</sounds>
 	<music>
-		<item name="testMusic" file="testMusic.ogg" />
+		<item name="backgroundMusic" file="thetimehascome.ogg" />
 	</music>
 </audio>
