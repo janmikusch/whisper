@@ -20,7 +20,7 @@ private:
 	std::shared_ptr<sf::RenderWindow> m_window;
 	sf::Clock m_frameClock;
 	GameStateManager m_gameStateManager;
-	const std::string m_gameName = "BasicEngine";
-	const int m_height = 600;
-	const int m_width = 800;
+	const std::string m_gameName = "Whisper";
+	const int m_height = 900;
+	const int m_width = 1200;
 };

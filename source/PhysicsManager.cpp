@@ -2,12 +2,8 @@
 #include "PhysicsManager.h"
 #include "ColliderComponent.h"
 #include "RigidbodyComponent.h"
-#include "BallInputComponent.h"
 #include "BoundingBoxComponent.h"
 #include "TextGuiComponent.h"
-#include "ScoreComponent.h"
-#include "GameOverComponent.h"
-#include "ScoreManager.h"
 #include "GameEvent.h"
 
 bool PhysicsManager::AABBvsAABB(const sf::FloatRect& a, const sf::FloatRect& b, sf::Vector2f& normal,

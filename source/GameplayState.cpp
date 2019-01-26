@@ -3,16 +3,13 @@
 #include "GameplayState.h"
 #include <SFML/Graphics.hpp>
 #include "InputManager.h"
-#include "CameraComponent.h"
 #include "TextureManager.h"
 #include "LayerComponent.h"
-#include "BallGenerateComponent.h"
 #include "GameObjectManager.h"
 #include "PhysicsManager.h"
-#include "ScoreManager.h"
 #include "TextGuiComponent.h"
-#include "GameOverComponent.h"
 #include "FontManager.h"
+#include "window.h"
 
 GameplayState::GameplayState(StateType type) :State(type)
 {
@@ -29,26 +26,9 @@ State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 
 	for (std::shared_ptr<GameObject> o : objManager.getList())
 	{
-		if (o->getName() == "score")
-		{
-			int score = ScoreManager::getInstance().getScore();
-			sf::String text = std::to_string(score);
-			o->getComponent<TextGuiComponent>()->setTextContent(text);
-		}
-
-		if (o->getName() == "end")
-		{
-			if (o->getComponent<GameOverComponent>()->getGameOver())
-			{
-				exit();
-				return State::StateType::STATE_MENU;
-			}
-		}
-
 		if(o != nullptr)
 			o->update(fDeltaTimeSeconds);
 	}
-
 
 	PhysicsManager::getInstance().findCollisions(objManager.getList());
 
@@ -68,17 +48,18 @@ void GameplayState::init()
 {
 	GameObjectManager& objManager = GameObjectManager::getInstance();
 
-	auto gameObjects = WorldBuilder::loadWorld("background.tmx", sf::Vector2f());
+	sf::Text text = sf::Text("Press ESC to quit", FontManager::getInstance().getFont("arial"));
+	text.setCharacterSize(30);
+	text.setStyle(sf::Text::Bold);
+	text.setFillColor(sf::Color::White);
 
-	for(auto obj:gameObjects)
-	{
-		objManager.add(obj);
-	}
+	auto window = engine::Window::getInstance().getWindow();
+	auto position = sf::Vector2f(window->getSize().x / 2 - text.getString().getSize()*text.getCharacterSize() / 4, window->getSize().y / 2);
+	text.setPosition(position);
+	std::shared_ptr<GameObject> uiObject = std::make_shared<GameObject>(position, "menu");
+	uiObject->addComponent(std::make_shared <TextGuiComponent>(uiObject, Layer::FOREGROUND, text));
 
-	std::shared_ptr<GameObject> camera = GameObjectCreator::getInstance().createCamera(sf::Vector2f(0, 0));
-	auto camComponent = camera->getComponent<CameraComponent>();
-	
-	objManager.add(camera);
+	objManager.add(uiObject);
 
 	objManager.applyChanges();
 
@@ -91,15 +72,6 @@ void GameplayState::init()
 void GameplayState::exit()
 {
 	GameObjectManager& objManager = GameObjectManager::getInstance();
-
-	for (std::shared_ptr<GameObject> o : objManager.getList())
-	{
-		if (o->getComponent<CameraComponent>() != nullptr)
-		{
-			o->getComponent<CameraComponent>()->reset();
-		}
-	}
-
+	
 	objManager.clear();
-	ScoreManager::getInstance().resetScore();
 }

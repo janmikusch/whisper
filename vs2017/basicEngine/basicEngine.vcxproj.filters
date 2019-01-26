@@ -144,15 +144,6 @@
     <ClCompile Include="..\..\source\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\BallInputComponent.cpp">
-      <Filter>Source Files\GameObject\Components\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\FlipperLeftInputComponent.cpp">
-      <Filter>Source Files\GameObject\Components\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\FlipperRightInputComponent.cpp">
-      <Filter>Source Files\GameObject\Components\Input</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\InputComponent.cpp">
       <Filter>Source Files\GameObject\Components\Input</Filter>
     </ClCompile>
@@ -228,25 +219,7 @@
     <ClCompile Include="..\..\source\GameObjectManager.cpp">
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\BallGenerateComponent.cpp">
-      <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\CameraComponent.cpp">
-      <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\CharacterMoveComponent.cpp">
-      <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\GameOverComponent.cpp">
-      <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\ImpulseComponent.cpp">
-      <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\ScoreComponent.cpp">
-      <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\StartPointComponent.cpp">
       <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\AssetsManager.cpp">
@@ -269,9 +242,6 @@
     </ClCompile>
     <ClCompile Include="..\..\source\NavigationGraphBuilder.cpp">
       <Filter>Source Files\Navigation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\CoinComponent.cpp">
-      <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -307,15 +277,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\GameObjectCreator.h">
       <Filter>Header Files\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\BallInputComponent.h">
-      <Filter>Header Files\GameObject\Components\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\FlipperLeftInputComponent.h">
-      <Filter>Header Files\GameObject\Components\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\FlipperRightInputComponent.h">
-      <Filter>Header Files\GameObject\Components\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\InputComponent.h">
       <Filter>Header Files\GameObject\Components\Input</Filter>
@@ -413,25 +374,7 @@
     <ClInclude Include="..\..\include\GameStateManager.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\BallGenerateComponent.h">
-      <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\CameraComponent.h">
-      <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\CharacterMoveComponent.h">
-      <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\GameOverComponent.h">
-      <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\ImpulseComponent.h">
-      <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\ScoreComponent.h">
-      <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\StartPointComponent.h">
       <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\AssetsManager.h">
@@ -455,11 +398,5 @@
     <ClInclude Include="..\..\include\NavigationNode.h">
       <Filter>Header Files\Navigation</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\CoinComponent.h">
-      <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

@@ -81,22 +81,14 @@ bool Game::init()
 	m_gameStateManager.setState(State::STATE_MENU);
 
 
-	WorldBuilder::loadTextures("background.tmx");
-
 	//create input controll
 	{
-		InputManager::getInstance().bind("FlipperLeft", sf::Keyboard::Key::Left, 0);
-		InputManager::getInstance().bind("FlipperRight", sf::Keyboard::Key::Right, 0);
-		InputManager::getInstance().bind("MoveLeft", sf::Keyboard::Key::A, 0);
-		InputManager::getInstance().bind("MoveUp", sf::Keyboard::Key::W, 0);
-		InputManager::getInstance().bind("MoveRight", sf::Keyboard::Key::D, 0);
-		InputManager::getInstance().bind("MoveDown", sf::Keyboard::Key::S, 0);
+		InputManager::getInstance().bind("Up", sf::Keyboard::Key::Up, 0);
+		InputManager::getInstance().bind("Right", sf::Keyboard::Key::Right, 0);
+		InputManager::getInstance().bind("Down", sf::Keyboard::Key::Down, 0);
+		InputManager::getInstance().bind("Left", sf::Keyboard::Key::Left, 0);
 		InputManager::getInstance().bind("EndGame", sf::Keyboard::Key::Escape, 0);
 		InputManager::getInstance().bind("StartGame", sf::Keyboard::Key::Space, 0);
-		InputManager::getInstance().bind("CreateBall", sf::Keyboard::Key::N, 0);
-		InputManager::getInstance().bind("RemoveBall", sf::Keyboard::Key::M, 0);
-		InputManager::getInstance().bind("Toggle1", sf::Keyboard::Key::Num1, 0);
-		InputManager::getInstance().bind("Toggle2", sf::Keyboard::Key::Num2, 0);
 	}
 
 	
