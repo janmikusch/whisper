@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="15" height="11" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="11">
  <tileset firstgid="1" name="DungeonColor3@64x64" tilewidth="64" tileheight="64" tilecount="256" columns="16">
-  <image source="../textures/DungeonColor3@64x64.png" width="1024" height="1024"/>
+  <image source="../textures/Dungeon_color3.png" width="1024" height="1024"/>
  </tileset>
  <layer id="2" name="background1" width="15" height="11">
   <data encoding="csv">

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <audio>
 	<sounds>
-		<item name="testSound" file="testSound.wav" />
 	</sounds>
 	<music>
 		<item name="backgroundMusic" file="thetimehascome.ogg" />
