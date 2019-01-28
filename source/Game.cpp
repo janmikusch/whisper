@@ -87,6 +87,7 @@ bool Game::init()
 		InputManager::getInstance().bind("Right", sf::Keyboard::Key::Right, 0);
 		InputManager::getInstance().bind("Down", sf::Keyboard::Key::Down, 0);
 		InputManager::getInstance().bind("Left", sf::Keyboard::Key::Left, 0);
+		InputManager::getInstance().bind("Attack", sf::Keyboard::Key::Space, 0);
 		InputManager::getInstance().bind("EndGame", sf::Keyboard::Key::Escape, 0);
 		InputManager::getInstance().bind("StartGame", sf::Keyboard::Key::Space, 0);
 	}

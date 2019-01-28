@@ -17,6 +17,7 @@ public:
 private:
 	void setAnimation(sf::Vector2f movement) const;
 	void setStandingAnimation();
+	void setFightAnimation();
 
 	std::shared_ptr<CharacterMoveBehaviour> m_moveBehaviour;
 	int m_characterId;

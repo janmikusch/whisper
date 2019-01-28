@@ -201,7 +201,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 
 	animComp->addAnimation(fightRight, "fightRight");
 
-	animComp->setAnimation("fightDown");
+	animComp->setAnimation("standingDown");
 
 	auto rigidbody = std::make_shared<Rigidbody>(character, 1, false, true);
 	auto collider = std::make_shared<ColliderComponent>(character, aabb, false);

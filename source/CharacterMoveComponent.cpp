@@ -18,27 +18,37 @@ CharacterMoveComponent::CharacterMoveComponent(const std::shared_ptr<GameObject>
 
 void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 {
+	InputManager& im = InputManager::getInstance();
+
 	setMoveBehaviour();
 
 	if(m_moveBehaviour)
 	{
-		const float speed = 100.0f;
-		sf::Vector2f movement = m_moveBehaviour->getMovement();
-
-		float length = std::sqrt((movement.x * movement.x) + (movement.y * movement.y));
-		if (length != 0)
+		if (im.isKeyPressed("Attack", 0))
 		{
-			movement = movement / length; //normalize
-			movement *= (speed * fDeltaTimeSeconds); // speed up
-			setAnimation(movement);
-
-			//keepInArea(movement);
-			dontCollide(movement);
-			m_parent->move(movement);
+			setFightAnimation();
 		}
 		else
 		{
-			setStandingAnimation();
+			const float speed = 100.0f;
+			sf::Vector2f movement = m_moveBehaviour->getMovement();
+
+			float length = std::sqrt((movement.x * movement.x) + (movement.y * movement.y));
+			if (length != 0)
+			{
+				movement = movement / length; //normalize
+				movement *= (speed * fDeltaTimeSeconds); // speed up
+				setAnimation(movement);
+
+				//keepInArea(movement);
+				dontCollide(movement);
+				m_parent->move(movement);
+			}
+			else
+			{
+
+				setStandingAnimation();
+			}
 		}
 	}
 }
@@ -181,4 +191,27 @@ void CharacterMoveComponent::setStandingAnimation()
 		animComponent->setAnimation("standingRight");
 	else if (animComponent->getAnimation() == "left")
 		animComponent->setAnimation("standingLeft");
+}
+
+void CharacterMoveComponent::setFightAnimation()
+{
+	auto animComponent = m_parent->getComponent<AnimationComponent>();
+
+	std::string current_animation = animComponent->getAnimation();
+
+	if (current_animation.substr(0, 5) != "fight")
+	{
+		std::string direction;
+
+		if (current_animation.length() > 5)
+			direction = current_animation.substr(8, 12);
+		else
+			direction = current_animation;
+
+		direction[0] = toupper(direction[0]);
+
+		std::string animation = "fight" + direction;
+
+		animComponent->setAnimation(animation);
+	}
 }
