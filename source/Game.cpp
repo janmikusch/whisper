@@ -81,7 +81,7 @@ bool Game::init()
 	m_gameStateManager.setState(State::STATE_MENU);
 
 
-	//create input controll
+	//create input control
 	{
 		InputManager::getInstance().bind("Up", sf::Keyboard::Key::Up, 0);
 		InputManager::getInstance().bind("Right", sf::Keyboard::Key::Right, 0);

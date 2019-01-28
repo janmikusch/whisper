@@ -13,22 +13,22 @@ sf::Vector2f PlayerMoveBehaviour::getMovement()
 
 	sf::Vector2f movement{0,0};
 
-	if (im.isKeyPressed("MoveUp", 0))
+	if (im.isKeyPressed("Up", 0))
 	{
 		movement.y -= 1;
 	}
 
-	if (im.isKeyPressed("MoveRight", 0))
+	if (im.isKeyPressed("Right", 0))
 	{
 		movement.x += 1;
 	}
 
-	if (im.isKeyPressed("MoveDown", 0))
+	if (im.isKeyPressed("Down", 0))
 	{
 		movement.y += 1;
 	}
 
-	if (im.isKeyPressed("MoveLeft", 0))
+	if (im.isKeyPressed("Left", 0))
 	{
 		movement.x -= 1;
 	}

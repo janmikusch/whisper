@@ -32,7 +32,7 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 			movement *= (speed * fDeltaTimeSeconds); // speed up
 			setAnimation(movement);
 
-			keepInArea(movement);
+			//keepInArea(movement);
 			dontCollide(movement);
 			m_parent->move(movement);
 		}
@@ -54,6 +54,9 @@ void CharacterMoveComponent::init()
 /// set MoveBehaviour if toggle Button is Pressed
 void CharacterMoveComponent::setMoveBehaviour()
 {
+	m_moveBehaviour = std::make_shared<PlayerMoveBehaviour>(PlayerMoveBehaviour{});
+
+	/*
 	InputManager& im = InputManager::getInstance();
 
 	if (im.isKeyPressed("Toggle1", 0))
@@ -78,6 +81,7 @@ void CharacterMoveComponent::setMoveBehaviour()
 			m_moveBehaviour = std::make_shared<AiMoveBehaviour>(AiMoveBehaviour{});
 		}
 	}
+	*/
 }
 
 void CharacterMoveComponent::keepInArea(sf::Vector2f& movement)
