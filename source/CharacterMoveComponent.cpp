@@ -14,6 +14,7 @@
 CharacterMoveComponent::CharacterMoveComponent(const std::shared_ptr<GameObject>& parent, int character_id): Component(parent)
 {
 	m_characterId = character_id;
+	m_direction = Direction::DOWN;
 }
 
 void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
@@ -147,7 +148,7 @@ void CharacterMoveComponent::dontCollide(sf::Vector2f& movement)
 	}
 }
 
-void CharacterMoveComponent::setAnimation(sf::Vector2f movement) const
+void CharacterMoveComponent::setAnimation(sf::Vector2f movement)
 {
 	auto animComponent = m_parent->getComponent<AnimationComponent>();
 	
@@ -159,10 +160,12 @@ void CharacterMoveComponent::setAnimation(sf::Vector2f movement) const
 			if (movement.y >= 0)
 			{
 				animComponent->setAnimation("down");
+				m_direction = Direction::DOWN;
 			}
 			else
 			{
 				animComponent->setAnimation("up");
+				m_direction = Direction::UP;
 			}
 		}
 		else
@@ -170,10 +173,12 @@ void CharacterMoveComponent::setAnimation(sf::Vector2f movement) const
 			if (movement.x <= 0)
 			{
 				animComponent->setAnimation("left");
+				m_direction = Direction::LEFT;
 			}
 			else
 			{
 				animComponent->setAnimation("right");
+				m_direction = Direction::RIGHT;
 			}
 		}
 	}
@@ -183,35 +188,41 @@ void CharacterMoveComponent::setStandingAnimation()
 {
 	auto animComponent = m_parent->getComponent<AnimationComponent>();
 
-	if (animComponent->getAnimation() == "down")
-		animComponent->setAnimation("standingDown");
-	else if (animComponent->getAnimation() == "up")
+	switch (m_direction)
+	{
+	case UP:
 		animComponent->setAnimation("standingUp");
-	else if (animComponent->getAnimation() == "right")
-		animComponent->setAnimation("standingRight");
-	else if (animComponent->getAnimation() == "left")
+		break;
+	case DOWN:
+		animComponent->setAnimation("standingDown");
+		break;
+	case LEFT:
 		animComponent->setAnimation("standingLeft");
+		break;
+	case RIGHT:
+		animComponent->setAnimation("standingRight");
+		break;
+	}
 }
 
 void CharacterMoveComponent::setFightAnimation()
 {
 	auto animComponent = m_parent->getComponent<AnimationComponent>();
 
-	std::string current_animation = animComponent->getAnimation();
-
-	if (current_animation.substr(0, 5) != "fight")
+	switch (m_direction)
 	{
-		std::string direction;
-
-		if (current_animation.length() > 5)
-			direction = current_animation.substr(8, 12);
-		else
-			direction = current_animation;
-
-		direction[0] = toupper(direction[0]);
-
-		std::string animation = "fight" + direction;
-
-		animComponent->setAnimation(animation);
+	case UP:
+		animComponent->setAnimation("fightUp");
+		break;
+	case DOWN:
+		animComponent->setAnimation("fightDown");
+		break;
+	case LEFT:
+		animComponent->setAnimation("fightLeft");
+		break;
+	case RIGHT:
+		animComponent->setAnimation("fightRight");
+		break;
 	}
+	
 }

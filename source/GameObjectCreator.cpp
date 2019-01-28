@@ -84,7 +84,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 	walkingAnimationUp.addFrame(sf::IntRect(384, 512, 64, 64));
 	walkingAnimationUp.addFrame(sf::IntRect(448, 512, 64, 64));
 	walkingAnimationUp.addFrame(sf::IntRect(512, 512, 64, 64));
-
+	
 	animComp->addAnimation(walkingAnimationUp, "up");
 
 	Animation walkingAnimationLeft;
