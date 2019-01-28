@@ -9,5 +9,5 @@ namespace engine {
 class CollisionObserver
 {
 public:
-	virtual void onNotify(const GameObject& collidedWith, engine::GameEvent* event) = 0;
+	virtual void onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> event) = 0;
 };

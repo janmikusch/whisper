@@ -102,7 +102,7 @@ void Rigidbody::onCollisionResolve()
 
 		for (auto observer : m_observers)
 		{
-			observer->onNotify(other->getGameObject(), &event);
+			observer->onNotify(other->getGameObject(), std::make_shared<engine::CollisionGameEvent>(event));
 			
 		}
 	}
@@ -137,7 +137,7 @@ void Rigidbody::onCollisionResolve()
 		{
 			for (auto observer : m_observers)
 			{
-				observer->onNotify(other->getGameObject(), &event);
+				observer->onNotify(other->getGameObject(), std::make_shared<engine::CollisionGameEvent>(event));
 			}
 		}
 	}

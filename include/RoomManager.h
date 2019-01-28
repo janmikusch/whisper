@@ -11,6 +11,7 @@ class RoomManager: public EventObserver
 public:
 	static RoomManager& getInstance();
 	void createRooms();
+	void init();
 	void changeRoom(Room::Direction dir);
 	std::shared_ptr<Room> getCurrentRoom() { return  m_currentRoom; };
 	int countNotCompleted();

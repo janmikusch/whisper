@@ -97,9 +97,6 @@ bool Game::init()
 	//sm.playSound("testSound");
 	//sm.setMusic("testMusic");
 
-	RoomManager::getInstance().createRooms();
-
-
 	return true;
 }
 

@@ -15,8 +15,7 @@ void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 {
 	m_frameTime = m_frameClock.restart();
 	
-
-	if (m_parent->getComponent<CharacterMoveComponent>()->getState() == 2)
+	if (m_currentAnimation == "fightUp" || m_currentAnimation == "fightDown" || m_currentAnimation == "fightLeft" || m_currentAnimation == "fightRight" )
 		m_animatedSprite.setPosition(m_parent->getPosition() + m_diplace);
 	else
 		m_animatedSprite.setPosition(m_parent->getPosition());

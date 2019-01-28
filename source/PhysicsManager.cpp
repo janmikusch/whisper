@@ -107,11 +107,11 @@ void PhysicsManager::findCollisions(std::vector<std::shared_ptr<GameObject>> gam
 #endif // _DEBUG
 
 
-				if (body1->getComponent<ColliderComponent>()->isTrigger())
-				{
-					body2->getComponent<Rigidbody>()->onCollision(manifold);
-				}
-				else
+				body2->getComponent<Rigidbody>()->onCollision(manifold);
+				body1->getComponent<Rigidbody>()->onCollision(manifold);
+
+
+				if (!body1->getComponent<ColliderComponent>()->isTrigger() && !body2->getComponent<ColliderComponent>()->isTrigger())
 				{
 					m_manifolds.push_back(manifold);
 				}

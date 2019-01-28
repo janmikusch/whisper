@@ -206,7 +206,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 
 	animComp->setAnimation("standingDown");
 
-	auto rigidbody = std::make_shared<Rigidbody>(character, 1, false, true);
+	auto rigidbody = std::make_shared<Rigidbody>(character, 1, false, false);
 	auto collider = std::make_shared<ColliderComponent>(character, aabb, false);
 	character->addComponent(rigidbody);
 	character->addComponent(collider);
@@ -280,8 +280,8 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 		door->setPosition(position + sf::Vector2f{ 384, 0 });
 
 
-		rect.left = door->getPosition().x;
-		rect.top = door->getPosition().y;
+		rect.left = door->getPosition().x + 80;
+		rect.top = door->getPosition().y + 96;
 		displacement.x = 80;
 		displacement.y = 96;
 
@@ -302,7 +302,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 
 
 		rect.left = door->getPosition().x;
-		rect.top = door->getPosition().y;
+		rect.top = door->getPosition().y + 80;
 		displacement.x = 0;
 		displacement.y = 80;
 	}
@@ -321,7 +321,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 		door->setPosition(position + sf::Vector2f{ 384, 576});
 
 
-		rect.left = door->getPosition().x;
+		rect.left = door->getPosition().x + 80;
 		rect.top = door->getPosition().y;
 		displacement.x = 80;
 		displacement.y = 0;
@@ -341,8 +341,8 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 		door->setPosition(position + sf::Vector2f{ 0, 256 });
 
 
-		rect.left = door->getPosition().x;
-		rect.top = door->getPosition().y;
+		rect.left = door->getPosition().x + 96;
+		rect.top = door->getPosition().y + 80;
 		displacement.x = 96;
 		displacement.y = 80;
 	}
@@ -358,6 +358,8 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 	auto boundingbox = std::make_shared <BoundingboxComponent>(door, rect,Layer::DEBUG_BOUNDINGBOX,displacement);
 	door->addComponent(boundingbox);
 #endif
+
+	rigidbody->addObserver(*doorComp);
 
 	return door;
 }

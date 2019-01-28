@@ -75,32 +75,43 @@ void DoorComponent::rotate(float angle)
 	m_gateSprite.rotate(angle);
 }
 
-void DoorComponent::onNotify(const GameObject& collidedWith, engine::GameEvent* event)
+void DoorComponent::onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> gameEvent)
 {
 	if(collidedWith.getName() != "hero")
 	{
 		return;
 	}
 
+	std::shared_ptr<engine::CollisionGameEvent> cge = std::static_pointer_cast<engine::CollisionGameEvent>(gameEvent);
+
+	if(cge->type != engine::CollisionGameEvent::CollisionType::ENTER)
+	{
+		return;
+	}
+
 	engine::DoorEnterGameEvent doorEvent{};
-	if(collidedWith.getName()=="door_top")
+	if(m_parent->getName()=="door_top")
 	{
 		doorEvent.direction = Room::Direction::TOP;
 	}
-	else if (collidedWith.getName() == "door_right")
+	else if (m_parent->getName() == "door_right")
 	{
 		doorEvent.direction = Room::Direction::RIGHT;
 	}
-	else if (collidedWith.getName() == "door_bottom")
+	else if (m_parent->getName() == "door_bottom")
 	{
 		doorEvent.direction = Room::Direction::BOTTOM;
 	}
-	else if (collidedWith.getName() == "door_left")
+	else if (m_parent->getName() == "door_left")
 	{
 		doorEvent.direction = Room::Direction::LEFT;
 	}
+	else
+	{
+		return;
+	}
 
-	EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::GameEvent>(doorEvent));
+	EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::DoorEnterGameEvent>(doorEvent));
 }
 
 

@@ -31,8 +31,13 @@ void RoomManager::createRooms()
 	m_rooms.push_back(room_11);
 	m_rooms.push_back(room_12);
 
+	room_00->setCompleted();
+	room_01->setCompleted();
+	room_02->setCompleted();
+	room_10->setCompleted();
+	room_11->setCompleted();
+	room_12->setCompleted();
 	m_currentRoom = room_01;
-	m_currentRoom->setCompleted();
 
 	room_00->setRoom(Room::Direction::RIGHT, room_01);
 	room_00->setRoom(Room::Direction::BOTTOM, room_10);
@@ -80,12 +85,32 @@ void RoomManager::createRooms()
 	room_12->setRoomObjects(roomObjects_12);
 }
 
+void RoomManager::init()
+{
+	createRooms();
+
+	for(auto it:m_rooms)
+	{
+		it->init();
+	}
+}
+
 void RoomManager::changeRoom(Room::Direction dir)
 {
+	if(!m_currentRoom->isCompleted())
+	{
+#ifdef _DEBUG
+		sf::err() << "room not solved yet!" << std::endl;
+#endif
+		return;
+	}
+
 	if(!m_currentRoom->hasRoom(dir))
 	{
+#ifdef _DEBUG
 		sf::err() << "no room in this direction!" << std::endl;
-		return;
+#endif
+		return; 
 	}
 
 	m_currentRoom->removeRoomObjectsFromGame();
@@ -94,6 +119,7 @@ void RoomManager::changeRoom(Room::Direction dir)
 	sf::err() << "changed room from " << m_currentRoom->getName();
 #endif
 
+
 	m_currentRoom = m_currentRoom->getRoom(dir);
 
 #ifdef _DEBUG
@@ -101,6 +127,30 @@ void RoomManager::changeRoom(Room::Direction dir)
 #endif
 
 	m_currentRoom->addRoomObjectsToGame();
+
+	sf::Vector2f newPos { 0,0 };
+
+	switch (dir)
+	{
+	case Room::TOP:
+		newPos.x = 448;
+		newPos.y = 512 - 8;
+		break;
+	case Room::RIGHT:
+		newPos.x = 128 + 8;
+		newPos.y = 320;
+		break;
+	case Room::BOTTOM:
+		newPos.x = 448;
+		newPos.y = 128 + 8;
+		break;
+	case Room::LEFT:
+		newPos.x = 768 - 8;
+		newPos.y = 320;
+		break;
+	}
+
+	GameObjectManager::getInstance().getFirstGameObject("hero")->setPosition(newPos);
 }
 
 int RoomManager::countNotCompleted()
