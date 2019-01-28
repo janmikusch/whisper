@@ -9,6 +9,7 @@
 #include <fstream>
 #include "AudioManager.h"
 #include "FontManager.h"
+#include "RoomManager.h"
 
 
 void Game::run()
@@ -94,6 +95,8 @@ bool Game::init()
 	
 	//sm.playSound("testSound");
 	//sm.setMusic("testMusic");
+
+	RoomManager::getInstance().createRooms();
 
 
 	return true;

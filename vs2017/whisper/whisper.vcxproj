@@ -58,6 +58,7 @@
     <ClCompile Include="..\..\source\RigidbodyComponent.cpp" />
     <ClCompile Include="..\..\source\AudioManager.cpp" />
     <ClCompile Include="..\..\source\Room.cpp" />
+    <ClCompile Include="..\..\source\RoomManager.cpp" />
     <ClCompile Include="..\..\source\SpriteComponent.cpp" />
     <ClCompile Include="..\..\source\State.cpp" />
     <ClCompile Include="..\..\source\stdafx.cpp">
@@ -112,6 +113,7 @@
     <ClInclude Include="..\..\include\RenderManager.h" />
     <ClInclude Include="..\..\include\RigidbodyComponent.h" />
     <ClInclude Include="..\..\include\Room.h" />
+    <ClInclude Include="..\..\include\RoomManager.h" />
     <ClInclude Include="..\..\include\ScoreManager.h" />
     <ClInclude Include="..\..\include\AudioManager.h" />
     <ClInclude Include="..\..\include\SpriteComponent.h" />

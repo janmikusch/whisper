@@ -11,6 +11,7 @@
 #include "FontManager.h"
 #include "window.h"
 #include "WorldBuilder.h"
+#include "RoomManager.h"
 
 GameplayState::GameplayState(StateType type) :State(type)
 {
@@ -34,6 +35,32 @@ State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 	PhysicsManager::getInstance().findCollisions(objManager.getList());
 
 	objManager.applyChanges();
+
+	//TESTING
+
+	if(InputManager::getInstance().isKeyDown(sf::Keyboard::W))
+	{
+		RoomManager::getInstance().changeRoom(Room::Direction::TOP);
+	}
+	else if(InputManager::getInstance().isKeyDown(sf::Keyboard::A))
+	{
+		RoomManager::getInstance().changeRoom(Room::Direction::LEFT);
+
+	}
+	else if(InputManager::getInstance().isKeyDown(sf::Keyboard::S))
+	{
+		RoomManager::getInstance().changeRoom(Room::Direction::BOTTOM);
+
+	}
+	else if(InputManager::getInstance().isKeyDown(sf::Keyboard::D))
+	{
+		RoomManager::getInstance().changeRoom(Room::Direction::RIGHT);
+
+	}
+
+	//ENDTESTING
+
+
 	return m_type;
 }
 
