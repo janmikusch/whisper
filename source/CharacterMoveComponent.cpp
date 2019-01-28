@@ -36,6 +36,10 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 			dontCollide(movement);
 			m_parent->move(movement);
 		}
+		else
+		{
+			setStandingAnimation();
+		}
 	}
 }
 
@@ -136,9 +140,9 @@ void CharacterMoveComponent::dontCollide(sf::Vector2f& movement)
 void CharacterMoveComponent::setAnimation(sf::Vector2f movement) const
 {
 	auto animComponent = m_parent->getComponent<AnimationComponent>();
-
+	
 	if (animComponent)
-	{
+	{		
 		if(std::abs(movement.y) > std::abs(movement.x))
 		{
 			//animate up or down
@@ -163,4 +167,18 @@ void CharacterMoveComponent::setAnimation(sf::Vector2f movement) const
 			}
 		}
 	}
+}
+
+void CharacterMoveComponent::setStandingAnimation()
+{
+	auto animComponent = m_parent->getComponent<AnimationComponent>();
+
+	if (animComponent->getAnimation() == "down")
+		animComponent->setAnimation("standingDown");
+	else if (animComponent->getAnimation() == "up")
+		animComponent->setAnimation("standingUp");
+	else if (animComponent->getAnimation() == "right")
+		animComponent->setAnimation("standingRight");
+	else if (animComponent->getAnimation() == "left")
+		animComponent->setAnimation("standingLeft");
 }

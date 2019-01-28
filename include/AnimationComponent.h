@@ -27,6 +27,7 @@ public:
 	void rotate(float angle) override;
 
 	void setAnimation(std::string name);
+	std::string getAnimation() { return m_currentAnimation; };
 	void addAnimation(Animation anim,std::string name);
 protected:
 	sf::Clock m_frameClock;

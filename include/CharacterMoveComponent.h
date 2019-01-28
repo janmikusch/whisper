@@ -16,6 +16,7 @@ public:
 	void dontCollide(sf::Vector2f& movement);
 private:
 	void setAnimation(sf::Vector2f movement) const;
+	void setStandingAnimation();
 
 	std::shared_ptr<CharacterMoveBehaviour> m_moveBehaviour;
 	int m_characterId;
