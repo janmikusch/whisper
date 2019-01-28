@@ -240,8 +240,8 @@
     <ClCompile Include="..\..\source\NavigationGraphBuilder.cpp">
       <Filter>Source Files\Navigation</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\Room.cpp">
-      <Filter>Source Files\Room</Filter>
+    <ClCompile Include="..\..\source\HeroAnimationComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\RoomManager.cpp">
       <Filter>Source Files\Room</Filter>
@@ -430,6 +430,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\EventObserver.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\HeroAnimationComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
