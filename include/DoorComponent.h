@@ -26,7 +26,7 @@ public:
 	void scale(const sf::Vector2f& factor) override;
 	void rotate(float angle) override;
 
-	void onNotify(const GameObject& collidedWith, engine::GameEvent* event) override;
+	void onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> event) override;
 protected:
 	sf::Sprite m_gateSprite;
 	sf::Sprite m_reddoorSprite;

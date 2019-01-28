@@ -6,6 +6,10 @@ Room::Room(std::string name): m_name(name),m_completed(false)
 {
 }
 
+void Room::init()
+{
+}
+
 bool Room::hasRoom(Direction dir) const
 {
 	switch (dir) { 

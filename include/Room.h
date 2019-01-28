@@ -9,6 +9,8 @@ class Room
 public:
 	Room(std::string name);
 
+	void init();
+
 	enum Direction {TOP,RIGHT,BOTTOM,LEFT};
 	bool hasRoom(Direction dir) const;
 	void setRoom(Direction dir, std::shared_ptr<Room> room);

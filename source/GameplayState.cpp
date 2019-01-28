@@ -35,33 +35,6 @@ State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 	PhysicsManager::getInstance().findCollisions(objManager.getList());
 
 
-	//TESTING
-
-	engine::DoorEnterGameEvent doorEvent{};
-	if (InputManager::getInstance().isKeyDown(sf::Keyboard::W))
-	{
-		doorEvent.direction = Room::Direction::TOP;
-		EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::DoorEnterGameEvent>(doorEvent));
-	}
-	else if (InputManager::getInstance().isKeyDown(sf::Keyboard::D))
-	{
-		doorEvent.direction = Room::Direction::RIGHT;
-		EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::DoorEnterGameEvent>(doorEvent));
-	}
-	else if (InputManager::getInstance().isKeyDown(sf::Keyboard::S))
-	{
-		doorEvent.direction = Room::Direction::BOTTOM;
-		EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::DoorEnterGameEvent>(doorEvent));
-	}
-	else if (InputManager::getInstance().isKeyDown(sf::Keyboard::A))
-	{
-		doorEvent.direction = Room::Direction::LEFT;
-		EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::DoorEnterGameEvent>(doorEvent));
-	}
-
-
-	//ENDTESTING
-
 	objManager.applyChanges();
 
 	return m_type;
@@ -77,6 +50,8 @@ void GameplayState::draw()
 
 void GameplayState::init()
 {
+	RoomManager::getInstance().init();
+
 	GameObjectManager& objManager = GameObjectManager::getInstance();
 
 	WorldBuilder::loadTextures("room.tmx");
