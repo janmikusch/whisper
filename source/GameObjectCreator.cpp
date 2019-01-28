@@ -138,8 +138,6 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 
 	animComp->addAnimation(standingDown, "standingDown");
 
-	animComp->setAnimation("standingDown");
-
 	Animation standingUp;
 	standingUp.setSpriteSheet(texture);
 	standingUp.addFrame(sf::IntRect(0, 512, 64, 64));
@@ -157,6 +155,53 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 	standingRight.addFrame(sf::IntRect(0, 704, 64, 64));
 
 	animComp->addAnimation(standingRight, "standingRight");
+
+
+	Animation fightUp;
+	fightUp.setSpriteSheet(texture);
+	fightUp.addFrame(sf::IntRect(0, 1408, 192, 192));
+	fightUp.addFrame(sf::IntRect(192, 1408, 192, 192));
+	fightUp.addFrame(sf::IntRect(384, 1408, 192, 192));
+	fightUp.addFrame(sf::IntRect(576, 1408, 192, 192));
+	fightUp.addFrame(sf::IntRect(768, 1408, 192, 192));
+	fightUp.addFrame(sf::IntRect(960, 1408, 192, 192));
+
+	animComp->addAnimation(fightUp, "fightUp");
+
+	Animation fightLeft;
+	fightLeft.setSpriteSheet(texture);
+	fightLeft.addFrame(sf::IntRect(0, 1600, 192, 192));
+	fightLeft.addFrame(sf::IntRect(192, 1600, 192, 192));
+	fightLeft.addFrame(sf::IntRect(384, 1600, 192, 192));
+	fightLeft.addFrame(sf::IntRect(576, 1600, 192, 192));
+	fightLeft.addFrame(sf::IntRect(768, 1600, 192, 192));
+	fightLeft.addFrame(sf::IntRect(960, 1600, 192, 192));
+
+	animComp->addAnimation(fightLeft, "fightLeft");
+
+	Animation fightDown;
+	fightDown.setSpriteSheet(texture);
+	fightDown.addFrame(sf::IntRect(0, 1792, 192, 192));
+	fightDown.addFrame(sf::IntRect(192, 1792, 192, 192));
+	fightDown.addFrame(sf::IntRect(384, 1792, 192, 192));
+	fightDown.addFrame(sf::IntRect(576, 1792, 192, 192));
+	fightDown.addFrame(sf::IntRect(768, 1792, 192, 192));
+	fightDown.addFrame(sf::IntRect(960, 1792, 192, 192));
+
+	animComp->addAnimation(fightDown, "fightDown");
+
+	Animation fightRight;
+	fightRight.setSpriteSheet(texture); 
+	fightRight.addFrame(sf::IntRect(0, 1984, 192, 192));
+	fightRight.addFrame(sf::IntRect(192, 1984, 192, 192));
+	fightRight.addFrame(sf::IntRect(384, 1984, 192, 192));
+	fightRight.addFrame(sf::IntRect(576, 1984, 192, 192));
+	fightRight.addFrame(sf::IntRect(768, 1984, 192, 192));
+	fightRight.addFrame(sf::IntRect(960, 1984, 192, 192));
+
+	animComp->addAnimation(fightRight, "fightRight");
+
+	animComp->setAnimation("fightDown");
 
 	auto rigidbody = std::make_shared<Rigidbody>(character, 1, false, true);
 	auto collider = std::make_shared<ColliderComponent>(character, aabb, false);
