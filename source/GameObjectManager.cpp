@@ -19,14 +19,7 @@ void GameObjectManager::remove(std::shared_ptr<GameObject> gameObject)
 
 void GameObjectManager::applyChanges()
 {
-	while(!m_toAdd.empty())
-	{
-		std::shared_ptr<GameObject> obj = m_toAdd.front();
-		m_toAdd.pop();
-		m_gameObjects.push_back(obj);
-	}
-
-	while(!m_toRemove.empty())
+	while (!m_toRemove.empty())
 	{
 		std::shared_ptr<GameObject> obj = m_toRemove.front();
 		m_toRemove.pop();
@@ -35,6 +28,13 @@ void GameObjectManager::applyChanges()
 		{
 			m_gameObjects.erase(position);
 		}
+	}
+
+	while(!m_toAdd.empty())
+	{
+		std::shared_ptr<GameObject> obj = m_toAdd.front();
+		m_toAdd.pop();
+		m_gameObjects.push_back(obj);
 	}
 }
 

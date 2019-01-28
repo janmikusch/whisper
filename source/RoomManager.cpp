@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "RoomManager.h"
+#include "GameObjectManager.h"
+#include "FadeComponent.h"
+#include "GameObjectCreator.h"
 
 RoomManager& RoomManager::getInstance()
 {
@@ -51,7 +54,30 @@ void RoomManager::createRooms()
 	room_12->setRoom(Room::Direction::LEFT, room_11);
 	room_12->setRoom(Room::Direction::TOP, room_02);
 
+	std::vector<std::shared_ptr<GameObject>> roomObjects_00;
+	std::vector<std::shared_ptr<GameObject>> roomObjects_01;
+	std::vector<std::shared_ptr<GameObject>> roomObjects_02;
+	std::vector<std::shared_ptr<GameObject>> roomObjects_10;
+	std::vector<std::shared_ptr<GameObject>> roomObjects_11;
+	std::vector<std::shared_ptr<GameObject>> roomObjects_12;
 
+	//add fader
+	auto fader = GameObjectCreator::getInstance().createFade();
+
+	roomObjects_00.push_back(fader);
+	roomObjects_01.push_back(fader);
+	roomObjects_02.push_back(fader);
+	roomObjects_10.push_back(fader);
+	roomObjects_11.push_back(fader);
+	roomObjects_12.push_back(fader);
+
+
+	room_00->setRoomObjects(roomObjects_00);
+	room_01->setRoomObjects(roomObjects_01);
+	room_02->setRoomObjects(roomObjects_02);
+	room_10->setRoomObjects(roomObjects_10);
+	room_11->setRoomObjects(roomObjects_11);
+	room_12->setRoomObjects(roomObjects_12);
 }
 
 void RoomManager::changeRoom(Room::Direction dir)

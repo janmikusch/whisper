@@ -34,7 +34,6 @@ State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 
 	PhysicsManager::getInstance().findCollisions(objManager.getList());
 
-	objManager.applyChanges();
 
 	//TESTING
 
@@ -57,6 +56,7 @@ State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 
 	//ENDTESTING
 
+	objManager.applyChanges();
 
 	return m_type;
 }
@@ -90,7 +90,6 @@ void GameplayState::init()
 	objManager.add(rightDoor);
 	objManager.add(bottomDoor);
 	objManager.add(leftDoor);
-
 
 
 	objManager.applyChanges();

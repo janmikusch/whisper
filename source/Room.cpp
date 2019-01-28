@@ -63,13 +63,14 @@ std::shared_ptr<Room> Room::getRoom(Direction dir)
 	return nullptr;
 }
 
-void Room::setRoomObjects(std::vector< std::shared_ptr<GameObject>>)
+void Room::setRoomObjects(std::vector< std::shared_ptr<GameObject>> roomObjects)
 {
+	m_roomObjects = roomObjects;
 }
 
 void Room::addRoomObjectsToGame()
 {
-	auto gom = GameObjectManager::getInstance();
+	GameObjectManager& gom = GameObjectManager::getInstance();
 	for (auto it : m_roomObjects)
 	{
 		it->init();
@@ -79,7 +80,7 @@ void Room::addRoomObjectsToGame()
 
 void Room::removeRoomObjectsFromGame()
 {
-	auto gom = GameObjectManager::getInstance();
+	GameObjectManager& gom = GameObjectManager::getInstance();
 	for (auto it : m_roomObjects)
 	{
 		gom.remove(it);

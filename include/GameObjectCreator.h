@@ -18,7 +18,8 @@ public:
 	std::shared_ptr<GameObject> createCharacter(sf::FloatRect& aabb, int id = 1, sf::Vector2f position = sf::Vector2f());
 	std::shared_ptr<GameObject> createCharacterArea(sf::FloatRect& aabb, int id = 1, sf::Vector2f position = sf::Vector2f());
 
-	std::shared_ptr<GameObject> createDoor(Room::Direction dir,sf::Vector2f position = sf::Vector2f());
+	std::shared_ptr<GameObject> createDoor(Room::Direction dir, sf::Vector2f position = sf::Vector2f());
+	std::shared_ptr<GameObject> createFade(sf::Vector2f position = sf::Vector2f());
 
 private:
 	GameObjectCreator() = default;

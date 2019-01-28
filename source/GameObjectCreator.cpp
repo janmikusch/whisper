@@ -15,6 +15,7 @@
 #include "FontManager.h"
 #include "CharacterAreaComponent.h"
 #include "DoorComponent.h"
+#include "FadeComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -147,7 +148,20 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacterArea(sf::FloatRect
 
 std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, sf::Vector2f position)
 {
-	std::shared_ptr<GameObject> door = std::make_shared<GameObject>();
+	std::string name = ""; 
+	switch (dir)
+	{
+	case Room::TOP: name = "door_top";
+		break;
+	case Room::RIGHT: name = "door_right";
+		break;
+	case Room::BOTTOM: name = "door_bottom";
+		break;
+	case Room::LEFT: name = "door_left";
+		break;
+	default: ;
+	}
+	std::shared_ptr<GameObject> door = std::make_shared<GameObject>(position, name);
 
 	std::shared_ptr<DoorComponent> doorComp;
 
@@ -213,4 +227,12 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 	door->addComponent(doorComp);
 
 	return door;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createFade(sf::Vector2f position)
+{
+	std::shared_ptr<GameObject> fader = std::make_shared<GameObject>(position, "fade");
+
+	fader->addComponent(std::make_shared<FadeComponent>(fader, Layer::FOREGROUND3));
+	return fader;
 }
