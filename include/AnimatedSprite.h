@@ -55,6 +55,7 @@ public:
 	bool isPlaying() const;
 	sf::Time getFrameTime() const;
 	void setFrame(std::size_t newFrame, bool resetTime = true);
+	bool isFinished() { return m_isFinished; };
 
 private:
 	const Animation* m_animation;
@@ -63,6 +64,7 @@ private:
 	std::size_t m_currentFrame;
 	bool m_isPaused;
 	bool m_isLooped;
+	bool m_isFinished = false;
 	const sf::Texture* m_texture;
 	sf::Vertex m_vertices[4];
 

@@ -21,15 +21,19 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 {
 	InputManager& im = InputManager::getInstance();
 
+	auto animComponent = m_parent->getComponent<AnimationComponent>();
+
 	setMoveBehaviour();
 
 	if(m_moveBehaviour)
 	{
-		if (im.isKeyPressed("Attack", 0))
-		{
-			setFightAnimation();
+		if (animComponent->isFinished())
+		{	
+			isFighting = false;
+			setStandingAnimation();
 		}
-		else
+
+		if(!isFighting)
 		{
 			const float speed = 100.0f;
 			sf::Vector2f movement = m_moveBehaviour->getMovement();
@@ -47,9 +51,13 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 			}
 			else
 			{
-
 				setStandingAnimation();
 			}
+		}
+
+		if (im.isKeyPressed("Attack", 0))
+		{
+			setFightAnimation();
 		}
 	}
 }
@@ -213,6 +221,7 @@ void CharacterMoveComponent::setFightAnimation()
 	{
 	case UP:
 		animComponent->setAnimation("fightUp");
+		//animComponent->setLoop(false);
 		break;
 	case DOWN:
 		animComponent->setAnimation("fightDown");
@@ -225,4 +234,5 @@ void CharacterMoveComponent::setFightAnimation()
 		break;
 	}
 	
+	isFighting = true;
 }

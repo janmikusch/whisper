@@ -99,3 +99,8 @@ void AnimationComponent::draw()
 	engine::Window::getInstance().getWindow()->draw(m_animatedSprite);
 	//RenderManagerInstance.AddRenderable(m_layer,SpriteRenderer{&m_sprite});
 }
+
+void AnimationComponent::setLoop(bool loop)
+{
+	m_animatedSprite.setLooped(loop);
+}

@@ -29,6 +29,11 @@ public:
 	void setAnimation(std::string name);
 	std::string getAnimation() { return m_currentAnimation; };
 	void addAnimation(Animation anim,std::string name);
+
+	void setLoop(bool loop);
+
+	bool isFinished() { return m_animatedSprite.isFinished(); };
+
 protected:
 	sf::Clock m_frameClock;
 	sf::Time m_frameTime;
@@ -36,4 +41,5 @@ protected:
 	std::string m_currentAnimation;
 	std::map<std::string,std::shared_ptr<Animation>> m_animations;
 	AnimatedSprite m_animatedSprite;
+
 };

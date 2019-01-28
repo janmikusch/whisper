@@ -21,7 +21,7 @@ private:
 	void setAnimation(sf::Vector2f movement);
 	void setStandingAnimation();
 	void setFightAnimation();
-
+	bool isFighting = false;
 	Direction m_direction;
 	std::shared_ptr<CharacterMoveBehaviour> m_moveBehaviour;
 	int m_characterId;
