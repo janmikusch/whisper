@@ -45,17 +45,14 @@ State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 	else if(InputManager::getInstance().isKeyDown(sf::Keyboard::A))
 	{
 		RoomManager::getInstance().changeRoom(Room::Direction::LEFT);
-
 	}
 	else if(InputManager::getInstance().isKeyDown(sf::Keyboard::S))
 	{
 		RoomManager::getInstance().changeRoom(Room::Direction::BOTTOM);
-
 	}
 	else if(InputManager::getInstance().isKeyDown(sf::Keyboard::D))
 	{
 		RoomManager::getInstance().changeRoom(Room::Direction::RIGHT);
-
 	}
 
 	//ENDTESTING
@@ -83,6 +80,18 @@ void GameplayState::init()
 	{
 		objManager.add(it);
 	}
+
+	auto topDoor = GameObjectCreator::getInstance().createDoor(Room::Direction::TOP);
+	auto rightDoor = GameObjectCreator::getInstance().createDoor(Room::Direction::RIGHT);
+	auto bottomDoor = GameObjectCreator::getInstance().createDoor(Room::Direction::BOTTOM);
+	auto leftDoor = GameObjectCreator::getInstance().createDoor(Room::Direction::LEFT);
+
+	objManager.add(topDoor);
+	objManager.add(rightDoor);
+	objManager.add(bottomDoor);
+	objManager.add(leftDoor);
+
+
 
 	objManager.applyChanges();
 

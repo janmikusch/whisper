@@ -32,6 +32,7 @@
     <ClCompile Include="..\..\source\ColliderComponent.cpp" />
     <ClCompile Include="..\..\source\Collision.cpp" />
     <ClCompile Include="..\..\source\Component.cpp" />
+    <ClCompile Include="..\..\source\DoorComponent.cpp" />
     <ClCompile Include="..\..\source\FontManager.cpp" />
     <ClCompile Include="..\..\source\FontMapLoader.cpp" />
     <ClCompile Include="..\..\source\Game.cpp" />
@@ -83,6 +84,7 @@
     <ClInclude Include="..\..\include\ColliderComponent.h" />
     <ClInclude Include="..\..\include\Collision.h" />
     <ClInclude Include="..\..\include\Component.h" />
+    <ClInclude Include="..\..\include\DoorComponent.h" />
     <ClInclude Include="..\..\include\FontManager.h" />
     <ClInclude Include="..\..\include\FontMapLoader.h" />
     <ClInclude Include="..\..\include\Game.h" />

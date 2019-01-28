@@ -14,6 +14,7 @@
 #include "CharacterMoveComponent.h"
 #include "FontManager.h"
 #include "CharacterAreaComponent.h"
+#include "DoorComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -142,4 +143,66 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacterArea(sf::FloatRect
 	area->addComponent(boundingbox);
 #endif
 	return  area;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, sf::Vector2f position)
+{
+	std::shared_ptr<GameObject> door = std::make_shared<GameObject>();
+
+	std::shared_ptr<DoorComponent> doorComp;
+
+	switch (dir) { 
+	case Room::TOP:
+	{
+		TextureManager::getInstance().loadTexture("gate_top.png");
+		sf::Texture& gateTex = TextureManager::getInstance().getTexture("gate_top.png");
+		TextureManager::getInstance().loadTexture("door_top.png");
+		sf::Texture& doorTex = TextureManager::getInstance().getTexture("door_top.png");
+
+		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTex, dir);
+
+		door->setPosition(position + sf::Vector2f{ 384, 0 });
+	}
+		break;
+	case Room::RIGHT:
+	{
+		TextureManager::getInstance().loadTexture("gate_right.png");
+		sf::Texture& gateTex = TextureManager::getInstance().getTexture("gate_right.png");
+		TextureManager::getInstance().loadTexture("door_right.png");
+		sf::Texture& doorTex = TextureManager::getInstance().getTexture("door_right.png");
+
+		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTex, dir);
+
+		door->setPosition(position + sf::Vector2f{ 832, 256 });
+	}
+		break;
+	case Room::BOTTOM:
+	{
+		TextureManager::getInstance().loadTexture("gate_bottom.png");
+		sf::Texture& gateTex = TextureManager::getInstance().getTexture("gate_bottom.png");
+		TextureManager::getInstance().loadTexture("door_bottom.png");
+		sf::Texture& doorTex = TextureManager::getInstance().getTexture("door_bottom.png");
+
+		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTex, dir);
+
+		door->setPosition(position + sf::Vector2f{ 384, 576});
+	}
+		break;
+	case Room::LEFT:
+	{
+		TextureManager::getInstance().loadTexture("gate_left.png");
+		sf::Texture& gateTex = TextureManager::getInstance().getTexture("gate_left.png");
+		TextureManager::getInstance().loadTexture("door_left.png");
+		sf::Texture& doorTex = TextureManager::getInstance().getTexture("door_left.png");
+
+		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTex, dir);
+
+		door->setPosition(position + sf::Vector2f{ 0, 256 });
+	}
+		break;
+	}
+
+	door->addComponent(doorComp);
+
+	return door;
 }

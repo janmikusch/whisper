@@ -12,7 +12,6 @@ public:
 	void createRooms();
 	void changeRoom(Room::Direction dir);
 
-
 private:
 	RoomManager() = default;
 
