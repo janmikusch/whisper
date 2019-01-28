@@ -20,11 +20,15 @@ void engine::RenderManager::add(std::shared_ptr<RenderComponent> component)
 void engine::RenderManager::renderAll()
 {
 	renderLayer(Layer::NOTDEFINED);
-	renderLayer(Layer::BACKGROUND);
-	renderLayer(Layer::MIDDLE);
-	renderLayer(Layer::OBJECTS);
-	renderLayer(Layer::PLAYER);
-	renderLayer(Layer::FOREGROUND);
+	renderLayer(Layer::BACKGROUND1);
+	renderLayer(Layer::BACKGROUND2);
+	renderLayer(Layer::BACKGROUND3);
+	renderLayer(Layer::MIDDLE1);
+	renderLayer(Layer::MIDDLE2);
+	renderLayer(Layer::MIDDLE3);
+	renderLayer(Layer::FOREGROUND1);
+	renderLayer(Layer::FOREGROUND2);
+	renderLayer(Layer::FOREGROUND3);
 
 #ifdef _DEBUG
 	renderLayer(Layer::DEBUG_BOUNDINGBOX);

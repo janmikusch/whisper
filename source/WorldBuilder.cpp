@@ -95,8 +95,8 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 		}
 	}
 
-	/*std::shared_ptr<GameObject> map = m_gameObjectCreator.createMap(sf::Vector2f(0.0f, 0.0f), m_layers);
-	objects.push_back(map);*/
+	std::shared_ptr<GameObject> map = m_gameObjectCreator.createMap(sf::Vector2f(0.0f, 0.0f), m_layers);
+	objects.push_back(map);
 
 	
 	// go through all object layers
