@@ -4,6 +4,12 @@
 #include "window.h"
 #include "TextureManager.h"
 
+HeroAnimationComponent::HeroAnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, float animationTime) :
+	AnimationComponent(parent, layer, animationTime)
+{
+
+}
+
 void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 {
 	m_frameTime = m_frameClock.restart();

@@ -11,6 +11,7 @@
 #include "BoundingBoxComponent.h"
 #include "TextureManager.h"
 #include "AnimationComponent.h"
+#include "HeroAnimationComponent.h"
 #include "CharacterMoveComponent.h"
 #include "FontManager.h"
 #include "CharacterAreaComponent.h"
@@ -68,7 +69,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 	TextureManager::getInstance().loadTexture("hero.png");
 	sf::Texture& texture = TextureManager::getInstance().getTexture("hero.png");
 
-	auto animComp = std::make_shared<AnimationComponent>(character, Layer::MIDDLE1, 0.1f);
+	std::shared_ptr<AnimationComponent> animComp = std::make_shared<HeroAnimationComponent>(character, Layer::MIDDLE1, 0.1f);
 
 	character->addComponent(animComp);
 	character->addComponent(std::make_shared<CharacterMoveComponent>(character, id));
