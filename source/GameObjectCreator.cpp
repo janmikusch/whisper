@@ -65,49 +65,80 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 {
 	std::shared_ptr<GameObject> character = std::make_shared<GameObject>(position, "character");
 
-	TextureManager::getInstance().loadTexture("char_animation.png");
-	sf::Texture& texture = TextureManager::getInstance().getTexture("char_animation.png");
+	TextureManager::getInstance().loadTexture("hero.png");
+	sf::Texture& texture = TextureManager::getInstance().getTexture("hero.png");
 
 	auto animComp = std::make_shared<AnimationComponent>(character, Layer::MIDDLE1);
 
 	character->addComponent(animComp);
 	character->addComponent(std::make_shared<CharacterMoveComponent>(character, id));
 
-	Animation walkingAnimationDown;
-	walkingAnimationDown.setSpriteSheet(texture);
-	walkingAnimationDown.addFrame(sf::IntRect(0, 0, 32, 32));
-	walkingAnimationDown.addFrame(sf::IntRect(32, 0, 32, 32));
-	walkingAnimationDown.addFrame(sf::IntRect(64, 0, 32, 32));
+	Animation walkingAnimationUp;
+	walkingAnimationUp.setSpriteSheet(texture);
+	walkingAnimationUp.addFrame(sf::IntRect(0, 512, 64, 64));
+	walkingAnimationUp.addFrame(sf::IntRect(64, 512, 64, 64));
+	walkingAnimationUp.addFrame(sf::IntRect(128, 512, 64, 64));
+	walkingAnimationUp.addFrame(sf::IntRect(192, 512, 64, 64));
+	walkingAnimationUp.addFrame(sf::IntRect(256, 512, 64, 64));
+	walkingAnimationUp.addFrame(sf::IntRect(320, 512, 64, 64));
+	walkingAnimationUp.addFrame(sf::IntRect(384, 512, 64, 64));
+	walkingAnimationUp.addFrame(sf::IntRect(448, 512, 64, 64));
+	walkingAnimationUp.addFrame(sf::IntRect(512, 512, 64, 64));
 
-	animComp->addAnimation(walkingAnimationDown, "down");
+	animComp->addAnimation(walkingAnimationUp, "up");
 
 	Animation walkingAnimationLeft;
 	walkingAnimationLeft.setSpriteSheet(texture);
-	walkingAnimationLeft.addFrame(sf::IntRect(0, 32, 32, 32));
-	walkingAnimationLeft.addFrame(sf::IntRect(32, 32, 32, 32));
-	walkingAnimationLeft.addFrame(sf::IntRect(64, 32, 32, 32));
+	walkingAnimationLeft.addFrame(sf::IntRect(0, 576, 64, 64));
+	walkingAnimationLeft.addFrame(sf::IntRect(64, 576, 64, 64));
+	walkingAnimationLeft.addFrame(sf::IntRect(128, 576, 64, 64));
+	walkingAnimationLeft.addFrame(sf::IntRect(192, 576, 64, 64));
+	walkingAnimationLeft.addFrame(sf::IntRect(256, 576, 64, 64));
+	walkingAnimationLeft.addFrame(sf::IntRect(320, 576, 64, 64));
+	walkingAnimationLeft.addFrame(sf::IntRect(384, 576, 64, 64));
+	walkingAnimationLeft.addFrame(sf::IntRect(448, 576, 64, 64));
+	walkingAnimationLeft.addFrame(sf::IntRect(512, 576, 64, 64));
 
 	animComp->addAnimation(walkingAnimationLeft, "left");
 
 
+	Animation walkingAnimationDown;
+	walkingAnimationDown.setSpriteSheet(texture);
+	walkingAnimationDown.addFrame(sf::IntRect(0, 640, 64, 64));
+	walkingAnimationDown.addFrame(sf::IntRect(64, 640, 64, 64));
+	walkingAnimationDown.addFrame(sf::IntRect(128, 640, 64, 64));
+	walkingAnimationDown.addFrame(sf::IntRect(192, 640, 64, 64));
+	walkingAnimationDown.addFrame(sf::IntRect(256, 640, 64, 64));
+	walkingAnimationDown.addFrame(sf::IntRect(320, 640, 64, 64));
+	walkingAnimationDown.addFrame(sf::IntRect(384, 640, 64, 64));
+	walkingAnimationDown.addFrame(sf::IntRect(448, 640, 64, 64));
+	walkingAnimationDown.addFrame(sf::IntRect(512, 640, 64, 64));
+
+	animComp->addAnimation(walkingAnimationDown, "down");
+
+
 	Animation walkingAnimationRight;
 	walkingAnimationRight.setSpriteSheet(texture);
-	walkingAnimationRight.addFrame(sf::IntRect(0, 64, 32, 32));
-	walkingAnimationRight.addFrame(sf::IntRect(32, 64, 32, 32));
-	walkingAnimationRight.addFrame(sf::IntRect(64, 64, 32, 32));
+	walkingAnimationRight.addFrame(sf::IntRect(0, 704, 64, 64));
+	walkingAnimationRight.addFrame(sf::IntRect(64, 704, 64, 64));
+	walkingAnimationRight.addFrame(sf::IntRect(128, 704, 64, 64));
+	walkingAnimationRight.addFrame(sf::IntRect(192, 704, 64, 64));
+	walkingAnimationRight.addFrame(sf::IntRect(256, 704, 64, 64));
+	walkingAnimationRight.addFrame(sf::IntRect(320, 704, 64, 64));
+	walkingAnimationRight.addFrame(sf::IntRect(384, 704, 64, 64));
+	walkingAnimationRight.addFrame(sf::IntRect(448, 704, 64, 64));
+	walkingAnimationRight.addFrame(sf::IntRect(512, 704, 64, 64));
 
 	animComp->addAnimation(walkingAnimationRight, "right");
 
 
-	Animation walkingAnimationUp;
-	walkingAnimationUp.setSpriteSheet(texture);
-	walkingAnimationUp.addFrame(sf::IntRect(0, 96, 32, 32));
-	walkingAnimationUp.addFrame(sf::IntRect(32, 96, 32, 32));
-	walkingAnimationUp.addFrame(sf::IntRect(64, 96, 32, 32));
+	Animation standing;
+	standing.setSpriteSheet(texture);
+	standing.addFrame(sf::IntRect(0, 640, 64, 64));
 
-	animComp->addAnimation(walkingAnimationUp, "up");
+	animComp->addAnimation(standing, "standing");
 
-	animComp->setAnimation("down");
+	animComp->setAnimation("right");
 
 	auto rigidbody = std::make_shared<Rigidbody>(character, 1, false, true);
 	auto collider = std::make_shared<ColliderComponent>(character, aabb, false);

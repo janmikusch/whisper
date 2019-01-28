@@ -129,6 +129,16 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 				std::shared_ptr<GameObject> area = m_gameObjectCreator.createCharacterArea(box, id, position);
 				objects.push_back(area);
 			}
+
+			else if (object->type == "character")
+			{
+				int id = std::stoi(object->properties[0]->value); 
+				sf::Vector2f position{ static_cast<float>(object->x), static_cast<float>(object->y) };
+				sf::FloatRect box{ static_cast<float>(object->x), static_cast<float>(object->y), static_cast<float>(object->width), static_cast<float>(object->height) };
+
+				std::shared_ptr<GameObject> character = m_gameObjectCreator.createCharacter(box, id, position);
+				objects.push_back(character);
+			}
 		}
 	}
 

@@ -249,9 +249,6 @@
     <ClCompile Include="..\..\source\NavigationGraphBuilder.cpp">
       <Filter>Source Files\Navigation</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\Room.cpp">
-      <Filter>Source Files\Room</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">

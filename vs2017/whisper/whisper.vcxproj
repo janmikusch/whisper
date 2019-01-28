@@ -57,7 +57,6 @@
     <ClCompile Include="..\..\source\RenderManager.cpp" />
     <ClCompile Include="..\..\source\RigidbodyComponent.cpp" />
     <ClCompile Include="..\..\source\AudioManager.cpp" />
-    <ClCompile Include="..\..\source\Room.cpp" />
     <ClCompile Include="..\..\source\SpriteComponent.cpp" />
     <ClCompile Include="..\..\source\State.cpp" />
     <ClCompile Include="..\..\source\stdafx.cpp">
