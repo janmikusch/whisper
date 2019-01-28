@@ -27,5 +27,5 @@ public:
 protected:
 	sf::RectangleShape m_rect;
 	float m_alpha;
-	const float m_speed = 300;
+	const float m_speed = 320;
 };

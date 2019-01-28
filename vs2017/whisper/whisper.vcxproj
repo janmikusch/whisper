@@ -33,11 +33,11 @@
     <ClCompile Include="..\..\source\Collision.cpp" />
     <ClCompile Include="..\..\source\Component.cpp" />
     <ClCompile Include="..\..\source\DoorComponent.cpp" />
+    <ClCompile Include="..\..\source\EventBus.cpp" />
     <ClCompile Include="..\..\source\FadeComponent.cpp" />
     <ClCompile Include="..\..\source\FontManager.cpp" />
     <ClCompile Include="..\..\source\FontMapLoader.cpp" />
     <ClCompile Include="..\..\source\Game.cpp" />
-    <ClCompile Include="..\..\source\GameEvent.cpp" />
     <ClCompile Include="..\..\source\GameObject.cpp" />
     <ClCompile Include="..\..\source\GameObjectCreator.cpp" />
     <ClCompile Include="..\..\source\GameObjectManager.cpp" />
@@ -86,6 +86,8 @@
     <ClInclude Include="..\..\include\Collision.h" />
     <ClInclude Include="..\..\include\Component.h" />
     <ClInclude Include="..\..\include\DoorComponent.h" />
+    <ClInclude Include="..\..\include\EventBus.h" />
+    <ClInclude Include="..\..\include\EventObserver.h" />
     <ClInclude Include="..\..\include\FadeComponent.h" />
     <ClInclude Include="..\..\include\FontManager.h" />
     <ClInclude Include="..\..\include\FontMapLoader.h" />

@@ -6,9 +6,10 @@
 #include "Layer.h"
 #include "RenderComponent.h"
 #include "Room.h"
+#include "CollisionObserver.h"
 
 
-class DoorComponent : public RenderComponent, public TransformableComponent
+class DoorComponent : public RenderComponent, public TransformableComponent, public CollisionObserver
 {
 public:
 	explicit DoorComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& textureGate, sf::Texture& textureRedDoor, sf::Texture& textureGreenDoor, Room::Direction dir);
@@ -25,6 +26,7 @@ public:
 	void scale(const sf::Vector2f& factor) override;
 	void rotate(float angle) override;
 
+	void onNotify(const GameObject& collidedWith, engine::GameEvent* event) override;
 protected:
 	sf::Sprite m_gateSprite;
 	sf::Sprite m_reddoorSprite;

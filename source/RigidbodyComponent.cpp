@@ -76,18 +76,18 @@ void Rigidbody::onCollisionResolve()
 	for(auto collision : m_collisionsCurrentFrame)
 	{
 		std::shared_ptr<Rigidbody> other;
-		std::shared_ptr<Rigidbody> ball;
+		std::shared_ptr<Rigidbody> thisRigidbody;
 		event.type = engine::CollisionGameEvent::ENTER;
 
 		if (collision->body1 == std::make_shared<Rigidbody>(*this))
 		{
 			other = collision->body2;
-			ball = collision->body1;
+			thisRigidbody = collision->body1;
 		}
 		else
 		{
 			other = collision->body1;
-			ball = collision->body2;
+			thisRigidbody = collision->body2;
 		}
 
 		for(auto lastCollision : m_collisionsLastFrame)
@@ -102,7 +102,7 @@ void Rigidbody::onCollisionResolve()
 
 		for (auto observer : m_observers)
 		{
-			observer->onNotify(other->getGameObject(), ball->getGameObject(), &event);
+			observer->onNotify(other->getGameObject(), &event);
 			
 		}
 	}
@@ -137,7 +137,7 @@ void Rigidbody::onCollisionResolve()
 		{
 			for (auto observer : m_observers)
 			{
-				observer->onNotify(other->getGameObject(), ball->getGameObject(), &event);
+				observer->onNotify(other->getGameObject(), &event);
 			}
 		}
 	}

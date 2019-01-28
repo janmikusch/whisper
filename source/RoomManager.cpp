@@ -115,3 +115,19 @@ int RoomManager::countNotCompleted()
 	}
 	return unsolved;
 }
+
+void RoomManager::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent)
+{
+	if(type == engine::EventType::DOORENTER)
+	{
+		std::shared_ptr<engine::DoorEnterGameEvent> ev = std::static_pointer_cast<engine::DoorEnterGameEvent>(gameEvent);
+
+		if(ev != nullptr)
+			changeRoom(ev->direction);
+	}
+}
+
+RoomManager::RoomManager():EventObserver()
+{
+	EventBus::getInstance().addObserver(engine::DOORENTER, this);
+}

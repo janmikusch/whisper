@@ -159,11 +159,17 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 		break;
 	case Room::LEFT: name = "door_left";
 		break;
-	default: ;
 	}
 	std::shared_ptr<GameObject> door = std::make_shared<GameObject>(position, name);
 
 	std::shared_ptr<DoorComponent> doorComp;
+	std::shared_ptr<ColliderComponent> collider;
+	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(door, 1, false, true);
+
+	sf::FloatRect rect{};
+	rect.height = 32;
+	rect.width = 32;
+	sf::Vector2f displacement{};
 
 	switch (dir) { 
 	case Room::TOP:
@@ -176,8 +182,14 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 		sf::Texture& doorTexGreen = TextureManager::getInstance().getTexture("door_top_green.png");
 
 		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTexRed, doorTexGreen, dir);
-
 		door->setPosition(position + sf::Vector2f{ 384, 0 });
+
+
+		rect.left = door->getPosition().x;
+		rect.top = door->getPosition().y;
+		displacement.x = 80;
+		displacement.y = 96;
+
 	}
 		break;
 	case Room::RIGHT:
@@ -192,6 +204,12 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTexRed, doorTexGreen, dir);
 
 		door->setPosition(position + sf::Vector2f{ 832, 256 });
+
+
+		rect.left = door->getPosition().x;
+		rect.top = door->getPosition().y;
+		displacement.x = 0;
+		displacement.y = 80;
 	}
 		break;
 	case Room::BOTTOM:
@@ -206,6 +224,12 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTexRed, doorTexGreen, dir);
 
 		door->setPosition(position + sf::Vector2f{ 384, 576});
+
+
+		rect.left = door->getPosition().x;
+		rect.top = door->getPosition().y;
+		displacement.x = 80;
+		displacement.y = 0;
 	}
 		break;
 	case Room::LEFT:
@@ -220,11 +244,25 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTexRed,doorTexGreen, dir);
 
 		door->setPosition(position + sf::Vector2f{ 0, 256 });
+
+
+		rect.left = door->getPosition().x;
+		rect.top = door->getPosition().y;
+		displacement.x = 96;
+		displacement.y = 80;
 	}
 		break;
 	}
+	collider = std::make_shared<ColliderComponent>(door, rect, true);
 
 	door->addComponent(doorComp);
+	door->addComponent(rigidbody);
+	door->addComponent(collider);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(door, rect,Layer::DEBUG_BOUNDINGBOX,displacement);
+	door->addComponent(boundingbox);
+#endif
 
 	return door;
 }

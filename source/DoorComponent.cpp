@@ -3,6 +3,7 @@
 #include <iostream>
 #include "window.h"
 #include "RoomManager.h"
+#include "EventBus.h"
 
 DoorComponent::DoorComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& textureGate, sf::Texture& textureRedDoor, sf::Texture& textureGreenDoor, Room::Direction dir):
 	RenderComponent(parent,layer),m_dir(dir)
@@ -72,6 +73,34 @@ void DoorComponent::scale(const sf::Vector2f& factor)
 void DoorComponent::rotate(float angle)
 {
 	m_gateSprite.rotate(angle);
+}
+
+void DoorComponent::onNotify(const GameObject& collidedWith, engine::GameEvent* event)
+{
+	if(collidedWith.getName() != "hero")
+	{
+		return;
+	}
+
+	engine::DoorEnterGameEvent doorEvent{};
+	if(collidedWith.getName()=="door_top")
+	{
+		doorEvent.direction = Room::Direction::TOP;
+	}
+	else if (collidedWith.getName() == "door_right")
+	{
+		doorEvent.direction = Room::Direction::RIGHT;
+	}
+	else if (collidedWith.getName() == "door_bottom")
+	{
+		doorEvent.direction = Room::Direction::BOTTOM;
+	}
+	else if (collidedWith.getName() == "door_left")
+	{
+		doorEvent.direction = Room::Direction::LEFT;
+	}
+
+	EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::GameEvent>(doorEvent));
 }
 
 

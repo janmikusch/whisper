@@ -37,22 +37,28 @@ State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 
 	//TESTING
 
-	if(InputManager::getInstance().isKeyDown(sf::Keyboard::W))
+	engine::DoorEnterGameEvent doorEvent{};
+	if (InputManager::getInstance().isKeyDown(sf::Keyboard::W))
 	{
-		RoomManager::getInstance().changeRoom(Room::Direction::TOP);
+		doorEvent.direction = Room::Direction::TOP;
+		EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::DoorEnterGameEvent>(doorEvent));
 	}
-	else if(InputManager::getInstance().isKeyDown(sf::Keyboard::A))
+	else if (InputManager::getInstance().isKeyDown(sf::Keyboard::D))
 	{
-		RoomManager::getInstance().changeRoom(Room::Direction::LEFT);
+		doorEvent.direction = Room::Direction::RIGHT;
+		EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::DoorEnterGameEvent>(doorEvent));
 	}
-	else if(InputManager::getInstance().isKeyDown(sf::Keyboard::S))
+	else if (InputManager::getInstance().isKeyDown(sf::Keyboard::S))
 	{
-		RoomManager::getInstance().changeRoom(Room::Direction::BOTTOM);
+		doorEvent.direction = Room::Direction::BOTTOM;
+		EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::DoorEnterGameEvent>(doorEvent));
 	}
-	else if(InputManager::getInstance().isKeyDown(sf::Keyboard::D))
+	else if (InputManager::getInstance().isKeyDown(sf::Keyboard::A))
 	{
-		RoomManager::getInstance().changeRoom(Room::Direction::RIGHT);
+		doorEvent.direction = Room::Direction::LEFT;
+		EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::DoorEnterGameEvent>(doorEvent));
 	}
+
 
 	//ENDTESTING
 
@@ -90,6 +96,8 @@ void GameplayState::init()
 	objManager.add(rightDoor);
 	objManager.add(bottomDoor);
 	objManager.add(leftDoor);
+
+
 
 
 	objManager.applyChanges();
