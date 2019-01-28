@@ -41,6 +41,7 @@
     <ClCompile Include="..\..\source\GameObjectManager.cpp" />
     <ClCompile Include="..\..\source\GameplayState.cpp" />
     <ClCompile Include="..\..\source\GameStateManager.cpp" />
+    <ClCompile Include="..\..\source\HeroAnimationComponent.cpp" />
     <ClCompile Include="..\..\source\InputComponent.cpp" />
     <ClCompile Include="..\..\source\InputManager.cpp" />
     <ClCompile Include="..\..\source\LayerComponent.cpp" />
@@ -90,6 +91,7 @@
     <ClInclude Include="..\..\include\GameObjectManager.h" />
     <ClInclude Include="..\..\include\GameplayState.h" />
     <ClInclude Include="..\..\include\GameStateManager.h" />
+    <ClInclude Include="..\..\include\HeroAnimationComponent.h" />
     <ClInclude Include="..\..\include\InputComponent.h" />
     <ClInclude Include="..\..\include\InputManager.h" />
     <ClInclude Include="..\..\include\Layer.h" />

@@ -26,14 +26,8 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 	setMoveBehaviour();
 
 	if(m_moveBehaviour)
-	{
-		if (animComponent->isFinished())
-		{	
-			isFighting = false;
-			setStandingAnimation();
-		}
-
-		if(!isFighting)
+	{	
+		if (m_state != AnimationState::ATTACK)
 		{
 			const float speed = 100.0f;
 			sf::Vector2f movement = m_moveBehaviour->getMovement();
@@ -41,6 +35,8 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 			float length = std::sqrt((movement.x * movement.x) + (movement.y * movement.y));
 			if (length != 0)
 			{
+				m_state = AnimationState::WALK;
+
 				movement = movement / length; //normalize
 				movement *= (speed * fDeltaTimeSeconds); // speed up
 				setAnimation(movement);
@@ -53,11 +49,15 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 			{
 				setStandingAnimation();
 			}
-		}
 
-		if (im.isKeyPressed("Attack", 0))
+			if (im.isKeyPressed("Attack", 0))
+			{
+				setFightAnimation();
+			}
+		}
+		else if (animComponent->isFinished())
 		{
-			setFightAnimation();
+			m_state = AnimationState::WALK;
 		}
 	}
 }
@@ -211,6 +211,8 @@ void CharacterMoveComponent::setStandingAnimation()
 		animComponent->setAnimation("standingRight");
 		break;
 	}
+
+	m_state = AnimationState::STAND;
 }
 
 void CharacterMoveComponent::setFightAnimation()
@@ -221,7 +223,6 @@ void CharacterMoveComponent::setFightAnimation()
 	{
 	case UP:
 		animComponent->setAnimation("fightUp");
-		//animComponent->setLoop(false);
 		break;
 	case DOWN:
 		animComponent->setAnimation("fightDown");
@@ -233,6 +234,6 @@ void CharacterMoveComponent::setFightAnimation()
 		animComponent->setAnimation("fightRight");
 		break;
 	}
-	
-	isFighting = true;
+
+	m_state = AnimationState::ATTACK;
 }

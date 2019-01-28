@@ -63,7 +63,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createStaticCollider(sf::FloatRec
 
 std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aabb, int id, sf::Vector2f position)
 {
-	std::shared_ptr<GameObject> character = std::make_shared<GameObject>(position, "character");
+	std::shared_ptr<GameObject> character = std::make_shared<GameObject>(position, "hero");
 
 	TextureManager::getInstance().loadTexture("hero.png");
 	sf::Texture& texture = TextureManager::getInstance().getTexture("hero.png");
@@ -165,7 +165,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 	fightUp.addFrame(sf::IntRect(576, 1408, 192, 192));
 	fightUp.addFrame(sf::IntRect(768, 1408, 192, 192));
 	fightUp.addFrame(sf::IntRect(960, 1408, 192, 192));
-
+	
 	animComp->addAnimation(fightUp, "fightUp");
 
 	Animation fightLeft;
