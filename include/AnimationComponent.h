@@ -12,7 +12,7 @@
 class AnimationComponent : public RenderComponent, public TransformableComponent
 {
 public:
-	explicit AnimationComponent(std::shared_ptr<GameObject> parent, Layer layer);
+	explicit AnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, float animationTime = 0.2f);
 
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;

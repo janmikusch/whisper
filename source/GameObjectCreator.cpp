@@ -68,7 +68,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 	TextureManager::getInstance().loadTexture("hero.png");
 	sf::Texture& texture = TextureManager::getInstance().getTexture("hero.png");
 
-	auto animComp = std::make_shared<AnimationComponent>(character, Layer::MIDDLE1);
+	auto animComp = std::make_shared<AnimationComponent>(character, Layer::MIDDLE1, 0.1f);
 
 	character->addComponent(animComp);
 	character->addComponent(std::make_shared<CharacterMoveComponent>(character, id));
