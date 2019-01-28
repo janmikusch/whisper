@@ -5,12 +5,14 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include "Layer.h"
 #include "RenderComponent.h"
+#include "Room.h"
+#include "CollisionObserver.h"
 
 
-class BoundingboxComponent : public RenderComponent, public TransformableComponent
+class DoorComponent : public RenderComponent, public TransformableComponent, public CollisionObserver
 {
 public:
-	explicit BoundingboxComponent(std::shared_ptr<GameObject> parent, sf::FloatRect& aabb, Layer layer = Layer::DEBUG_BOUNDINGBOX, sf::Vector2f displacement = sf::Vector2f(0,0));
+	explicit DoorComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& textureGate, sf::Texture& textureRedDoor, sf::Texture& textureGreenDoor, Room::Direction dir);
 
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;
@@ -24,11 +26,11 @@ public:
 	void scale(const sf::Vector2f& factor) override;
 	void rotate(float angle) override;
 
-	void setColor(sf::Color c);
-
+	void onNotify(const GameObject& collidedWith, engine::GameEvent* event) override;
 protected:
-	// The debug geometry to visualize the bounding geometry of the object.
-	// Can be part of a BBoxCollisionComponent.
-	sf::RectangleShape m_debugGeometry;
-	sf::Vector2f m_displacement;
+	sf::Sprite m_gateSprite;
+	sf::Sprite m_reddoorSprite;
+	sf::Sprite m_greendoorSprite;
+
+	Room::Direction m_dir;
 };

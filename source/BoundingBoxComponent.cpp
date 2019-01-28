@@ -4,8 +4,8 @@
 #include "window.h"
 #include "BoundingBoxComponent.h"
 
-BoundingboxComponent::BoundingboxComponent(std::shared_ptr<GameObject> parent, sf::FloatRect& aabb, Layer layer):
-	RenderComponent(parent,layer)
+BoundingboxComponent::BoundingboxComponent(std::shared_ptr<GameObject> parent, sf::FloatRect& aabb, Layer layer, sf::Vector2f displacement):
+	RenderComponent(parent,layer),m_displacement(displacement)
 {
 	m_debugGeometry = sf::RectangleShape({ aabb.width, aabb.height });
 	m_debugGeometry.setFillColor(sf::Color::Transparent);
@@ -21,7 +21,7 @@ void BoundingboxComponent::setColor(sf::Color c)
 void BoundingboxComponent::update( const float
 	fDeltaTimeSeconds)
 {
-	m_debugGeometry.setPosition(m_parent->getPosition());
+	m_debugGeometry.setPosition(m_parent->getPosition() + m_displacement);
 	m_debugGeometry.setRotation(m_parent->getRotation());
 	m_debugGeometry.setOrigin(m_parent->getOrigin());
 	setColor(sf::Color::Red);

@@ -15,6 +15,8 @@
 #include "CharacterMoveComponent.h"
 #include "FontManager.h"
 #include "CharacterAreaComponent.h"
+#include "DoorComponent.h"
+#include "FadeComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -237,4 +239,133 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacterArea(sf::FloatRect
 	area->addComponent(boundingbox);
 #endif
 	return  area;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, sf::Vector2f position)
+{
+	std::string name = ""; 
+	switch (dir)
+	{
+	case Room::TOP: name = "door_top";
+		break;
+	case Room::RIGHT: name = "door_right";
+		break;
+	case Room::BOTTOM: name = "door_bottom";
+		break;
+	case Room::LEFT: name = "door_left";
+		break;
+	}
+	std::shared_ptr<GameObject> door = std::make_shared<GameObject>(position, name);
+
+	std::shared_ptr<DoorComponent> doorComp;
+	std::shared_ptr<ColliderComponent> collider;
+	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(door, 1, false, true);
+
+	sf::FloatRect rect{};
+	rect.height = 32;
+	rect.width = 32;
+	sf::Vector2f displacement{};
+
+	switch (dir) { 
+	case Room::TOP:
+	{
+		TextureManager::getInstance().loadTexture("gate_top.png");
+		sf::Texture& gateTex = TextureManager::getInstance().getTexture("gate_top.png");
+		TextureManager::getInstance().loadTexture("door_top.png");
+		sf::Texture& doorTexRed = TextureManager::getInstance().getTexture("door_top.png");
+		TextureManager::getInstance().loadTexture("door_top_green.png");
+		sf::Texture& doorTexGreen = TextureManager::getInstance().getTexture("door_top_green.png");
+
+		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTexRed, doorTexGreen, dir);
+		door->setPosition(position + sf::Vector2f{ 384, 0 });
+
+
+		rect.left = door->getPosition().x;
+		rect.top = door->getPosition().y;
+		displacement.x = 80;
+		displacement.y = 96;
+
+	}
+		break;
+	case Room::RIGHT:
+	{
+		TextureManager::getInstance().loadTexture("gate_right.png");
+		sf::Texture& gateTex = TextureManager::getInstance().getTexture("gate_right.png");
+		TextureManager::getInstance().loadTexture("door_right.png");
+		sf::Texture& doorTexRed = TextureManager::getInstance().getTexture("door_right.png");
+		TextureManager::getInstance().loadTexture("door_right_green.png");
+		sf::Texture& doorTexGreen = TextureManager::getInstance().getTexture("door_right_green.png");
+
+		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTexRed, doorTexGreen, dir);
+
+		door->setPosition(position + sf::Vector2f{ 832, 256 });
+
+
+		rect.left = door->getPosition().x;
+		rect.top = door->getPosition().y;
+		displacement.x = 0;
+		displacement.y = 80;
+	}
+		break;
+	case Room::BOTTOM:
+	{
+		TextureManager::getInstance().loadTexture("gate_bottom.png");
+		sf::Texture& gateTex = TextureManager::getInstance().getTexture("gate_bottom.png");
+		TextureManager::getInstance().loadTexture("door_bottom.png");
+		sf::Texture& doorTexRed = TextureManager::getInstance().getTexture("door_bottom.png");
+		TextureManager::getInstance().loadTexture("door_bottom_green.png");
+		sf::Texture& doorTexGreen = TextureManager::getInstance().getTexture("door_bottom_green.png");
+
+		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTexRed, doorTexGreen, dir);
+
+		door->setPosition(position + sf::Vector2f{ 384, 576});
+
+
+		rect.left = door->getPosition().x;
+		rect.top = door->getPosition().y;
+		displacement.x = 80;
+		displacement.y = 0;
+	}
+		break;
+	case Room::LEFT:
+	{
+		TextureManager::getInstance().loadTexture("gate_left.png");
+		sf::Texture& gateTex = TextureManager::getInstance().getTexture("gate_left.png");
+		TextureManager::getInstance().loadTexture("door_left.png");
+		sf::Texture& doorTexRed = TextureManager::getInstance().getTexture("door_left.png");
+		TextureManager::getInstance().loadTexture("door_left_green.png");
+		sf::Texture& doorTexGreen = TextureManager::getInstance().getTexture("door_left_green.png");
+
+		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTexRed,doorTexGreen, dir);
+
+		door->setPosition(position + sf::Vector2f{ 0, 256 });
+
+
+		rect.left = door->getPosition().x;
+		rect.top = door->getPosition().y;
+		displacement.x = 96;
+		displacement.y = 80;
+	}
+		break;
+	}
+	collider = std::make_shared<ColliderComponent>(door, rect, true);
+
+	door->addComponent(doorComp);
+	door->addComponent(rigidbody);
+	door->addComponent(collider);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(door, rect,Layer::DEBUG_BOUNDINGBOX,displacement);
+	door->addComponent(boundingbox);
+#endif
+
+	return door;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createFade(sf::Vector2f position)
+{
+	std::shared_ptr<GameObject> fader = std::make_shared<GameObject>(position, "fade");
+
+	fader->addComponent(std::make_shared<FadeComponent>(fader, Layer::FOREGROUND3));
+	return fader;
 }

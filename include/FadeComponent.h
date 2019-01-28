@@ -7,10 +7,10 @@
 #include "RenderComponent.h"
 
 
-class BoundingboxComponent : public RenderComponent, public TransformableComponent
+class FadeComponent : public RenderComponent, public TransformableComponent
 {
 public:
-	explicit BoundingboxComponent(std::shared_ptr<GameObject> parent, sf::FloatRect& aabb, Layer layer = Layer::DEBUG_BOUNDINGBOX, sf::Vector2f displacement = sf::Vector2f(0,0));
+	explicit FadeComponent(std::shared_ptr<GameObject> parent, Layer layer);
 
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;
@@ -24,11 +24,8 @@ public:
 	void scale(const sf::Vector2f& factor) override;
 	void rotate(float angle) override;
 
-	void setColor(sf::Color c);
-
 protected:
-	// The debug geometry to visualize the bounding geometry of the object.
-	// Can be part of a BBoxCollisionComponent.
-	sf::RectangleShape m_debugGeometry;
-	sf::Vector2f m_displacement;
+	sf::RectangleShape m_rect;
+	float m_alpha;
+	const float m_speed = 320;
 };

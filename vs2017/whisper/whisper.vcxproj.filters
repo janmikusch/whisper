@@ -79,9 +79,6 @@
     <Filter Include="Header Files\Manager\RenderManager">
       <UniqueIdentifier>{06f81c13-1444-46e6-a85e-421d88486c0e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Manager\RenderManager">
-      <UniqueIdentifier>{24f284fc-ac28-4735-be6c-fb5ea24e5a45}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\GameObject\Behaviour">
       <UniqueIdentifier>{3b8d2171-905a-4557-805e-00dc3e5fbebc}</UniqueIdentifier>
     </Filter>
@@ -141,9 +138,6 @@
     <ClCompile Include="..\..\source\GameObject.cpp">
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\RenderManager.cpp">
-      <Filter>Source Files\Manager\RenderManager</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\GameObjectCreator.cpp">
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
@@ -182,9 +176,6 @@
     </ClCompile>
     <ClCompile Include="..\..\source\BoundingBoxComponent.cpp">
       <Filter>Source Files\GameObject\Components\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\GameEvent.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\CollisionObserver.cpp">
       <Filter>Source Files\Physics</Filter>
@@ -251,6 +242,21 @@
     </ClCompile>
     <ClCompile Include="..\..\source\HeroAnimationComponent.cpp">
       <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\RoomManager.cpp">
+      <Filter>Source Files\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\RenderManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\DoorComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\FadeComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\EventBus.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -409,6 +415,21 @@
     </ClInclude>
     <ClInclude Include="..\..\include\Room.h">
       <Filter>Header Files\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\RoomManager.h">
+      <Filter>Header Files\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\DoorComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\FadeComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\EventBus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\EventObserver.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\HeroAnimationComponent.h">
       <Filter>Header Files\GameObject\Components\Rendering</Filter>

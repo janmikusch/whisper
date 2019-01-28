@@ -11,6 +11,7 @@
 #include "FontManager.h"
 #include "window.h"
 #include "WorldBuilder.h"
+#include "RoomManager.h"
 
 GameplayState::GameplayState(StateType type) :State(type)
 {
@@ -33,7 +34,36 @@ State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 
 	PhysicsManager::getInstance().findCollisions(objManager.getList());
 
+
+	//TESTING
+
+	engine::DoorEnterGameEvent doorEvent{};
+	if (InputManager::getInstance().isKeyDown(sf::Keyboard::W))
+	{
+		doorEvent.direction = Room::Direction::TOP;
+		EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::DoorEnterGameEvent>(doorEvent));
+	}
+	else if (InputManager::getInstance().isKeyDown(sf::Keyboard::D))
+	{
+		doorEvent.direction = Room::Direction::RIGHT;
+		EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::DoorEnterGameEvent>(doorEvent));
+	}
+	else if (InputManager::getInstance().isKeyDown(sf::Keyboard::S))
+	{
+		doorEvent.direction = Room::Direction::BOTTOM;
+		EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::DoorEnterGameEvent>(doorEvent));
+	}
+	else if (InputManager::getInstance().isKeyDown(sf::Keyboard::A))
+	{
+		doorEvent.direction = Room::Direction::LEFT;
+		EventBus::getInstance().notify(engine::EventType::DOORENTER, std::make_shared<engine::DoorEnterGameEvent>(doorEvent));
+	}
+
+
+	//ENDTESTING
+
 	objManager.applyChanges();
+
 	return m_type;
 }
 
@@ -56,6 +86,19 @@ void GameplayState::init()
 	{
 		objManager.add(it);
 	}
+
+	auto topDoor = GameObjectCreator::getInstance().createDoor(Room::Direction::TOP);
+	auto rightDoor = GameObjectCreator::getInstance().createDoor(Room::Direction::RIGHT);
+	auto bottomDoor = GameObjectCreator::getInstance().createDoor(Room::Direction::BOTTOM);
+	auto leftDoor = GameObjectCreator::getInstance().createDoor(Room::Direction::LEFT);
+
+	objManager.add(topDoor);
+	objManager.add(rightDoor);
+	objManager.add(bottomDoor);
+	objManager.add(leftDoor);
+
+
+
 
 	objManager.applyChanges();
 
