@@ -5,7 +5,7 @@
 #include "NavigationGraphBuilder.h"
 #include "ColliderComponent.h"
 
-CharacterAreaComponent::CharacterAreaComponent(const std::shared_ptr<GameObject>& parent, int id): RenderComponent(parent,Layer::FOREGROUND)
+CharacterAreaComponent::CharacterAreaComponent(const std::shared_ptr<GameObject>& parent, int id): RenderComponent(parent,Layer::FOREGROUND1)
 {
 }
 

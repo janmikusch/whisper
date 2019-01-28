@@ -4,8 +4,8 @@
 #include "window.h"
 #include "TextureManager.h"
 
-AnimationComponent::AnimationComponent(std::shared_ptr<GameObject> parent, Layer layer) :
-	RenderComponent(parent, layer), m_animatedSprite(sf::seconds(0.2), true, false)
+AnimationComponent::AnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, float animationTime) :
+	RenderComponent(parent, layer), m_animatedSprite(sf::seconds(animationTime), true, false)
 {
 	m_animatedSprite.setPosition(m_parent->getPosition());
 }
@@ -98,4 +98,9 @@ void AnimationComponent::draw()
 
 	engine::Window::getInstance().getWindow()->draw(m_animatedSprite);
 	//RenderManagerInstance.AddRenderable(m_layer,SpriteRenderer{&m_sprite});
+}
+
+void AnimationComponent::setLoop(bool loop)
+{
+	m_animatedSprite.setLooped(loop);
 }

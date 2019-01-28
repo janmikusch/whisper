@@ -12,7 +12,7 @@
 class AnimationComponent : public RenderComponent, public TransformableComponent
 {
 public:
-	explicit AnimationComponent(std::shared_ptr<GameObject> parent, Layer layer);
+	explicit AnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, float animationTime = 0.2f);
 
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;
@@ -27,7 +27,13 @@ public:
 	void rotate(float angle) override;
 
 	void setAnimation(std::string name);
+	std::string getAnimation() { return m_currentAnimation; };
 	void addAnimation(Animation anim,std::string name);
+
+	void setLoop(bool loop);
+
+	bool isFinished() { return m_animatedSprite.isFinished(); };
+
 protected:
 	sf::Clock m_frameClock;
 	sf::Time m_frameTime;
@@ -35,4 +41,5 @@ protected:
 	std::string m_currentAnimation;
 	std::map<std::string,std::shared_ptr<Animation>> m_animations;
 	AnimatedSprite m_animatedSprite;
+
 };

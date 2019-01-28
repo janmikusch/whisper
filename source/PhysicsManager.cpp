@@ -2,12 +2,8 @@
 #include "PhysicsManager.h"
 #include "ColliderComponent.h"
 #include "RigidbodyComponent.h"
-#include "BallInputComponent.h"
 #include "BoundingBoxComponent.h"
 #include "TextGuiComponent.h"
-#include "ScoreComponent.h"
-#include "GameOverComponent.h"
-#include "ScoreManager.h"
 #include "GameEvent.h"
 
 bool PhysicsManager::AABBvsAABB(const sf::FloatRect& a, const sf::FloatRect& b, sf::Vector2f& normal,
@@ -111,11 +107,11 @@ void PhysicsManager::findCollisions(std::vector<std::shared_ptr<GameObject>> gam
 #endif // _DEBUG
 
 
-				if (body1->getComponent<ColliderComponent>()->isTrigger())
-				{
-					body2->getComponent<Rigidbody>()->onCollision(manifold);
-				}
-				else
+				body2->getComponent<Rigidbody>()->onCollision(manifold);
+				body1->getComponent<Rigidbody>()->onCollision(manifold);
+
+
+				if (!body1->getComponent<ColliderComponent>()->isTrigger() && !body2->getComponent<ColliderComponent>()->isTrigger())
 				{
 					m_manifolds.push_back(manifold);
 				}

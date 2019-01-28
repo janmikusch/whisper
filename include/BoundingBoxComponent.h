@@ -10,7 +10,7 @@
 class BoundingboxComponent : public RenderComponent, public TransformableComponent
 {
 public:
-	explicit BoundingboxComponent(std::shared_ptr<GameObject> parent, sf::FloatRect& aabb, Layer layer = Layer::DEBUG_BOUNDINGBOX);
+	explicit BoundingboxComponent(std::shared_ptr<GameObject> parent, sf::FloatRect& aabb, Layer layer = Layer::DEBUG_BOUNDINGBOX, sf::Vector2f displacement = sf::Vector2f(0,0));
 
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;
@@ -30,4 +30,5 @@ protected:
 	// The debug geometry to visualize the bounding geometry of the object.
 	// Can be part of a BBoxCollisionComponent.
 	sf::RectangleShape m_debugGeometry;
+	sf::Vector2f m_displacement;
 };

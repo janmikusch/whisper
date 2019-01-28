@@ -14,27 +14,50 @@
 CharacterMoveComponent::CharacterMoveComponent(const std::shared_ptr<GameObject>& parent, int character_id): Component(parent)
 {
 	m_characterId = character_id;
+	m_direction = Direction::DOWN;
 }
 
 void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 {
+	InputManager& im = InputManager::getInstance();
+
+	auto animComponent = m_parent->getComponent<AnimationComponent>();
+
 	setMoveBehaviour();
 
 	if(m_moveBehaviour)
-	{
-		const float speed = 100.0f;
-		sf::Vector2f movement = m_moveBehaviour->getMovement();
-
-		float length = std::sqrt((movement.x * movement.x) + (movement.y * movement.y));
-		if (length != 0)
+	{	
+		if (m_state != AnimationState::ATTACK)
 		{
-			movement = movement / length; //normalize
-			movement *= (speed * fDeltaTimeSeconds); // speed up
-			setAnimation(movement);
+			const float speed = 100.0f;
+			sf::Vector2f movement = m_moveBehaviour->getMovement();
 
-			keepInArea(movement);
-			dontCollide(movement);
-			m_parent->move(movement);
+			float length = std::sqrt((movement.x * movement.x) + (movement.y * movement.y));
+			if (length != 0)
+			{
+				m_state = AnimationState::WALK;
+
+				movement = movement / length; //normalize
+				movement *= (speed * fDeltaTimeSeconds); // speed up
+				setAnimation(movement);
+
+				//keepInArea(movement);
+				dontCollide(movement);
+				m_parent->move(movement);
+			}
+			else
+			{
+				setStandingAnimation();
+			}
+
+			if (im.isKeyPressed("Attack", 0))
+			{
+				setFightAnimation();
+			}
+		}
+		else if (animComponent->isFinished())
+		{
+			m_state = AnimationState::WALK;
 		}
 	}
 }
@@ -54,6 +77,9 @@ void CharacterMoveComponent::init()
 /// set MoveBehaviour if toggle Button is Pressed
 void CharacterMoveComponent::setMoveBehaviour()
 {
+	m_moveBehaviour = std::make_shared<PlayerMoveBehaviour>(PlayerMoveBehaviour{});
+
+	/*
 	InputManager& im = InputManager::getInstance();
 
 	if (im.isKeyPressed("Toggle1", 0))
@@ -78,6 +104,7 @@ void CharacterMoveComponent::setMoveBehaviour()
 			m_moveBehaviour = std::make_shared<AiMoveBehaviour>(AiMoveBehaviour{});
 		}
 	}
+	*/
 }
 
 void CharacterMoveComponent::keepInArea(sf::Vector2f& movement)
@@ -129,22 +156,24 @@ void CharacterMoveComponent::dontCollide(sf::Vector2f& movement)
 	}
 }
 
-void CharacterMoveComponent::setAnimation(sf::Vector2f movement) const
+void CharacterMoveComponent::setAnimation(sf::Vector2f movement)
 {
 	auto animComponent = m_parent->getComponent<AnimationComponent>();
-
+	
 	if (animComponent)
-	{
+	{		
 		if(std::abs(movement.y) > std::abs(movement.x))
 		{
 			//animate up or down
 			if (movement.y >= 0)
 			{
 				animComponent->setAnimation("down");
+				m_direction = Direction::DOWN;
 			}
 			else
 			{
 				animComponent->setAnimation("up");
+				m_direction = Direction::UP;
 			}
 		}
 		else
@@ -152,11 +181,59 @@ void CharacterMoveComponent::setAnimation(sf::Vector2f movement) const
 			if (movement.x <= 0)
 			{
 				animComponent->setAnimation("left");
+				m_direction = Direction::LEFT;
 			}
 			else
 			{
 				animComponent->setAnimation("right");
+				m_direction = Direction::RIGHT;
 			}
 		}
 	}
+}
+
+void CharacterMoveComponent::setStandingAnimation()
+{
+	auto animComponent = m_parent->getComponent<AnimationComponent>();
+
+	switch (m_direction)
+	{
+	case UP:
+		animComponent->setAnimation("standingUp");
+		break;
+	case DOWN:
+		animComponent->setAnimation("standingDown");
+		break;
+	case LEFT:
+		animComponent->setAnimation("standingLeft");
+		break;
+	case RIGHT:
+		animComponent->setAnimation("standingRight");
+		break;
+	}
+
+	m_state = AnimationState::STAND;
+}
+
+void CharacterMoveComponent::setFightAnimation()
+{
+	auto animComponent = m_parent->getComponent<AnimationComponent>();
+
+	switch (m_direction)
+	{
+	case UP:
+		animComponent->setAnimation("fightUp");
+		break;
+	case DOWN:
+		animComponent->setAnimation("fightDown");
+		break;
+	case LEFT:
+		animComponent->setAnimation("fightLeft");
+		break;
+	case RIGHT:
+		animComponent->setAnimation("fightRight");
+		break;
+	}
+
+	m_state = AnimationState::ATTACK;
 }

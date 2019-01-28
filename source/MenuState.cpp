@@ -10,6 +10,8 @@
 #include <SFML/Graphics/Font.hpp>
 #include "GameObjectCreator.h"
 #include "GameObjectManager.h"
+#include "window.h"
+#include "FontManager.h"
 
 MenuState::MenuState(StateType type):State(type)
 {
@@ -48,9 +50,18 @@ void MenuState::init()
 {
 	GameObjectManager& objManager = GameObjectManager::getInstance();
 
-	auto textObject = GameObjectCreator::getInstance().createMenuStartText();
-	
-	objManager.add(textObject);
+	sf::Text text = sf::Text("Press SPACE to start", FontManager::getInstance().getFont("arial"));
+	text.setCharacterSize(30);
+	text.setStyle(sf::Text::Bold);
+	text.setFillColor(sf::Color::White);
+
+	auto window = engine::Window::getInstance().getWindow();
+	auto position = sf::Vector2f(window->getSize().x / 2 - text.getString().getSize()*text.getCharacterSize() / 4, window->getSize().y / 2);
+	text.setPosition(position);
+	std::shared_ptr<GameObject> uiObject = std::make_shared<GameObject>(position, "menu");
+	uiObject->addComponent(std::make_shared <TextGuiComponent>(uiObject, Layer::FOREGROUND1, text));
+
+	objManager.add(uiObject);
 
 	objManager.applyChanges();
 
@@ -58,7 +69,6 @@ void MenuState::init()
 	{
 		it->init();
 	}
-
 }
 
 void MenuState::exit()

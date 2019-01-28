@@ -3,16 +3,15 @@
 #include "GameplayState.h"
 #include <SFML/Graphics.hpp>
 #include "InputManager.h"
-#include "CameraComponent.h"
 #include "TextureManager.h"
 #include "LayerComponent.h"
-#include "BallGenerateComponent.h"
 #include "GameObjectManager.h"
 #include "PhysicsManager.h"
-#include "ScoreManager.h"
 #include "TextGuiComponent.h"
-#include "GameOverComponent.h"
 #include "FontManager.h"
+#include "window.h"
+#include "WorldBuilder.h"
+#include "RoomManager.h"
 
 GameplayState::GameplayState(StateType type) :State(type)
 {
@@ -29,30 +28,15 @@ State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 
 	for (std::shared_ptr<GameObject> o : objManager.getList())
 	{
-		if (o->getName() == "score")
-		{
-			int score = ScoreManager::getInstance().getScore();
-			sf::String text = std::to_string(score);
-			o->getComponent<TextGuiComponent>()->setTextContent(text);
-		}
-
-		if (o->getName() == "end")
-		{
-			if (o->getComponent<GameOverComponent>()->getGameOver())
-			{
-				exit();
-				return State::StateType::STATE_MENU;
-			}
-		}
-
 		if(o != nullptr)
 			o->update(fDeltaTimeSeconds);
 	}
 
-
 	PhysicsManager::getInstance().findCollisions(objManager.getList());
 
+
 	objManager.applyChanges();
+
 	return m_type;
 }
 
@@ -66,19 +50,30 @@ void GameplayState::draw()
 
 void GameplayState::init()
 {
+	RoomManager::getInstance().init();
+
 	GameObjectManager& objManager = GameObjectManager::getInstance();
 
-	auto gameObjects = WorldBuilder::loadWorld("background.tmx", sf::Vector2f());
+	WorldBuilder::loadTextures("room.tmx");
+	auto room = WorldBuilder::loadWorld("room.tmx", sf::Vector2f());
 
-	for(auto obj:gameObjects)
+	for(auto it:room)
 	{
-		objManager.add(obj);
+		objManager.add(it);
 	}
 
-	std::shared_ptr<GameObject> camera = GameObjectCreator::getInstance().createCamera(sf::Vector2f(0, 0));
-	auto camComponent = camera->getComponent<CameraComponent>();
-	
-	objManager.add(camera);
+	auto topDoor = GameObjectCreator::getInstance().createDoor(Room::Direction::TOP);
+	auto rightDoor = GameObjectCreator::getInstance().createDoor(Room::Direction::RIGHT);
+	auto bottomDoor = GameObjectCreator::getInstance().createDoor(Room::Direction::BOTTOM);
+	auto leftDoor = GameObjectCreator::getInstance().createDoor(Room::Direction::LEFT);
+
+	objManager.add(topDoor);
+	objManager.add(rightDoor);
+	objManager.add(bottomDoor);
+	objManager.add(leftDoor);
+
+
+
 
 	objManager.applyChanges();
 
@@ -91,15 +86,6 @@ void GameplayState::init()
 void GameplayState::exit()
 {
 	GameObjectManager& objManager = GameObjectManager::getInstance();
-
-	for (std::shared_ptr<GameObject> o : objManager.getList())
-	{
-		if (o->getComponent<CameraComponent>() != nullptr)
-		{
-			o->getComponent<CameraComponent>()->reset();
-		}
-	}
-
+	
 	objManager.clear();
-	ScoreManager::getInstance().resetScore();
 }

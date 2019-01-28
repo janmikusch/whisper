@@ -160,12 +160,16 @@ void AnimatedSprite::update(sf::Time deltaTime)
 
 			// get next Frame index
 			if (m_currentFrame + 1 < m_animation->getSize())
+			{
 				m_currentFrame++;
+				m_isFinished = false;
+			}
 			else
 			{
 				// animation has ended
 				m_currentFrame = 0; // reset to start
 
+				m_isFinished = true;
 				if (!m_isLooped)
 				{
 					m_isPaused = true;
