@@ -111,7 +111,7 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 			FloatRect bounds(position.x, position.y, object->width, object->height);
 
 
-			if (object->name == "staticCollider" && object->type == "box")
+			if (object->name == "static_collider" && object->type == "static_collider")
 			{
 				sf::FloatRect box { static_cast<float>(object->x), static_cast<float>(object->y), static_cast<float>(object->width), static_cast<float>(object->height) };
 				sf::Vector2f position { static_cast<float>(object->x), static_cast<float>(object->y) };
