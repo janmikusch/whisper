@@ -157,9 +157,11 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 		TextureManager::getInstance().loadTexture("gate_top.png");
 		sf::Texture& gateTex = TextureManager::getInstance().getTexture("gate_top.png");
 		TextureManager::getInstance().loadTexture("door_top.png");
-		sf::Texture& doorTex = TextureManager::getInstance().getTexture("door_top.png");
+		sf::Texture& doorTexRed = TextureManager::getInstance().getTexture("door_top.png");
+		TextureManager::getInstance().loadTexture("door_top_green.png");
+		sf::Texture& doorTexGreen = TextureManager::getInstance().getTexture("door_top_green.png");
 
-		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTex, dir);
+		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTexRed, doorTexGreen, dir);
 
 		door->setPosition(position + sf::Vector2f{ 384, 0 });
 	}
@@ -169,9 +171,11 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 		TextureManager::getInstance().loadTexture("gate_right.png");
 		sf::Texture& gateTex = TextureManager::getInstance().getTexture("gate_right.png");
 		TextureManager::getInstance().loadTexture("door_right.png");
-		sf::Texture& doorTex = TextureManager::getInstance().getTexture("door_right.png");
+		sf::Texture& doorTexRed = TextureManager::getInstance().getTexture("door_right.png");
+		TextureManager::getInstance().loadTexture("door_right_green.png");
+		sf::Texture& doorTexGreen = TextureManager::getInstance().getTexture("door_right_green.png");
 
-		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTex, dir);
+		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTexRed, doorTexGreen, dir);
 
 		door->setPosition(position + sf::Vector2f{ 832, 256 });
 	}
@@ -181,9 +185,11 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 		TextureManager::getInstance().loadTexture("gate_bottom.png");
 		sf::Texture& gateTex = TextureManager::getInstance().getTexture("gate_bottom.png");
 		TextureManager::getInstance().loadTexture("door_bottom.png");
-		sf::Texture& doorTex = TextureManager::getInstance().getTexture("door_bottom.png");
+		sf::Texture& doorTexRed = TextureManager::getInstance().getTexture("door_bottom.png");
+		TextureManager::getInstance().loadTexture("door_bottom_green.png");
+		sf::Texture& doorTexGreen = TextureManager::getInstance().getTexture("door_bottom_green.png");
 
-		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTex, dir);
+		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTexRed, doorTexGreen, dir);
 
 		door->setPosition(position + sf::Vector2f{ 384, 576});
 	}
@@ -193,9 +199,11 @@ std::shared_ptr<GameObject> GameObjectCreator::createDoor(Room::Direction dir, s
 		TextureManager::getInstance().loadTexture("gate_left.png");
 		sf::Texture& gateTex = TextureManager::getInstance().getTexture("gate_left.png");
 		TextureManager::getInstance().loadTexture("door_left.png");
-		sf::Texture& doorTex = TextureManager::getInstance().getTexture("door_left.png");
+		sf::Texture& doorTexRed = TextureManager::getInstance().getTexture("door_left.png");
+		TextureManager::getInstance().loadTexture("door_left_green.png");
+		sf::Texture& doorTexGreen = TextureManager::getInstance().getTexture("door_left_green.png");
 
-		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTex, dir);
+		doorComp = std::make_shared<DoorComponent>(door, BACKGROUND3, gateTex, doorTexRed,doorTexGreen, dir);
 
 		door->setPosition(position + sf::Vector2f{ 0, 256 });
 	}

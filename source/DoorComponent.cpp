@@ -4,11 +4,12 @@
 #include "window.h"
 #include "RoomManager.h"
 
-DoorComponent::DoorComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& textureGate, sf::Texture& textureDoor, Room::Direction dir):
+DoorComponent::DoorComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& textureGate, sf::Texture& textureRedDoor, sf::Texture& textureGreenDoor, Room::Direction dir):
 	RenderComponent(parent,layer),m_dir(dir)
 {
 	m_gateSprite.setTexture(textureGate);
-	m_doorSprite.setTexture(textureDoor);
+	m_reddoorSprite.setTexture(textureRedDoor);
+	m_greendoorSprite.setTexture(textureGreenDoor);
 }
 
 void DoorComponent::update( const float
@@ -28,7 +29,8 @@ void DoorComponent::update( const float
 		doorOffset.x += 64;
 		break;
 	}
-	m_doorSprite.setPosition(m_gateSprite.getPosition() + doorOffset);
+	m_reddoorSprite.setPosition(m_gateSprite.getPosition() + doorOffset);
+	m_greendoorSprite.setPosition(m_gateSprite.getPosition() + doorOffset);
 
 }
 
@@ -81,7 +83,17 @@ void DoorComponent::draw()
 		window->draw(m_gateSprite);
 		if (!RoomManager::getInstance().getCurrentRoom()->isCompleted())
 		{
-			window->draw(m_doorSprite);
+			window->draw(m_reddoorSprite);
 		}
 	}
+	//draw green room for exit of game
+	else if(m_dir == Room::Direction::TOP && RoomManager::getInstance().getCurrentRoom()->getName() == "01" )
+	{
+		window->draw(m_gateSprite);
+		if (RoomManager::getInstance().countNotCompleted() != 0)
+		{
+			window->draw(m_greendoorSprite);
+		}
+	}
+
 }

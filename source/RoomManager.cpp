@@ -21,7 +21,15 @@ void RoomManager::createRooms()
 	std::shared_ptr<Room> room_11 = std::make_shared<Room>("11");
 	std::shared_ptr<Room> room_12 = std::make_shared<Room>("12");
 
+	m_rooms.push_back(room_00);
+	m_rooms.push_back(room_01);
+	m_rooms.push_back(room_02);
+	m_rooms.push_back(room_10);
+	m_rooms.push_back(room_11);
+	m_rooms.push_back(room_12);
+
 	m_currentRoom = room_01;
+	m_currentRoom->setCompleted();
 
 	room_00->setRoom(Room::Direction::RIGHT, room_01);
 	room_00->setRoom(Room::Direction::BOTTOM, room_10);
@@ -67,4 +75,17 @@ void RoomManager::changeRoom(Room::Direction dir)
 #endif
 
 	m_currentRoom->addRoomObjectsToGame();
+}
+
+int RoomManager::countNotCompleted()
+{
+	int unsolved = 0;
+	for(auto it:m_rooms)
+	{
+		if(!it->isCompleted())
+		{
+			unsolved++;
+		}
+	}
+	return unsolved;
 }

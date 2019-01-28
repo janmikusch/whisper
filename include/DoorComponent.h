@@ -11,7 +11,7 @@
 class DoorComponent : public RenderComponent, public TransformableComponent
 {
 public:
-	explicit DoorComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& textureGate, sf::Texture& textureDoor, Room::Direction dir);
+	explicit DoorComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& textureGate, sf::Texture& textureRedDoor, sf::Texture& textureGreenDoor, Room::Direction dir);
 
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;
@@ -27,7 +27,8 @@ public:
 
 protected:
 	sf::Sprite m_gateSprite;
-	sf::Sprite m_doorSprite;
+	sf::Sprite m_reddoorSprite;
+	sf::Sprite m_greendoorSprite;
 
 	Room::Direction m_dir;
 };
