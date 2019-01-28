@@ -10,6 +10,7 @@
 #include "TextGuiComponent.h"
 #include "FontManager.h"
 #include "window.h"
+#include "WorldBuilder.h"
 
 GameplayState::GameplayState(StateType type) :State(type)
 {
@@ -48,18 +49,13 @@ void GameplayState::init()
 {
 	GameObjectManager& objManager = GameObjectManager::getInstance();
 
-	sf::Text text = sf::Text("Press ESC to quit", FontManager::getInstance().getFont("arial"));
-	text.setCharacterSize(30);
-	text.setStyle(sf::Text::Bold);
-	text.setFillColor(sf::Color::White);
+	WorldBuilder::loadTextures("room.tmx");
+	auto room = WorldBuilder::loadWorld("room.tmx", sf::Vector2f());
 
-	auto window = engine::Window::getInstance().getWindow();
-	auto position = sf::Vector2f(window->getSize().x / 2 - text.getString().getSize()*text.getCharacterSize() / 4, window->getSize().y / 2);
-	text.setPosition(position);
-	std::shared_ptr<GameObject> uiObject = std::make_shared<GameObject>(position, "menu");
-	uiObject->addComponent(std::make_shared <TextGuiComponent>(uiObject, Layer::FOREGROUND, text));
-
-	objManager.add(uiObject);
+	for(auto it:room)
+	{
+		objManager.add(it);
+	}
 
 	objManager.applyChanges();
 

@@ -21,6 +21,6 @@ private:
 	sf::Clock m_frameClock;
 	GameStateManager m_gameStateManager;
 	const std::string m_gameName = "Whisper";
-	const int m_height = 900;
-	const int m_width = 1200;
+	const int m_height = 704;
+	const int m_width = 960;
 };

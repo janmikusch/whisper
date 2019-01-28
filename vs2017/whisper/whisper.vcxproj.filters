@@ -106,6 +106,12 @@
     <Filter Include="Source Files\Navigation">
       <UniqueIdentifier>{ae213a9b-9a6c-40f0-94a9-fa3f1385e251}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Room">
+      <UniqueIdentifier>{d7381ede-16ab-4596-a367-c8dfe0fbf206}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Room">
+      <UniqueIdentifier>{5a8f69c3-3bbf-41e8-8885-53e3f499982a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\stdafx.cpp">
@@ -242,6 +248,9 @@
     </ClCompile>
     <ClCompile Include="..\..\source\NavigationGraphBuilder.cpp">
       <Filter>Source Files\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Room.cpp">
+      <Filter>Source Files\Room</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +406,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\NavigationNode.h">
       <Filter>Header Files\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Room.h">
+      <Filter>Header Files\Room</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

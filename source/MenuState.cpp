@@ -59,7 +59,7 @@ void MenuState::init()
 	auto position = sf::Vector2f(window->getSize().x / 2 - text.getString().getSize()*text.getCharacterSize() / 4, window->getSize().y / 2);
 	text.setPosition(position);
 	std::shared_ptr<GameObject> uiObject = std::make_shared<GameObject>(position, "menu");
-	uiObject->addComponent(std::make_shared <TextGuiComponent>(uiObject, Layer::FOREGROUND, text));
+	uiObject->addComponent(std::make_shared <TextGuiComponent>(uiObject, Layer::FOREGROUND1, text));
 
 	objManager.add(uiObject);
 

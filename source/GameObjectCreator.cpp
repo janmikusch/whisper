@@ -29,7 +29,7 @@ void GameObjectCreator::init()
 
 std::shared_ptr<GameObject> GameObjectCreator::createMap(sf::Vector2f position, std::map<std::string, std::vector<std::shared_ptr<sf::Sprite>>> layers)
 {
-	std::shared_ptr<GameObject> layer = std::make_shared<GameObject>(position, "map");
+	std::shared_ptr<GameObject> layer = std::make_shared<GameObject>(position, "basicRoom");
 
 	for (auto it : layers)
 	{
@@ -68,7 +68,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 	TextureManager::getInstance().loadTexture("char_animation.png");
 	sf::Texture& texture = TextureManager::getInstance().getTexture("char_animation.png");
 
-	auto animComp = std::make_shared<AnimationComponent>(character, Layer::PLAYER);
+	auto animComp = std::make_shared<AnimationComponent>(character, Layer::MIDDLE1);
 
 	character->addComponent(animComp);
 	character->addComponent(std::make_shared<CharacterMoveComponent>(character, id));
