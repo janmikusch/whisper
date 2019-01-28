@@ -216,8 +216,6 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 	character->addComponent(boundingbox);
 #endif
 
-
-
 	return character;
 }
 
