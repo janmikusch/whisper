@@ -11,7 +11,7 @@ public:
 	static RoomManager& getInstance();
 	void createRooms();
 	void changeRoom(Room::Direction dir);
-
+	std::shared_ptr<Room> getCurrentRoom() { return  m_currentRoom; };
 private:
 	RoomManager() = default;
 

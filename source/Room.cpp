@@ -2,7 +2,7 @@
 #include "Room.h"
 #include "GameObjectManager.h"
 
-Room::Room(std::string name): m_name(name)
+Room::Room(std::string name): m_name(name),m_completed(false)
 {
 }
 

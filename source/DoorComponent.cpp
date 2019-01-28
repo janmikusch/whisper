@@ -2,6 +2,7 @@
 #include "DoorComponent.h"
 #include <iostream>
 #include "window.h"
+#include "RoomManager.h"
 
 DoorComponent::DoorComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& textureGate, sf::Texture& textureDoor, Room::Direction dir):
 	RenderComponent(parent,layer),m_dir(dir)
@@ -21,16 +22,10 @@ void DoorComponent::update( const float
 
 	switch (m_dir) { 
 	case Room::TOP:
-		doorOffset.y -= 64;
-		break;
-	case Room::RIGHT:
-		doorOffset.x += 64;
-		break;
-	case Room::BOTTOM:
 		doorOffset.y += 64;
 		break;
 	case Room::LEFT:
-		doorOffset.x -= 64;
+		doorOffset.x += 64;
 		break;
 	}
 	m_doorSprite.setPosition(m_gateSprite.getPosition() + doorOffset);
@@ -80,6 +75,13 @@ void DoorComponent::rotate(float angle)
 
 void DoorComponent::draw()
 {
-	engine::Window::getInstance().getWindow()->draw(m_gateSprite);
-	//RenderManagerInstance.AddRenderable(m_layer,SpriteRenderer{&m_sprite});
+	auto window = engine::Window::getInstance().getWindow();
+	if (RoomManager::getInstance().getCurrentRoom()->hasRoom(m_dir))
+	{
+		window->draw(m_gateSprite);
+		if (!RoomManager::getInstance().getCurrentRoom()->isCompleted())
+		{
+			window->draw(m_doorSprite);
+		}
+	}
 }

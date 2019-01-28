@@ -19,6 +19,10 @@ public:
 	void removeRoomObjectsFromGame();
 
 	std::string getName() { return m_name; };
+
+	bool isCompleted() { return m_completed; };
+	void setCompleted(bool state = true) { m_completed = state; };
+
 private:
 	std::string m_name;
 
@@ -28,4 +32,6 @@ private:
 	std::shared_ptr<Room> m_BottomRoom;
 
 	std::vector<std::shared_ptr<GameObject>> m_roomObjects{};
+
+	bool m_completed;
 };
