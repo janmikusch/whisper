@@ -401,9 +401,6 @@
     <ClInclude Include="..\..\include\PlayerMoveBehaviour.h">
       <Filter>Header Files\GameObject\Behaviour\MoveBehaviour</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\GameStateManager.h">
-      <Filter>Header Files\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\CharacterMoveComponent.h">
       <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
     </ClInclude>
@@ -460,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\TorchAnimationComponent.h">
       <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\GameStateManager.h">
+      <Filter>Header Files\GameStates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

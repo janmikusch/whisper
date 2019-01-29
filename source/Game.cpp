@@ -75,6 +75,7 @@ bool Game::init()
 	EventBus::getInstance().addObserver(engine::EventType::GAMESTART,&m_gameStateManager);
 	EventBus::getInstance().addObserver(engine::EventType::GAMEQUIT,&m_gameStateManager);
 	EventBus::getInstance().addObserver(engine::EventType::GAMECONTINUE,&m_gameStateManager);
+	EventBus::getInstance().addObserver(engine::EventType::GAMECOMPLETE,&m_gameStateManager);
 
 	AudioManager& sm = AudioManager::getInstance();
 
