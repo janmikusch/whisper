@@ -25,5 +25,7 @@ namespace engine
 
 		void createMenuGui();
 		void createGameplayGui();
+
+		int m_hearts = 3;
 	};
 }

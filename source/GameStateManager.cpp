@@ -2,6 +2,7 @@
 #include "GameStateManager.h"
 #include <SFML/Graphics.hpp>
 #include "RenderManager.h"
+#include "GameplayState.h"
 
 void GameStateManager::update(const float fDeltaTimeSeconds)
 {
@@ -44,10 +45,16 @@ void GameStateManager::onNotify(engine::EventType type, std::shared_ptr<engine::
 {
 	if(type == engine::EventType::GAMESTART)
 	{
+		m_states[m_currentState]->exit();
 		setState(State::STATE_GAMEPLAY);
 	}
-	if(type == engine::EventType::GAMEQUIT)
+	else if(type == engine::EventType::GAMEQUIT)
 	{
+		m_states[m_currentState]->exit();
 		setState(State::STATE_MENU);
+	}
+	else if (type == engine::EventType::GAMECONTINUE || type == engine::EventType::GAMEOVER)
+	{
+		std::static_pointer_cast<GameplayState>(m_states[State::STATE_GAMEPLAY])->pause(false);
 	}
 }
