@@ -39,6 +39,8 @@ private:
 	std::shared_ptr<GameObject> calcCorrectButtonFrom5(std::vector<std::shared_ptr<GameObject>> &room_objects);
 	std::shared_ptr<GameObject> calcCorrectButtonFrom6(std::vector<std::shared_ptr<GameObject>> &room_objects);
 
+	std::shared_ptr<GameObject> findButton(std::vector<std::shared_ptr<GameObject>> buttons, int id);
+
 	engine::Color randomColor();
 
 	std::shared_ptr<Room> m_currentRoom;

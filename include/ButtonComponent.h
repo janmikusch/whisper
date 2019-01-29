@@ -13,7 +13,7 @@
 class ButtonComponent : public RenderComponent, public TransformableComponent, public CollisionObserver
 {
 public:
-	explicit ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, engine::Color c);
+	explicit ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, engine::Color c, int id);
 
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;
@@ -28,6 +28,7 @@ public:
 	void rotate(float angle) override;
 
 	engine::Color getColor() { return m_color; };
+	int getId() { return m_id; };
 
 	void onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> event) override;
 protected:
@@ -36,4 +37,5 @@ protected:
 	sf::Sprite m_currentState;
 	engine::Color m_color;
 	bool m_isPressed = false; 
+	int m_id; 
 };

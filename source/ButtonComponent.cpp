@@ -5,8 +5,8 @@
 #include "RoomManager.h"
 #include "EventBus.h"
 
-ButtonComponent::ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, engine::Color c) :
-	RenderComponent(parent, layer), m_color(c)
+ButtonComponent::ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, engine::Color c, int id) :
+	RenderComponent(parent, layer), m_color(c), m_id(id)
 {
 	m_buttonPressed.setTexture(texture);
 	m_buttonReleased.setTexture(texture);
