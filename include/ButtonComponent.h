@@ -5,12 +5,14 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include "Layer.h"
 #include "RenderComponent.h"
+#include "CollisionObserver.h"
+#include "Room.h"
 
 
-class BoundingboxComponent : public RenderComponent, public TransformableComponent
+class ButtonComponent : public RenderComponent, public TransformableComponent, public CollisionObserver
 {
 public:
-	explicit BoundingboxComponent(std::shared_ptr<GameObject> parent, sf::FloatRect& aabb, Layer layer = Layer::DEBUG_BOUNDINGBOX, sf::Vector2f displacement = sf::Vector2f(0,0));
+	explicit ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture);
 
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;
@@ -23,13 +25,11 @@ public:
 	void move(const sf::Vector2f &movement) override;
 	void scale(const sf::Vector2f& factor) override;
 	void rotate(float angle) override;
-	void setDisplacement(sf::Vector2f displacement) { m_displacement = displacement; };
 
-	void setColor(sf::Color c);
-
+	void onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> event) override;
 protected:
-	// The debug geometry to visualize the bounding geometry of the object.
-	// Can be part of a BBoxCollisionComponent.
-	sf::RectangleShape m_debugGeometry;
-	sf::Vector2f m_displacement;
+	sf::Sprite m_buttonPressed;
+	sf::Sprite m_buttonReleased;
+	sf::Sprite m_currentState;
+	bool m_isPressed = false; 
 };

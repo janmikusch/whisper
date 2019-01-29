@@ -3,6 +3,8 @@
 #include "TextureManager.h"
 #include "RigidbodyComponent.h"
 #include "AssetsManager.h"
+#include "RoomManager.h"
+#include "RandomNumber.h"
 
 using namespace sf;
 
@@ -142,7 +144,6 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 		}
 	}
 
-	
 	return objects;
 }
 
