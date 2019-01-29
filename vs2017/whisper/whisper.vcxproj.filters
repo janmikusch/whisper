@@ -258,6 +258,12 @@
     <ClCompile Include="..\..\source\EventBus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\GUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Room.cpp">
+      <Filter>Source Files\Room</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\Room.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -439,6 +445,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\HeroAnimationComponent.h">
       <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\GUI.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\ButtonComponent.h">
       <Filter>Header Files\GameObject\Components\Rendering</Filter>

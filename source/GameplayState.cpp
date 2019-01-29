@@ -12,6 +12,7 @@
 #include "window.h"
 #include "WorldBuilder.h"
 #include "RoomManager.h"
+#include "GUI.h"
 
 GameplayState::GameplayState(StateType type) :State(type)
 {
@@ -50,6 +51,8 @@ void GameplayState::draw()
 
 void GameplayState::init()
 {
+	engine::GUI::getInstance().init(m_type);
+
 	RoomManager::getInstance().init();
 
 	GameObjectManager& objManager = GameObjectManager::getInstance();
