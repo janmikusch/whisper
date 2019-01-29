@@ -206,6 +206,11 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 
 	animComp->setAnimation("standingDown");
 
+	aabb.top += 14;
+	aabb.left += 18;
+	aabb.height -= 19;
+	aabb.width -= 36;
+
 	auto rigidbody = std::make_shared<Rigidbody>(character, 1, false, false);
 	auto collider = std::make_shared<ColliderComponent>(character, aabb, false);
 	character->addComponent(rigidbody);
@@ -213,6 +218,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 
 #ifdef _DEBUG
 	auto boundingbox = std::make_shared <BoundingboxComponent>(character, aabb);
+	boundingbox->setDisplacement(sf::Vector2f(18, 14));
 	character->addComponent(boundingbox);
 #endif
 
