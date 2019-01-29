@@ -207,9 +207,9 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 
 	animComp->setAnimation("standingDown");
 
-	sf::Vector2f displacement(18, 14);
+	sf::Vector2f displacement(18, 40);
 
-	aabb.height -= 19;
+	aabb.height -= 45;
 	aabb.width -= 36;
 
 
