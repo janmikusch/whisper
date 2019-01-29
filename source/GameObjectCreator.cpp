@@ -19,6 +19,7 @@
 #include "FadeComponent.h"
 #include "ButtonComponent.h"
 #include "TorchAnimationComponent.h"
+#include "ButtonRoomComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -494,4 +495,17 @@ std::shared_ptr<GameObject> GameObjectCreator::createTorch(sf::Vector2f position
 	animComp->setAnimation("flameAnimation");
 
 	return torch;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createButtonRoomChecker(sf::Vector2f position,std::shared_ptr<GameObject> correctButton)
+{
+	std::shared_ptr<GameObject> brc = std::make_shared<GameObject>(position, "buttonRoomChecker");
+
+	auto buttonRoomComponent = std::make_shared<ButtonRoomComponent>(brc);
+
+	buttonRoomComponent->setCorrectButton(correctButton);
+
+	brc->addComponent(buttonRoomComponent);
+
+	return brc;
 }

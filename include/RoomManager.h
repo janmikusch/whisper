@@ -28,7 +28,7 @@ private:
 	void createObjectsForButtonRoom(std::vector<std::shared_ptr<GameObject>> &room_objects, int i);
 	void createButtons(std::vector<std::shared_ptr<GameObject>> &room_objects, int i);
 	void createTorches(std::vector<std::shared_ptr<GameObject>> &room_objects);
-	void createButtonRoomComponentObject(std::vector<std::shared_ptr<GameObject>> &room_objects);
+	void createButtonRoomComponentObject(std::vector<std::shared_ptr<GameObject>> &room_objects, int i);
 	void create3Buttons(std::vector<std::shared_ptr<GameObject>> &room_objects);
 	void create4Buttons(std::vector<std::shared_ptr<GameObject>> &room_objects);
 	void create5Buttons(std::vector<std::shared_ptr<GameObject>> &room_objects);

@@ -203,7 +203,7 @@ void RoomManager::createObjectsForButtonRoom(std::vector<std::shared_ptr<GameObj
 {
 	createButtons(room_objects, i);
 	createTorches(room_objects);
-	createButtonRoomComponentObject(room_objects);
+	createButtonRoomChecker(room_objects, i);
 }
 
 void RoomManager::createButtons(std::vector<std::shared_ptr<GameObject>>& room_objects, int i)
@@ -274,8 +274,24 @@ void RoomManager::createTorches(std::vector<std::shared_ptr<GameObject>>& room_o
 
 }
 
-void RoomManager::createButtonRoomComponentObject(std::vector<std::shared_ptr<GameObject>>& room_objects)
+void RoomManager::createButtonRoomChecker(std::vector<std::shared_ptr<GameObject>>& room_objects, int i)
 {
+	switch (i)
+	{
+	case 3:
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	default:
+		sf::err() << "wrong int input " << std::endl;
+		return;
+	}
+
+	//auto brc = GameObjectCreator::getInstance().createButtonRoomChecker()
 }
 
 void RoomManager::create3Buttons(std::vector<std::shared_ptr<GameObject>>& room_objects)
