@@ -16,7 +16,10 @@ public:
 	std::shared_ptr<Room> getCurrentRoom() { return  m_currentRoom; };
 	int countNotCompleted();
 	void onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent) override;
+<<<<<<< Updated upstream
 	std::shared_ptr<Room> getRoom(int i);
+=======
+>>>>>>> Stashed changes
 	void getDamange();
 
 private:
