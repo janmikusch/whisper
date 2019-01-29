@@ -4,6 +4,7 @@
 #include "Room.h"
 #include <SFML/System/Err.hpp>
 #include "EventObserver.h"
+#include "ButtonColor.h"
 
 
 class RoomManager: public EventObserver
@@ -32,7 +33,7 @@ private:
 	void create4Buttons(std::vector<std::shared_ptr<GameObject>> &room_objects);
 	void create5Buttons(std::vector<std::shared_ptr<GameObject>> &room_objects);
 	void create6Buttons(std::vector<std::shared_ptr<GameObject>> &room_objects);
-
+	ButtonColor randomColor();
 
 	std::shared_ptr<Room> m_currentRoom;
 	std::vector<std::shared_ptr<Room>> m_rooms{};
