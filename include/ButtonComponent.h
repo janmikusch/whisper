@@ -7,12 +7,13 @@
 #include "RenderComponent.h"
 #include "CollisionObserver.h"
 #include "Room.h"
+#include "Color.h"
 
 
 class ButtonComponent : public RenderComponent, public TransformableComponent, public CollisionObserver
 {
 public:
-	explicit ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture);
+	explicit ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, engine::Color c);
 
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;
@@ -26,10 +27,13 @@ public:
 	void scale(const sf::Vector2f& factor) override;
 	void rotate(float angle) override;
 
+	engine::Color getColor() { return m_color; };
+
 	void onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> event) override;
 protected:
 	sf::Sprite m_buttonPressed;
 	sf::Sprite m_buttonReleased;
 	sf::Sprite m_currentState;
+	engine::Color m_color;
 	bool m_isPressed = false; 
 };

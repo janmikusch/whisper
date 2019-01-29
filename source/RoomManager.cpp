@@ -384,6 +384,10 @@ void RoomManager::create6Buttons(std::vector<std::shared_ptr<GameObject>>& room_
 
 std::shared_ptr<GameObject> RoomManager::calcCorrectButtonFrom3(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
+	for (auto o : room_objects)
+	{
+
+	}
 	return std::shared_ptr<GameObject>();
 }
 
