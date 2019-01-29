@@ -5,6 +5,7 @@
 #include "AssetsManager.h"
 #include "RoomManager.h"
 #include "RandomNumber.h"
+#include "Color.h"
 
 using namespace sf;
 
@@ -143,6 +144,12 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 			}
 		}
 	}
+
+	engine::Color c = engine::Color::RED;
+
+	std::shared_ptr<GameObject> flame = m_gameObjectCreator.createTorch(sf::Vector2f(200,200), c);
+
+	objects.push_back(flame);
 
 	return objects;
 }

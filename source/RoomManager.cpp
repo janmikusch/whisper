@@ -216,7 +216,7 @@ void RoomManager::createButtons(std::vector<std::shared_ptr<GameObject>> &room_o
 
 	for (int i = 0; i < 6; i++)
 	{
-		Color c = static_cast<Color>(i);
+		engine::Color c = static_cast<engine::Color>(i);
 
 		buttonPosition.x += rangeX / 4;
 

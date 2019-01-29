@@ -1,4 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
-enum Color { BLACK, BLUE, GREEN, RED, WHITE, YELLOW, VIOLET};
+namespace engine
+{
+	enum Color { BLACK, BLUE, GREEN, RED, WHITE, YELLOW, VIOLET };
+}
