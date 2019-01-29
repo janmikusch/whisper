@@ -382,6 +382,30 @@ void RoomManager::create6Buttons(std::vector<std::shared_ptr<GameObject>>& room_
 	}
 }
 
+std::shared_ptr<GameObject> RoomManager::calcCorrectButtonFrom3(std::vector<std::shared_ptr<GameObject>>& room_objects)
+{
+	for (auto o : room_objects)
+	{
+
+	}
+	return std::shared_ptr<GameObject>();
+}
+
+std::shared_ptr<GameObject> RoomManager::calcCorrectButtonFrom4(std::vector<std::shared_ptr<GameObject>>& room_objects)
+{
+	return std::shared_ptr<GameObject>();
+}
+
+std::shared_ptr<GameObject> RoomManager::calcCorrectButtonFrom5(std::vector<std::shared_ptr<GameObject>>& room_objects)
+{
+	return std::shared_ptr<GameObject>();
+}
+
+std::shared_ptr<GameObject> RoomManager::calcCorrectButtonFrom6(std::vector<std::shared_ptr<GameObject>>& room_objects)
+{
+	return std::shared_ptr<GameObject>();
+}
+
 engine::Color RoomManager::randomColor()
 {
 	int i = engine::Random::getIntBetween(0, 5);
