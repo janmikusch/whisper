@@ -4,6 +4,8 @@
 #include "RigidbodyComponent.h"
 #include "AssetsManager.h"
 #include "RoomManager.h"
+#include "RandomNumber.h"
+#include "window.h"
 
 using namespace sf;
 
@@ -143,10 +145,34 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 		}
 	}
 
-	std::shared_ptr<Room> room = RoomManager::getInstance().getRoom(0);
-	std::shared_ptr<GameObject> button = m_gameObjectCreator.createButton(sf::Vector2f(200, 200), room);
+	std::shared_ptr<Room> room = RoomManager::getInstance().getRoom(1);
 	
-	objects.push_back(button);
+	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
+
+	int borderSize = 120;
+	int buttonWidth = 64;
+
+	float rangeX = winSize.x - 2 * borderSize;
+	float rangeY = winSize.y - 2 * borderSize;
+
+	sf::Vector2f buttonPosition = sf::Vector2f(borderSize, borderSize + rangeY/3);
+
+	for (int i = 0; i < 6; i++)
+	{
+		buttonPosition.x += rangeX/4;
+
+		sf::Vector2f positionWithOffset = sf::Vector2f(buttonPosition.x - buttonWidth / 2, buttonPosition.y - buttonWidth / 2);
+
+		std::shared_ptr<GameObject> button = m_gameObjectCreator.createButton(positionWithOffset, room);
+
+		if (buttonPosition.x >= borderSize + (rangeX/4)*3)
+		{
+			buttonPosition.x = borderSize;
+			buttonPosition.y += rangeY/3;
+		}
+
+		objects.push_back(button);
+	}	
 
 	return objects;
 }
