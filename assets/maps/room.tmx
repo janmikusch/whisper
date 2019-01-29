@@ -45,7 +45,7 @@
   </object>
   <object id="17" name="static_collider" type="static_collider" x="1" y="0" width="124" height="703"/>
   <object id="19" name="Door" type="door_entry_right" x="66" y="321" width="60" height="62"/>
-  <object id="20" name="static_collider" type="static_collider" x="0" y="0.5" width="960" height="94"/>
+  <object id="20" name="static_collider" type="static_collider" x="0" y="0.5" width="960" height="120"/>
   <object id="22" name="static_collider" type="static_collider" x="3" y="580.75" width="957" height="122"/>
  </objectgroup>
 </map>
