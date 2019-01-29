@@ -5,6 +5,7 @@
 #include "GameObjectCreator.h"
 #include "window.h"
 #include "Color.h"
+#include "RandomNumber.h"
 
 RoomManager& RoomManager::getInstance()
 {
@@ -74,6 +75,8 @@ void RoomManager::createRooms()
 	roomObjects_12.push_back(fader);
 
 	createButtons(roomObjects_00,3);
+
+	createTorches(roomObjects_00);
 
 	room_00->setRoomObjects(roomObjects_00);
 	room_01->setRoomObjects(roomObjects_01);
@@ -222,6 +225,49 @@ void RoomManager::createButtons(std::vector<std::shared_ptr<GameObject>>& room_o
 
 void RoomManager::createTorches(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
+	engine::Color c = engine::Color::RED;
+
+	int randomMin = 1;
+	int randomMax = 1;
+
+	int random = engine::Random::getIntBetween(randomMin, randomMax);
+	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
+	int torchWidth = 64;
+
+	std::cout << random;
+
+	if (random == randomMax)
+	{
+		std::shared_ptr<GameObject> flame = GameObjectCreator::getInstance().createTorch(sf::Vector2f(winSize.x/3-torchWidth/2, 40), c);
+		room_objects.push_back(flame);
+	}
+
+	random = engine::Random::getIntBetween(randomMin, randomMax);
+
+	if (random == randomMax)
+	{
+		std::shared_ptr<GameObject> flame = GameObjectCreator::getInstance().createTorch(sf::Vector2f((winSize.x / 3)*2 - torchWidth / 2, 40), c);
+		room_objects.push_back(flame);
+	}
+
+	random = engine::Random::getIntBetween(randomMin, randomMax);
+
+	if (random == randomMax)
+	{
+		std::shared_ptr<GameObject> flame = GameObjectCreator::getInstance().createTorch(sf::Vector2f(winSize.x / 3 + torchWidth/2, winSize.y - 40), c);
+		flame->setRotation(180.0f);
+		room_objects.push_back(flame);
+	}
+
+	random = engine::Random::getIntBetween(randomMin, randomMax);
+
+	if (random == randomMax)
+	{
+		std::shared_ptr<GameObject> flame = GameObjectCreator::getInstance().createTorch(sf::Vector2f((winSize.x / 3)*2 + torchWidth / 2, winSize.y - 40), c);
+		flame->setRotation(180.0f);
+		room_objects.push_back(flame);
+	}
+
 }
 
 void RoomManager::createButtonRoomComponentObject(std::vector<std::shared_ptr<GameObject>>& room_objects)
@@ -242,16 +288,14 @@ void RoomManager::create3Buttons(std::vector<std::shared_ptr<GameObject>>& room_
 
 	for (int i = 0; i < 3; i++)
 	{
-		ButtonColor c = static_cast<ButtonColor>(i);
+		engine::Color c = static_cast<engine::Color>(i);
 
 		buttonPosition.x += rangeX / 4;
 
 		sf::Vector2f positionWithOffset = sf::Vector2f(buttonPosition.x - buttonWidth / 2, buttonPosition.y - buttonWidth / 2);
 
 		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, c);
-
-
-
+				
 		room_objects.push_back(button);
 	}
 }

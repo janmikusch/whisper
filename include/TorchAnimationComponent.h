@@ -26,6 +26,6 @@ public:
 	void rotate(float angle) override;
 
 private:
-	sf::Vector2f m_diplace = sf::Vector2f(0,30);
+	sf::Vector2f m_displace = sf::Vector2f(0,30);
 	sf::Sprite m_handle;
 };

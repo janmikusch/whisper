@@ -476,7 +476,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createTorch(sf::Vector2f position
 	TextureManager::getInstance().loadTexture("torch_handle.png");
 	sf::Texture &handleTex = TextureManager::getInstance().getTexture("torch_handle.png");
 
-	std::shared_ptr<AnimationComponent> animComp = std::make_shared<TorchAnimationComponent>(torch, Layer::MIDDLE1, handleTex, 0.1f);
+	std::shared_ptr<AnimationComponent> animComp = std::make_shared<TorchAnimationComponent>(torch, Layer::BACKGROUND3, handleTex, 0.1f);
 
 	torch->addComponent(animComp);
 
@@ -492,8 +492,6 @@ std::shared_ptr<GameObject> GameObjectCreator::createTorch(sf::Vector2f position
 	animComp->addAnimation(flameAnimation, "flameAnimation");
 
 	animComp->setAnimation("flameAnimation");
-
-
 
 	return torch;
 }

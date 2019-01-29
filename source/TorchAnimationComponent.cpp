@@ -13,7 +13,7 @@ TorchAnimationComponent::TorchAnimationComponent(std::shared_ptr<GameObject> par
 
 void TorchAnimationComponent::update( const float fDeltaTimeSeconds)
 {
-	m_handle.setPosition(m_parent->getPosition() + m_diplace);
+	m_handle.setPosition(m_parent->getPosition() + m_displace);
 	m_handle.setRotation(m_parent->getRotation());
 	m_handle.setOrigin(m_parent->getOrigin());
 
@@ -35,6 +35,15 @@ void TorchAnimationComponent::setPosition(const sf::Vector2f & position)
 void TorchAnimationComponent::setRotation(float angle)
 {
 	AnimationComponent::setRotation(angle);
+
+	if (angle == 180)
+	{
+		m_displace.y = -30;
+	}
+	else
+	{
+		m_displace.y = 30;
+	}
 }
 
 void TorchAnimationComponent::setScale(const sf::Vector2f & factors)
