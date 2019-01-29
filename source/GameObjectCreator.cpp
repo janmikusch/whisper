@@ -369,3 +369,29 @@ std::shared_ptr<GameObject> GameObjectCreator::createFade(sf::Vector2f position)
 	fader->addComponent(std::make_shared<FadeComponent>(fader, Layer::FOREGROUND3));
 	return fader;
 }
+
+std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f position)
+{
+	TextureManager::getInstance().loadTexture("button_black.png");
+	sf::Texture& buttonBlackTex = TextureManager::getInstance().getTexture("button_black.png");
+	TextureManager::getInstance().loadTexture("button_blue.png");
+	sf::Texture& buttonBlueTex = TextureManager::getInstance().getTexture("button_blue.png");
+	TextureManager::getInstance().loadTexture("button_green.png");
+	sf::Texture& buttonGreenTex = TextureManager::getInstance().getTexture("button_green.png");
+	TextureManager::getInstance().loadTexture("button_red.png");
+	sf::Texture& buttonRedTex = TextureManager::getInstance().getTexture("button_Red.png");
+	TextureManager::getInstance().loadTexture("button_yellow.png");
+	sf::Texture& buttonYellowTex = TextureManager::getInstance().getTexture("button_yellow.png");
+	TextureManager::getInstance().loadTexture("button_white.png");
+	sf::Texture& buttonWhiteTex = TextureManager::getInstance().getTexture("button_white.png");
+	
+	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "button");
+
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, sf::FloatRect(position, sf::Vector2f(64,64)), true);
+	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(button, 1, false, true);
+
+	button->addComponent(collider);
+	button->addComponent(rigidbody);
+
+	return button;
+}
