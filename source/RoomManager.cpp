@@ -73,7 +73,7 @@ void RoomManager::createRooms()
 	roomObjects_11.push_back(fader);
 	roomObjects_12.push_back(fader);
 
-	createButtons(roomObjects_00);
+	createButtons(roomObjects_00,3);
 
 	room_00->setRoomObjects(roomObjects_00);
 	room_01->setRoomObjects(roomObjects_01);
@@ -197,12 +197,75 @@ RoomManager::RoomManager():EventObserver()
 
 }
 
-std::shared_ptr<Room> RoomManager::getRoom(int i)
+void RoomManager::createObjectsForButtonRoom(std::vector<std::shared_ptr<GameObject>>& room_objects, int i)
 {
-	return m_rooms[i];
 }
 
-void RoomManager::createButtons(std::vector<std::shared_ptr<GameObject>> &room_objects)
+void RoomManager::createButtons(std::vector<std::shared_ptr<GameObject>>& room_objects, int i)
+{
+	switch (i)
+	{
+	case 3:
+		create3Buttons(room_objects);
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	default:
+		sf::err() << "Method not allowed";
+		return;
+	}
+}
+
+void RoomManager::createTorches(std::vector<std::shared_ptr<GameObject>>& room_objects)
+{
+}
+
+void RoomManager::createButtonRoomComponentObject(std::vector<std::shared_ptr<GameObject>>& room_objects)
+{
+}
+
+void RoomManager::create3Buttons(std::vector<std::shared_ptr<GameObject>>& room_objects)
+{
+	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
+
+	int borderSize = 120;
+	int buttonWidth = 64;
+
+	float rangeX = winSize.x - 2 * borderSize;
+	float rangeY = winSize.y - 2 * borderSize;
+
+	sf::Vector2f buttonPosition = sf::Vector2f(borderSize, borderSize + rangeY / 2);
+
+	for (int i = 0; i < 3; i++)
+	{
+		ButtonColor c = static_cast<ButtonColor>(i);
+
+		buttonPosition.x += rangeX / 4;
+
+		sf::Vector2f positionWithOffset = sf::Vector2f(buttonPosition.x - buttonWidth / 2, buttonPosition.y - buttonWidth / 2);
+
+		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, c);
+
+
+
+		room_objects.push_back(button);
+	}
+}
+
+void RoomManager::create4Buttons(std::vector<std::shared_ptr<GameObject>>& room_objects)
+{
+}
+
+void RoomManager::create5Buttons(std::vector<std::shared_ptr<GameObject>>& room_objects)
+{
+
+}
+
+void RoomManager::create6Buttons(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
 	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
 
@@ -232,4 +295,9 @@ void RoomManager::createButtons(std::vector<std::shared_ptr<GameObject>> &room_o
 
 		room_objects.push_back(button);
 	}
+}
+
+std::shared_ptr<Room> RoomManager::getRoom(int i)
+{
+	return m_rooms[i];
 }
