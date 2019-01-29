@@ -5,6 +5,7 @@
 #include "GameObjectCreator.h"
 #include "window.h"
 #include "ButtonColor.h"
+#include "RandomNumber.h"
 
 RoomManager& RoomManager::getInstance()
 {
@@ -63,7 +64,6 @@ void RoomManager::createRooms()
 	std::vector<std::shared_ptr<GameObject>> roomObjects_11;
 	std::vector<std::shared_ptr<GameObject>> roomObjects_12;
 
-	//add fader
 	auto fader = GameObjectCreator::getInstance().createFade();
 
 	roomObjects_00.push_back(fader);
@@ -73,7 +73,7 @@ void RoomManager::createRooms()
 	roomObjects_11.push_back(fader);
 	roomObjects_12.push_back(fader);
 
-	createButtons(roomObjects_00,3);
+	createButtons(roomObjects_00,5);
 
 	room_00->setRoomObjects(roomObjects_00);
 	room_01->setRoomObjects(roomObjects_01);
@@ -209,10 +209,13 @@ void RoomManager::createButtons(std::vector<std::shared_ptr<GameObject>>& room_o
 		create3Buttons(room_objects);
 		break;
 	case 4:
+		create4Buttons(room_objects);
 		break;
 	case 5:
+		create5Buttons(room_objects);
 		break;
 	case 6:
+		create6Buttons(room_objects);
 		break;
 	default:
 		sf::err() << "Method not allowed";
@@ -242,13 +245,11 @@ void RoomManager::create3Buttons(std::vector<std::shared_ptr<GameObject>>& room_
 
 	for (int i = 0; i < 3; i++)
 	{
-		ButtonColor c = static_cast<ButtonColor>(i);
-
 		buttonPosition.x += rangeX / 4;
 
 		sf::Vector2f positionWithOffset = sf::Vector2f(buttonPosition.x - buttonWidth / 2, buttonPosition.y - buttonWidth / 2);
 
-		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, c);
+		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, randomColor());
 
 
 
@@ -258,10 +259,51 @@ void RoomManager::create3Buttons(std::vector<std::shared_ptr<GameObject>>& room_
 
 void RoomManager::create4Buttons(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
+	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
+
+	int borderSize = 120;
+	int buttonWidth = 64;
+
+	float rangeX = winSize.x - 2 * borderSize;
+	float rangeY = winSize.y - 2 * borderSize;
+
+	sf::Vector2f buttonPosition = sf::Vector2f(borderSize, borderSize + rangeY / 3);
+
+	for (int i = 0; i < 4; i++)
+	{
+		buttonPosition.x += rangeX / 3;
+
+		sf::Vector2f positionWithOffset = sf::Vector2f(buttonPosition.x - buttonWidth / 2, buttonPosition.y - buttonWidth / 2);
+
+		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, randomColor());
+
+		if (buttonPosition.x >= borderSize + (rangeX / 3) * 2)
+		{
+			buttonPosition.x = borderSize;
+			buttonPosition.y += rangeY / 3;
+		}
+
+		room_objects.push_back(button);
+	}
 }
 
 void RoomManager::create5Buttons(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
+	create4Buttons(room_objects);
+
+	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
+
+	int borderSize = 120;
+	int buttonWidth = 64;
+
+	float rangeX = winSize.x - 2 * borderSize;
+	float rangeY = winSize.y - 2 * borderSize;
+
+	sf::Vector2f position = sf::Vector2f(rangeX * 0.68  - buttonWidth / 2, rangeY * 0.75 - buttonWidth / 2);
+
+
+	std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(position, randomColor());
+	room_objects.push_back(button);
 
 }
 
@@ -279,13 +321,11 @@ void RoomManager::create6Buttons(std::vector<std::shared_ptr<GameObject>>& room_
 
 	for (int i = 0; i < 6; i++)
 	{
-		ButtonColor c = static_cast<ButtonColor>(i);
-
 		buttonPosition.x += rangeX / 4;
 
 		sf::Vector2f positionWithOffset = sf::Vector2f(buttonPosition.x - buttonWidth / 2, buttonPosition.y - buttonWidth / 2);
 
-		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, c);
+		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, randomColor());
 
 		if (buttonPosition.x >= borderSize + (rangeX / 4) * 3)
 		{
@@ -295,6 +335,12 @@ void RoomManager::create6Buttons(std::vector<std::shared_ptr<GameObject>>& room_
 
 		room_objects.push_back(button);
 	}
+}
+
+ButtonColor RoomManager::randomColor()
+{
+	int i = engine::Random::getIntBetween(0, 5);
+	return static_cast<ButtonColor>(i);
 }
 
 std::shared_ptr<Room> RoomManager::getRoom(int i)
