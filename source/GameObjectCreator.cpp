@@ -17,6 +17,7 @@
 #include "CharacterAreaComponent.h"
 #include "DoorComponent.h"
 #include "FadeComponent.h"
+#include "ButtonComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -370,8 +371,10 @@ std::shared_ptr<GameObject> GameObjectCreator::createFade(sf::Vector2f position)
 	return fader;
 }
 
-std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f position)
+std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f position, std::shared_ptr<Room> room)
 {
+	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(64, 64));
+
 	TextureManager::getInstance().loadTexture("button_black.png");
 	sf::Texture& buttonBlackTex = TextureManager::getInstance().getTexture("button_black.png");
 	TextureManager::getInstance().loadTexture("button_blue.png");
@@ -379,7 +382,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f positio
 	TextureManager::getInstance().loadTexture("button_green.png");
 	sf::Texture& buttonGreenTex = TextureManager::getInstance().getTexture("button_green.png");
 	TextureManager::getInstance().loadTexture("button_red.png");
-	sf::Texture& buttonRedTex = TextureManager::getInstance().getTexture("button_Red.png");
+	sf::Texture& buttonRedTex = TextureManager::getInstance().getTexture("button_red.png");
 	TextureManager::getInstance().loadTexture("button_yellow.png");
 	sf::Texture& buttonYellowTex = TextureManager::getInstance().getTexture("button_yellow.png");
 	TextureManager::getInstance().loadTexture("button_white.png");
@@ -387,11 +390,18 @@ std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f positio
 	
 	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "button");
 
-	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, sf::FloatRect(position, sf::Vector2f(64,64)), true);
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, rect, true);
 	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(button, 1, false, true);
+	std::shared_ptr<ButtonComponent> buttonComp = std::make_shared<ButtonComponent>(button, Layer::FOREGROUND3, buttonRedTex, room);
 
 	button->addComponent(collider);
 	button->addComponent(rigidbody);
+	button->addComponent(buttonComp);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(button, rect, Layer::DEBUG_BOUNDINGBOX);
+	button->addComponent(boundingbox);
+#endif
 
 	return button;
 }

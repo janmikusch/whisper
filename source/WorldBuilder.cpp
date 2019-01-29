@@ -3,6 +3,7 @@
 #include "TextureManager.h"
 #include "RigidbodyComponent.h"
 #include "AssetsManager.h"
+#include "RoomManager.h"
 
 using namespace sf;
 
@@ -142,7 +143,11 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 		}
 	}
 
+	std::shared_ptr<Room> room = RoomManager::getInstance().getRoom(0);
+	std::shared_ptr<GameObject> button = m_gameObjectCreator.createButton(sf::Vector2f(200, 200), room);
 	
+	objects.push_back(button);
+
 	return objects;
 }
 

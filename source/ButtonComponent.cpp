@@ -12,13 +12,12 @@ ButtonComponent::ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer
 	m_buttonReleased.setTexture(texture);
 
 	m_buttonReleased.setTextureRect(sf::IntRect(0, 0, 64, 64));
-	m_buttonReleased.setTextureRect(sf::IntRect(64, 64, 64, 64));
+	m_buttonPressed.setTextureRect(sf::IntRect(64, 0, 64, 64));
 
-	m_currentState = m_buttonPressed;
+	m_currentState = m_buttonReleased;
 }
 
-void ButtonComponent::update( const float
-	fDeltaTimeSeconds)
+void ButtonComponent::update( const float fDeltaTimeSeconds)
 {
 	if (m_isPressed)
 		m_currentState = m_buttonPressed;
@@ -28,8 +27,6 @@ void ButtonComponent::update( const float
 	m_currentState.setPosition(m_parent->getPosition());
 	m_currentState.setRotation(m_parent->getRotation());
 	m_currentState.setOrigin(m_parent->getOrigin());
-
-
 }
 
 void ButtonComponent::init()
@@ -92,6 +89,7 @@ void ButtonComponent::onNotify(const GameObject& collidedWith, std::shared_ptr<e
 void ButtonComponent::draw()
 {
 	auto window = engine::Window::getInstance().getWindow();
+
 	if (RoomManager::getInstance().getCurrentRoom() == m_room)
 	{
 		window->draw(m_currentState);
