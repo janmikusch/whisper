@@ -403,5 +403,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f positio
 	button->addComponent(boundingbox);
 #endif
 
+	rigidbody->addObserver(*buttonComp);
+
 	return button;
 }
