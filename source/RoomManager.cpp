@@ -232,14 +232,13 @@ void RoomManager::createTorches(std::vector<std::shared_ptr<GameObject>>& room_o
 {
 	engine::Color c = engine::Color::RED;
 
-	int randomMin = 1;
-	int randomMax = 1;
+	int randomMin = 0;
+	int randomMax = 8;
 
 	int random = engine::Random::getIntBetween(randomMin, randomMax);
 	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
 	int torchWidth = 64;
 
-	std::cout << random;
 
 	if (random == randomMax)
 	{
@@ -248,7 +247,7 @@ void RoomManager::createTorches(std::vector<std::shared_ptr<GameObject>>& room_o
 	}
 
 	random = engine::Random::getIntBetween(randomMin, randomMax);
-
+	
 	if (random == randomMax)
 	{
 		std::shared_ptr<GameObject> flame = GameObjectCreator::getInstance().createTorch(sf::Vector2f((winSize.x / 3)*2 - torchWidth / 2, 40), c);

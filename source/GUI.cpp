@@ -152,7 +152,7 @@ void GUI::createMenuGui()
 
 
 	tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
-	layout->setInheritedFont(FontManager::getInstance().getFont("Arial"));
+	layout->setInheritedFont(FontManager::getInstance().getFont("arial"));
 	layout->setSize("60%%", "50%");
 	layout->setPosition("20%", "40%");
 
@@ -198,7 +198,7 @@ void GUI::createGameplayGui()
 
 
 		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
-		layout->setInheritedFont(FontManager::getInstance().getFont("Arial"));
+		layout->setInheritedFont(FontManager::getInstance().getFont("arial"));
 		layout->setSize("60%", "50%");
 		layout->setPosition("20%", "40%");
 		pausemenu->add(layout);
@@ -237,7 +237,7 @@ void GUI::createGameplayGui()
 
 
 		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
-		layout->setInheritedFont(FontManager::getInstance().getFont("Arial"));
+		layout->setInheritedFont(FontManager::getInstance().getFont("arial"));
 		layout->setSize("60%", "50%");
 		layout->setPosition("20%", "40%");
 		gameovermenu->add(layout);
@@ -268,7 +268,7 @@ void GUI::createGameplayGui()
 
 
 		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
-		layout->setInheritedFont(FontManager::getInstance().getFont("Arial"));
+		layout->setInheritedFont(FontManager::getInstance().getFont("arial"));
 		layout->setSize("60%", "50%");
 		layout->setPosition("20%", "40%");
 		gamecomplete->add(layout);
