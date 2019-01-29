@@ -89,6 +89,16 @@ void DoorComponent::onNotify(const GameObject& collidedWith, std::shared_ptr<eng
 		return;
 	}
 
+
+	//green door for exit of game
+	if (m_dir == Room::Direction::TOP && RoomManager::getInstance().getCurrentRoom()->getName() == "01" && RoomManager::getInstance().countNotCompleted() == 0)
+	{
+		EventBus::getInstance().notify(engine::EventType::GAMECOMPLETE, std::make_shared<engine::GameEvent>());
+		return;
+	}
+
+
+
 	engine::DoorEnterGameEvent doorEvent{};
 	if(m_parent->getName()=="door_top")
 	{
