@@ -38,3 +38,16 @@ void GameStateManager::addState(State::StateType stateType, std::shared_ptr<Stat
 {
 	m_states.insert_or_assign(stateType, state);
 }
+
+
+void GameStateManager::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent)
+{
+	if(type == engine::EventType::GAMESTART)
+	{
+		setState(State::STATE_GAMEPLAY);
+	}
+	if(type == engine::EventType::GAMEQUIT)
+	{
+		setState(State::STATE_MENU);
+	}
+}

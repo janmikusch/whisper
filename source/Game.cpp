@@ -10,6 +10,7 @@
 #include "AudioManager.h"
 #include "FontManager.h"
 #include "RoomManager.h"
+#include "GUI.h"
 
 
 void Game::run()
@@ -28,6 +29,7 @@ void Game::run()
 				{
 					m_window->close();
 				}
+				engine::GUI::getInstance().getGui().handleEvent(event);
 			}
 
 			static sf::Clock clock;
@@ -38,7 +40,7 @@ void Game::run()
 			draw();
 		}
 	}
-	catch (std::exception ex)
+	catch (std::exception& ex)
 	{
 		sf::err() << ex.what() << std::endl;
 	}
@@ -56,16 +58,20 @@ bool Game::init()
 	m_frameClock.restart();
 
 	m_window = std::make_shared<sf::RenderWindow>();
-	engine::Window::getInstance().setWindow(m_window);
 
 	m_window->create(sf::VideoMode(m_width, m_height), m_gameName);
 	m_window->setFramerateLimit(60);
+
+	//init gui
+	engine::Window::getInstance().setWindow(m_window);
+	engine::GUI::getInstance().init(); //create gui
 
 	std::shared_ptr<State> menuState = std::make_shared<MenuState>(State::StateType::STATE_MENU);
 	std::shared_ptr<State> gameplayState = std::make_shared<GameplayState>(State::StateType::STATE_GAMEPLAY);
 
 	m_gameStateManager.addState(State::StateType::STATE_MENU,menuState);
 	m_gameStateManager.addState(State::StateType::STATE_GAMEPLAY,gameplayState);
+	EventBus::getInstance().addObserver(engine::EventType::GAMESTART,&m_gameStateManager);
 
 	AudioManager& sm = AudioManager::getInstance();
 
@@ -113,6 +119,7 @@ void Game::draw()
 {
 	m_window->clear();
 	m_gameStateManager.draw();
+	engine::GUI::getInstance().draw();
 	m_window->display();
 }
 

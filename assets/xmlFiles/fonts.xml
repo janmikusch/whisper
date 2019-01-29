@@ -2,4 +2,5 @@
 <fonts>
 	<item name="default" file="arial.ttf" />
 	<item name="arial" file="arial.ttf" />
+	<item name="Neverwinter" file="Neverwinter.ttf" />
 </fonts>
