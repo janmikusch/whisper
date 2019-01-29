@@ -70,6 +70,7 @@
     </ClCompile>
     <ClCompile Include="..\..\source\TextGuiComponent.cpp" />
     <ClCompile Include="..\..\source\TextureManager.cpp" />
+    <ClCompile Include="..\..\source\GUI.cpp" />
     <ClCompile Include="..\..\source\window.cpp" />
     <ClCompile Include="..\..\source\WorldBuilder.cpp" />
   </ItemGroup>
@@ -130,6 +131,7 @@
     <ClInclude Include="..\..\include\targetver.h" />
     <ClInclude Include="..\..\include\TextGuiComponent.h" />
     <ClInclude Include="..\..\include\TextureManager.h" />
+    <ClInclude Include="..\..\include\GUI.h" />
     <ClInclude Include="..\..\include\window.h" />
     <ClInclude Include="..\..\include\WorldBuilder.h" />
   </ItemGroup>
