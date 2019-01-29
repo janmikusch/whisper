@@ -445,50 +445,63 @@ std::shared_ptr<GameObject> GameObjectCreator::createTorch(sf::Vector2f position
 	switch (c)
 	{
 	case BLUE:
-		TextureManager::getInstance().loadTexture("button_blue.png");
-		texture = &TextureManager::getInstance().getTexture("button_blue.png");
+		TextureManager::getInstance().loadTexture("flame_blue.png");
+		texture = &TextureManager::getInstance().getTexture("flame_blue.png");
 		break;
 	case GREEN:
-		TextureManager::getInstance().loadTexture("button_green.png");
-		texture = &TextureManager::getInstance().getTexture("button_green.png");
+		TextureManager::getInstance().loadTexture("flame_green.png");
+		texture = &TextureManager::getInstance().getTexture("flame_green.png");
 		break;
 	case RED:
-		TextureManager::getInstance().loadTexture("button_red.png");
-		texture = &TextureManager::getInstance().getTexture("button_red.png");
+		TextureManager::getInstance().loadTexture("flame_red.png");
+		texture = &TextureManager::getInstance().getTexture("flame_red.png");
 		break;
 	case YELLOW:
-		TextureManager::getInstance().loadTexture("button_yellow.png");
-		texture = &TextureManager::getInstance().getTexture("button_yellow.png");
+		TextureManager::getInstance().loadTexture("flame_yellow.png");
+		texture = &TextureManager::getInstance().getTexture("flame_yellow.png");
 		break;
 	case WHITE:
-		TextureManager::getInstance().loadTexture("button_white.png");
-		texture = &TextureManager::getInstance().getTexture("button_white.png");
+		TextureManager::getInstance().loadTexture("flame_white.png");
+		texture = &TextureManager::getInstance().getTexture("flame_white.png");
 		break;
 	case VIOLET:
-		TextureManager::getInstance().loadTexture("button_white.png");
-		texture = &TextureManager::getInstance().getTexture("button_white.png");
+		TextureManager::getInstance().loadTexture("flame_white.png");
+		texture = &TextureManager::getInstance().getTexture("flame_white.png");
 		break;
 	}
 
-	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "button");
+	std::shared_ptr<GameObject> torch = std::make_shared<GameObject>(position, "torch");
 
-	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, rect, true);
-	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(button, 1, false, true);
-	std::shared_ptr<ButtonComponent> buttonComp = std::make_shared<ButtonComponent>(button, Layer::BACKGROUND3, *texture);
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(torch, rect, true);
+	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(torch, 1, false, true);
 
 	collider->setDisplacement(displacement);
 
-	button->addComponent(collider);
-	button->addComponent(rigidbody);
-	button->addComponent(buttonComp);
+	torch->addComponent(collider);
+	torch->addComponent(rigidbody);
+
+	std::shared_ptr<AnimationComponent> animComp = std::make_shared<HeroAnimationComponent>(torch, Layer::MIDDLE1, 0.1f);
+
+	torch->addComponent(animComp);
+
+	Animation flameAnimation;
+	flameAnimation.setSpriteSheet(*texture);
+	flameAnimation.addFrame(sf::IntRect(0, 0, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(64, 0, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(128, 0, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(192, 0, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(0, 64, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(64, 64, 64, 64));
+
+	animComp->addAnimation(flameAnimation, "flameAnimation");
+
+	animComp->setAnimation("flameAnimation");
 
 #ifdef _DEBUG
-	auto boundingbox = std::make_shared <BoundingboxComponent>(button, rect, Layer::DEBUG_BOUNDINGBOX);
+	auto boundingbox = std::make_shared <BoundingboxComponent>(torch, rect, Layer::DEBUG_BOUNDINGBOX);
 	boundingbox->setDisplacement(displacement);
-	button->addComponent(boundingbox);
+	torch->addComponent(boundingbox);
 #endif
 
-	rigidbody->addObserver(*buttonComp);
-
-	return button;
+	return torch;
 }
