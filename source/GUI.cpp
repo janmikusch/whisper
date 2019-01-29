@@ -48,6 +48,10 @@ void GUI::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> ga
 	{
 		m_gui.get("pausemenu")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
 	}
+	if (type == EventType::GAMEOVER)
+	{
+		m_gui.get("gameover")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
+	}
 }
 
 tgui::Gui& GUI::getGui()
@@ -150,41 +154,74 @@ void GUI::createGameplayGui()
 {
 	m_gui.removeAllWidgets();
 
-
-	tgui::Panel::Ptr pausemenu = tgui::Panel::create();
-	pausemenu->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(1));
-	pausemenu->setSize("60%", "40%");
-	pausemenu->setPosition("20%", "30%");
-	auto bgcolor = tgui::Color(8, 43, 43, 255);
-	pausemenu->getRenderer()->setBackgroundColor(bgcolor);
-	m_gui.add(pausemenu, "pausemenu");
-
-	
-	tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
-	layout->setInheritedFont(FontManager::getInstance().getFont("Arial"));
-	layout->setSize("60%", "50%");
-	layout->setPosition("20%", "40%");
-	pausemenu->add(layout);
-
-	tgui::Label::Ptr title = tgui::Label::create("Pause");
-	title->setTextSize(50);
-	title->setPosition({ "50% - width / 2", "10%" });
-	pausemenu->add(title);
-
-	tgui::Button::Ptr btn_continue = tgui::Button::create("Continue");
-	btn_continue->setTextSize(30);
-	btn_continue->connect("pressed", [&]()
+	//pausemenue
 	{
-		m_gui.get("pausemenu")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));		
-		EventBus::getInstance().notify(engine::GAMECONTINUE, make_shared<GameEvent>());
-	});
-	layout->add(btn_continue);
-	
-	tgui::Button::Ptr btn_quit = tgui::Button::create("Give Up");
-	btn_quit->setTextSize(30);
-	btn_quit->connect("pressed", [&]() { EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>()); });
-	layout->add(btn_quit);
+		tgui::Panel::Ptr pausemenu = tgui::Panel::create();
+		pausemenu->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(1));
+		pausemenu->setSize("60%", "40%");
+		pausemenu->setPosition("20%", "30%");
+		auto bgcolor = tgui::Color(8, 43, 43, 255);
+		pausemenu->getRenderer()->setBackgroundColor(bgcolor);
+		m_gui.add(pausemenu, "pausemenu");
 
-	layout->insertSpace(1, 0.3f);
+
+		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
+		layout->setInheritedFont(FontManager::getInstance().getFont("Arial"));
+		layout->setSize("60%", "50%");
+		layout->setPosition("20%", "40%");
+		pausemenu->add(layout);
+
+		tgui::Label::Ptr title = tgui::Label::create("Pause");
+		title->setTextSize(50);
+		title->setPosition({ "50% - width / 2", "10%" });
+		pausemenu->add(title);
+
+		tgui::Button::Ptr btn_continue = tgui::Button::create("Continue");
+		btn_continue->setTextSize(30);
+		btn_continue->connect("pressed", [&]()
+			{
+				m_gui.get("pausemenu")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
+				EventBus::getInstance().notify(engine::GAMECONTINUE, make_shared<GameEvent>());
+			});
+		layout->add(btn_continue);
+
+		tgui::Button::Ptr btn_quit = tgui::Button::create("Give Up");
+		btn_quit->setTextSize(30);
+		btn_quit->connect("pressed", [&]() { EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>()); });
+		layout->add(btn_quit);
+
+		layout->insertSpace(1, 0.3f);
+	}
+
+	//GAME OVER
+	{
+		tgui::Panel::Ptr gameovermenu = tgui::Panel::create();
+		gameovermenu->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(1));
+		gameovermenu->setSize("60%", "40%");
+		gameovermenu->setPosition("20%", "30%");
+		auto bgcolor = tgui::Color(8, 43, 43, 255);
+		gameovermenu->getRenderer()->setBackgroundColor(bgcolor);
+		m_gui.add(gameovermenu, "gameover");
+
+
+		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
+		layout->setInheritedFont(FontManager::getInstance().getFont("Arial"));
+		layout->setSize("60%", "50%");
+		layout->setPosition("20%", "40%");
+		gameovermenu->add(layout);
+
+		tgui::Label::Ptr title = tgui::Label::create("Game Over");
+		title->setTextSize(50);
+		title->setPosition({ "50% - width / 2", "10%" });
+		gameovermenu->add(title);
+
+
+		tgui::Button::Ptr btn_quit = tgui::Button::create("Back to Menu");
+		btn_quit->setTextSize(30);
+		btn_quit->connect("pressed", [&]() { EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>()); });
+		layout->add(btn_quit);
+
+		layout->insertSpace(1, 0.3f);
+	}
 
 }

@@ -180,6 +180,15 @@ void RoomManager::onNotify(engine::EventType type, std::shared_ptr<engine::GameE
 	}
 }
 
+void RoomManager::getDamange()
+{
+	m_lives--;
+	if(m_lives == 0)
+	{
+		EventBus::getInstance().notify(engine::EventType::GAMEOVER, std::make_shared<engine::GameEvent>());
+	}
+}
+
 RoomManager::RoomManager():EventObserver()
 {
 	EventBus::getInstance().addObserver(engine::DOORENTER, this);
