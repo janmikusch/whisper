@@ -6,6 +6,7 @@
 #include "window.h"
 #include "Color.h"
 #include "RandomNumber.h"
+#include "ButtonComponent.h"
 
 RoomManager& RoomManager::getInstance()
 {
@@ -294,7 +295,7 @@ void RoomManager::create3Buttons(std::vector<std::shared_ptr<GameObject>>& room_
 
 		sf::Vector2f positionWithOffset = sf::Vector2f(buttonPosition.x - buttonWidth / 2, buttonPosition.y - buttonWidth / 2);
 
-		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, randomColor());
+		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, randomColor(), i);
 
 
 
@@ -320,7 +321,7 @@ void RoomManager::create4Buttons(std::vector<std::shared_ptr<GameObject>>& room_
 
 		sf::Vector2f positionWithOffset = sf::Vector2f(buttonPosition.x - buttonWidth / 2, buttonPosition.y - buttonWidth / 2);
 
-		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, randomColor());
+		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, randomColor(), i);
 
 		if (buttonPosition.x >= borderSize + (rangeX / 3) * 2)
 		{
@@ -347,7 +348,7 @@ void RoomManager::create5Buttons(std::vector<std::shared_ptr<GameObject>>& room_
 	sf::Vector2f position = sf::Vector2f(rangeX * 0.68  - buttonWidth / 2, rangeY * 0.75 - buttonWidth / 2);
 
 
-	std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(position, randomColor());
+	std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(position, randomColor(), 4);
 	room_objects.push_back(button);
 
 }
@@ -370,7 +371,7 @@ void RoomManager::create6Buttons(std::vector<std::shared_ptr<GameObject>>& room_
 
 		sf::Vector2f positionWithOffset = sf::Vector2f(buttonPosition.x - buttonWidth / 2, buttonPosition.y - buttonWidth / 2);
 
-		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, randomColor());
+		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, randomColor(), i);
 
 		if (buttonPosition.x >= borderSize + (rangeX / 4) * 3)
 		{
@@ -384,11 +385,69 @@ void RoomManager::create6Buttons(std::vector<std::shared_ptr<GameObject>>& room_
 
 std::shared_ptr<GameObject> RoomManager::calcCorrectButtonFrom3(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
+	int countBlack = 0;
+	int countViolet = 0;
+	int countBlue = 0;
+	int countRed = 0;
+	int countGreen = 0;
+	int countWhite = 0;
+	int countYellow = 0;
+
+	std::shared_ptr<GameObject> targetButton = nullptr;
+
+	std::vector<std::shared_ptr<GameObject>> buttons;
+
 	for (auto o : room_objects)
 	{
+		if (o->getName() == "button")
+		{
+			buttons.push_back(o);
+			engine::Color c;
 
+			c = o->getComponent<ButtonComponent>()->getColor();
+
+			switch (c)
+			{
+			case engine::Color::BLACK:
+				countBlack++;
+				break;
+			case engine::Color::BLUE:
+				countBlue++;
+				break;
+			case engine::Color::GREEN:
+				countGreen++;
+				break;
+			case engine::Color::RED:
+				countRed++;
+				break;
+			case engine::Color::WHITE:
+				countWhite++;
+				break;
+			case engine::Color::YELLOW:
+				countYellow++;
+				break;
+			}
+		}
 	}
-	return std::shared_ptr<GameObject>();
+
+	if (countRed == 0)
+	{
+		targetButton = findButton(buttons, 1);
+	}
+	else if (findButton(buttons, 2)->getComponent<ButtonComponent>()->getColor() == engine::Color::BLUE)
+	{
+		targetButton = findButton(buttons, 0);
+	}
+	else if (countGreen > 1)
+	{
+		targetButton = findButton(buttons, 2);
+	}
+	else
+	{
+		targetButton = findButton(buttons, 0);
+	}
+
+	return targetButton;
 }
 
 std::shared_ptr<GameObject> RoomManager::calcCorrectButtonFrom4(std::vector<std::shared_ptr<GameObject>>& room_objects)
@@ -415,4 +474,16 @@ engine::Color RoomManager::randomColor()
 std::shared_ptr<Room> RoomManager::getRoom(int i)
 {
 	return m_rooms[i];
+}
+
+
+std::shared_ptr<GameObject> findButton(std::vector<std::shared_ptr<GameObject>> buttons, int id)
+{
+	for (auto b : buttons)
+	{
+		if (b->getComponent<ButtonComponent>()->getId() == id)
+			return b;
+	}
+
+	return nullptr;
 }
