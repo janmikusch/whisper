@@ -4,6 +4,7 @@
 #include "FontManager.h"
 #include "Game.h"
 #include "TextureManager.h"
+#include "RoomManager.h"
 
 using namespace engine;
 
@@ -20,7 +21,9 @@ void GUI::init()
 	//register to EventBus
 	//TODO
 	EventBus::getInstance().addObserver(engine::EventType::GAMEPAUSE, this);
-
+	EventBus::getInstance().addObserver(engine::EventType::GAMEOVER, this);
+	EventBus::getInstance().addObserver(engine::EventType::DAMAGETAKEN, this);
+	EventBus::getInstance().addObserver(engine::EventType::ROOMUNLOCKED, this);
 }
 
 void GUI::init(GameplayState::StateType type)
@@ -32,6 +35,7 @@ void GUI::init(GameplayState::StateType type)
 		break;
 	case State::STATE_GAMEPLAY:
 		createGameplayGui();
+		m_hearts = 3;
 		break;
 	}
 }
@@ -52,6 +56,29 @@ void GUI::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> ga
 	{
 		m_gui.get("gameover")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
 	}
+	if (type == engine::EventType::DAMAGETAKEN)
+	{
+		m_hearts--;
+		if(m_hearts == 2)
+		{
+			m_gui.get("heart3")->hideWithEffect(tgui::ShowAnimationType::Scale, sf::milliseconds(50));
+		}
+		if (m_hearts == 1)
+		{
+			m_gui.get("heart2")->hideWithEffect(tgui::ShowAnimationType::Scale, sf::milliseconds(50));
+		}
+		if (m_hearts == 0)
+		{
+			m_gui.get("heart1")->hideWithEffect(tgui::ShowAnimationType::Scale, sf::milliseconds(50));
+		}
+	}
+	if(type == engine::EventType::ROOMUNLOCKED)
+	{
+		int count = RoomManager::getInstance().countNotCompleted();
+		std::string text = "Rooms reft: ";
+		m_gui.get<tgui::Label>("roomsleft")->setText(text + std::to_string(count));
+	}
+
 }
 
 tgui::Gui& GUI::getGui()
@@ -224,4 +251,24 @@ void GUI::createGameplayGui()
 		layout->insertSpace(1, 0.3f);
 	}
 
+	TextureManager::getInstance().loadTexture("heart.png");
+	sf::Texture& heartTexture = TextureManager::getInstance().getTexture("heart.png");
+	tgui::Picture::Ptr heart = tgui::Picture::create(heartTexture);
+	heart->setPosition({ "5%", "1%" });
+	m_gui.add(heart,"heart1");
+
+	TextureManager::getInstance().loadTexture("heart.png");
+	tgui::Picture::Ptr heart2 = tgui::Picture::create(heartTexture);
+	heart2->setPosition({ "5% + width * 1", "1%" });
+	m_gui.add(heart2, "heart2");
+
+	TextureManager::getInstance().loadTexture("heart.png");
+	tgui::Picture::Ptr heart3 = tgui::Picture::create(heartTexture);
+	heart3->setPosition({ "5% + width * 2", "1%" });
+	m_gui.add(heart3, "heart3");
+
+	tgui::Label::Ptr rooms = tgui::Label::create("Rooms reft: 5");
+	rooms->setTextSize(20);
+	rooms->setPosition({ "95% - width", "1%" });
+	m_gui.add(rooms, "roomsleft");
 }

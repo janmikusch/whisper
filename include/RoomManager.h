@@ -18,6 +18,7 @@ public:
 	void onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent) override;
 	std::shared_ptr<Room> getRoom(int i);
 	void getDamange();
+	int getLives() { return m_lives; };
 
 private:
 	RoomManager();

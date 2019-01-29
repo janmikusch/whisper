@@ -27,6 +27,17 @@ State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 		pause(true);
 	}
 
+	//TESTING
+	if (InputManager::getInstance().isKeyDown(sf::Keyboard::Key::P))
+	{
+		EventBus::getInstance().notify(engine::DAMAGETAKEN, make_shared<engine::GameEvent>());
+	}
+	if (InputManager::getInstance().isKeyDown(sf::Keyboard::Key::U))
+	{
+		RoomManager::getInstance().getCurrentRoom()->setCompleted();
+	}
+	//ENDTESTING
+
 	if(m_pause)
 		return m_type;
 

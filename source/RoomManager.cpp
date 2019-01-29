@@ -33,12 +33,7 @@ void RoomManager::createRooms()
 	m_rooms.push_back(room_11);
 	m_rooms.push_back(room_12);
 
-	room_00->setCompleted();
 	room_01->setCompleted();
-	room_02->setCompleted();
-	room_10->setCompleted();
-	room_11->setCompleted();
-	room_12->setCompleted();
 	m_currentRoom = room_01;
 
 	room_00->setRoom(Room::Direction::RIGHT, room_01);
@@ -96,6 +91,8 @@ void RoomManager::init()
 	{
 		it->init();
 	}
+
+	m_lives = 3;
 }
 
 void RoomManager::changeRoom(Room::Direction dir)
@@ -178,6 +175,10 @@ void RoomManager::onNotify(engine::EventType type, std::shared_ptr<engine::GameE
 		if(ev != nullptr)
 			changeRoom(ev->direction);
 	}
+	if(type == engine::EventType::DAMAGETAKEN)
+	{
+		getDamange();
+	}
 }
 
 void RoomManager::getDamange()
@@ -192,6 +193,8 @@ void RoomManager::getDamange()
 RoomManager::RoomManager():EventObserver()
 {
 	EventBus::getInstance().addObserver(engine::DOORENTER, this);
+	EventBus::getInstance().addObserver(engine::DAMAGETAKEN, this);
+
 }
 
 std::shared_ptr<Room> RoomManager::getRoom(int i)
