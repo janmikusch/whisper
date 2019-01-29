@@ -57,4 +57,8 @@ void GameStateManager::onNotify(engine::EventType type, std::shared_ptr<engine::
 	{
 		std::static_pointer_cast<GameplayState>(m_states[State::STATE_GAMEPLAY])->pause(false);
 	}
+	else if (type == engine::EventType::GAMECOMPLETE)
+	{
+		std::static_pointer_cast<GameplayState>(m_states[State::STATE_GAMEPLAY])->pause(true);
+	}
 }

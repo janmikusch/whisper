@@ -24,6 +24,7 @@ void GUI::init()
 	EventBus::getInstance().addObserver(engine::EventType::GAMEOVER, this);
 	EventBus::getInstance().addObserver(engine::EventType::DAMAGETAKEN, this);
 	EventBus::getInstance().addObserver(engine::EventType::ROOMUNLOCKED, this);
+	EventBus::getInstance().addObserver(engine::EventType::GAMECOMPLETE, this);
 }
 
 void GUI::init(GameplayState::StateType type)
@@ -55,6 +56,10 @@ void GUI::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> ga
 	if (type == EventType::GAMEOVER)
 	{
 		m_gui.get("gameover")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
+	}
+	if (type == EventType::GAMECOMPLETE)
+	{
+		m_gui.get("gamecomplete")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
 	}
 	if (type == engine::EventType::DAMAGETAKEN)
 	{
@@ -241,6 +246,37 @@ void GUI::createGameplayGui()
 		title->setTextSize(50);
 		title->setPosition({ "50% - width / 2", "10%" });
 		gameovermenu->add(title);
+
+
+		tgui::Button::Ptr btn_quit = tgui::Button::create("Back to Menu");
+		btn_quit->setTextSize(30);
+		btn_quit->connect("pressed", [&]() { EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>()); });
+		layout->add(btn_quit);
+
+		layout->insertSpace(1, 0.3f);
+	}
+
+	//GAME OVER
+	{
+		tgui::Panel::Ptr gamecomplete = tgui::Panel::create();
+		gamecomplete->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(1));
+		gamecomplete->setSize("60%", "40%");
+		gamecomplete->setPosition("20%", "30%");
+		auto bgcolor = tgui::Color(8, 43, 43, 255);
+		gamecomplete->getRenderer()->setBackgroundColor(bgcolor);
+		m_gui.add(gamecomplete, "gamecomplete");
+
+
+		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
+		layout->setInheritedFont(FontManager::getInstance().getFont("Arial"));
+		layout->setSize("60%", "50%");
+		layout->setPosition("20%", "40%");
+		gamecomplete->add(layout);
+
+		tgui::Label::Ptr title = tgui::Label::create("Game Completed \n Your Rock!");
+		title->setTextSize(30);
+		title->setPosition({ "50% - width / 2", "10%" });
+		gamecomplete->add(title);
 
 
 		tgui::Button::Ptr btn_quit = tgui::Button::create("Back to Menu");
