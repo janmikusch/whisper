@@ -5,6 +5,7 @@
 #include "AssetsManager.h"
 #include "RoomManager.h"
 #include "RandomNumber.h"
+#include "Color.h"
 
 using namespace sf;
 

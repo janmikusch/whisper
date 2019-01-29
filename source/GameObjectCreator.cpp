@@ -18,6 +18,7 @@
 #include "DoorComponent.h"
 #include "FadeComponent.h"
 #include "ButtonComponent.h"
+#include "TorchAnimationComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -379,7 +380,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createFade(sf::Vector2f position)
 	return fader;
 }
 
-std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f position, ButtonColor c)
+std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f position, engine::Color c)
 {
 	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(54, 56));
 	sf::Vector2f displacement = sf::Vector2f(5, 0);
@@ -387,27 +388,27 @@ std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f positio
 
 	switch (c)
 	{
-	case BLACK:
+	case engine::Color::BLACK:
 		TextureManager::getInstance().loadTexture("button_black.png");
 		texture = &TextureManager::getInstance().getTexture("button_black.png");
 		break;
-	case BLUE:
+	case engine::Color::BLUE:
 		TextureManager::getInstance().loadTexture("button_blue.png");
 		texture = &TextureManager::getInstance().getTexture("button_blue.png");
 		break;
-	case GREEN:
+	case engine::Color::GREEN:
 		TextureManager::getInstance().loadTexture("button_green.png");
 		texture = &TextureManager::getInstance().getTexture("button_green.png");
 		break;
-	case RED:
+	case engine::Color::RED:
 		TextureManager::getInstance().loadTexture("button_red.png");
 		texture = &TextureManager::getInstance().getTexture("button_red.png");
 		break;
-	case YELLOW:
+	case engine::Color::YELLOW:
 		TextureManager::getInstance().loadTexture("button_yellow.png");
 		texture = &TextureManager::getInstance().getTexture("button_yellow.png");
 		break;
-	case WHITE:
+	case engine::Color::WHITE:
 		TextureManager::getInstance().loadTexture("button_white.png");
 		texture = &TextureManager::getInstance().getTexture("button_white.png");
 		break;
@@ -434,4 +435,63 @@ std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f positio
 	rigidbody->addObserver(*buttonComp);
 
 	return button;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createTorch(sf::Vector2f position, engine::Color c)
+{
+	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(64, 64));
+	sf::Vector2f displacement = sf::Vector2f(0, 0);
+	sf::Texture *texture = nullptr;
+
+	switch (c)
+	{
+	case engine::Color::BLUE:
+		TextureManager::getInstance().loadTexture("flame_blue.png");
+		texture = &TextureManager::getInstance().getTexture("flame_blue.png");
+		break;
+	case engine::Color::GREEN:
+		TextureManager::getInstance().loadTexture("flame_green.png");
+		texture = &TextureManager::getInstance().getTexture("flame_green.png");
+		break;
+	case engine::Color::RED:
+		TextureManager::getInstance().loadTexture("flame_red.png");
+		texture = &TextureManager::getInstance().getTexture("flame_red.png");
+		break;
+	case engine::Color::YELLOW:
+		TextureManager::getInstance().loadTexture("flame_yellow.png");
+		texture = &TextureManager::getInstance().getTexture("flame_yellow.png");
+		break;
+	case engine::Color::WHITE:
+		TextureManager::getInstance().loadTexture("flame_white.png");
+		texture = &TextureManager::getInstance().getTexture("flame_white.png");
+		break;
+	case engine::Color::VIOLET:
+		TextureManager::getInstance().loadTexture("flame_white.png");
+		texture = &TextureManager::getInstance().getTexture("flame_white.png");
+		break;
+	}
+
+	std::shared_ptr<GameObject> torch = std::make_shared<GameObject>(position, "torch");
+
+	TextureManager::getInstance().loadTexture("torch_handle.png");
+	sf::Texture &handleTex = TextureManager::getInstance().getTexture("torch_handle.png");
+
+	std::shared_ptr<AnimationComponent> animComp = std::make_shared<TorchAnimationComponent>(torch, Layer::BACKGROUND3, handleTex, 0.1f);
+
+	torch->addComponent(animComp);
+
+	Animation flameAnimation;
+	flameAnimation.setSpriteSheet(*texture);
+	flameAnimation.addFrame(sf::IntRect(0, 0, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(64, 0, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(128, 0, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(192, 0, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(0, 64, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(64, 64, 64, 64));
+
+	animComp->addAnimation(flameAnimation, "flameAnimation");
+
+	animComp->setAnimation("flameAnimation");
+
+	return torch;
 }
