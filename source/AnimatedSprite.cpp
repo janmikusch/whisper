@@ -146,6 +146,7 @@ void AnimatedSprite::setFrame(std::size_t newFrame, bool resetTime)
 
 void AnimatedSprite::update(sf::Time deltaTime)
 {
+	m_isFinished = false;
 	// if not paused and we have a valid animation
 	if (!m_isPaused && m_animation)
 	{
@@ -162,14 +163,15 @@ void AnimatedSprite::update(sf::Time deltaTime)
 			if (m_currentFrame + 1 < m_animation->getSize())
 			{
 				m_currentFrame++;
-				m_isFinished = false;
 			}
 			else
 			{
+				if(m_currentFrame+1 == m_animation->getSize())
+					m_isFinished = true;
+
 				// animation has ended
 				m_currentFrame = 0; // reset to start
 
-				m_isFinished = true;
 				if (!m_isLooped)
 				{
 					m_isPaused = true;

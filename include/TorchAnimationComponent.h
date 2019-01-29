@@ -5,16 +5,17 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include "Layer.h"
 #include "RenderComponent.h"
+#include "AnimationComponent.h"
+#include "Animation.h"
+#include "AnimatedSprite.h"
 
 
-class BoundingboxComponent : public RenderComponent, public TransformableComponent
+class TorchAnimationComponent : public AnimationComponent
 {
 public:
-	explicit BoundingboxComponent(std::shared_ptr<GameObject> parent, sf::FloatRect& aabb, Layer layer = Layer::DEBUG_BOUNDINGBOX, sf::Vector2f displacement = sf::Vector2f(0,0));
-
+	TorchAnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& handle, float animationTime = 0.2f);
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;
-	void init() override;
 
 	void setPosition(const sf::Vector2f &position) override;
 	void setRotation(float angle) override;
@@ -23,13 +24,8 @@ public:
 	void move(const sf::Vector2f &movement) override;
 	void scale(const sf::Vector2f& factor) override;
 	void rotate(float angle) override;
-	void setDisplacement(sf::Vector2f displacement) { m_displacement = displacement; };
 
-	void setColor(sf::Color c);
-
-protected:
-	// The debug geometry to visualize the bounding geometry of the object.
-	// Can be part of a BBoxCollisionComponent.
-	sf::RectangleShape m_debugGeometry;
-	sf::Vector2f m_displacement;
+private:
+	sf::Vector2f m_displace = sf::Vector2f(0,30);
+	sf::Sprite m_handle;
 };

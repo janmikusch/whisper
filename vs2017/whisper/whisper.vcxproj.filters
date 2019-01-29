@@ -270,6 +270,12 @@
     <ClCompile Include="..\..\source\ButtonComponent.cpp">
       <Filter>Source Files\GameObject\Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\TorchAnimationComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\ButtonRoomComponent.cpp">
+      <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">
@@ -398,9 +404,6 @@
     <ClInclude Include="..\..\include\PlayerMoveBehaviour.h">
       <Filter>Header Files\GameObject\Behaviour\MoveBehaviour</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\GameStateManager.h">
-      <Filter>Header Files\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\CharacterMoveComponent.h">
       <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
     </ClInclude>
@@ -452,8 +455,17 @@
     <ClInclude Include="..\..\include\ButtonComponent.h">
       <Filter>Header Files\GameObject\Components\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\ButtonColor.h">
+    <ClInclude Include="..\..\include\Color.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\TorchAnimationComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\GameStateManager.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ButtonRoomComponent.h">
+      <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

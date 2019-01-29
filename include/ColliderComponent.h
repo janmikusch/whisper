@@ -16,7 +16,7 @@ public:
 	std::shared_ptr<Rigidbody> getRigidbody();
 	bool isTrigger();
 	sf::FloatRect getShape() { return m_shape; }
-
+	void setDisplacement(sf::Vector2f displacement) { m_displacement = displacement; };
 
 	void setPosition(const sf::Vector2f& position) override;
 	void setRotation(float angle) override;
@@ -30,4 +30,5 @@ private:
 	sf::FloatRect m_shape;
 	bool m_isTrigger;
 	std::shared_ptr<Rigidbody> m_rigidbody;
+	sf::Vector2f m_displacement = sf::Vector2f(0, 0);
 };

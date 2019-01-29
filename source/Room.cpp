@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Room.h"
 #include "GameObjectManager.h"
+#include "EventBus.h"
 
 Room::Room(std::string name): m_name(name),m_completed(false)
 {
@@ -89,4 +90,10 @@ void Room::removeRoomObjectsFromGame()
 	{
 		gom.remove(it);
 	}
+}
+
+void Room::setCompleted(bool state)
+{
+	m_completed = state;
+	//EventBus::getInstance().notify(engine::EventType::ROOMUNLOCKED, std::make_shared<engine::GameEvent>());
 }

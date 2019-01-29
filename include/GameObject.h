@@ -16,7 +16,7 @@ class Component; //GameObject uses Component, vice versa
 class GameObject:public sf::Transformable
 {
 public:
-	GameObject() = default;
+	GameObject();
 	GameObject(sf::Vector2f position,std::string name);
 	void update(const float fDeltaTimeSeconds);
 	void draw();
@@ -34,6 +34,7 @@ public:
 	
 
 	std::string getName() const { return  m_name; };
+	int getId() const { return  m_identifier; };
 
 	template<class T>
 	std::shared_ptr<T> getComponent(); // where T is Component
@@ -42,6 +43,7 @@ public:
 private:
 	std::vector<std::shared_ptr<Component>> m_components{};
 	std::string m_name;
+	int m_identifier;
 };
 
 

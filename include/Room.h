@@ -23,7 +23,7 @@ public:
 	std::string getName() { return m_name; };
 
 	bool isCompleted() { return m_completed; };
-	void setCompleted(bool state = true) { m_completed = state; };
+	void setCompleted(bool state = true);;
 
 private:
 	std::string m_name;

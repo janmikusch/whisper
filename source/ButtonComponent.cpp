@@ -5,8 +5,8 @@
 #include "RoomManager.h"
 #include "EventBus.h"
 
-ButtonComponent::ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture) :
-	RenderComponent(parent, layer)
+ButtonComponent::ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, engine::Color c, int id) :
+	RenderComponent(parent, layer), m_color(c), m_id(id)
 {
 	m_buttonPressed.setTexture(texture);
 	m_buttonReleased.setTexture(texture);
@@ -84,7 +84,6 @@ void ButtonComponent::onNotify(const GameObject& collidedWith, std::shared_ptr<e
 	if (cge->type == engine::CollisionGameEvent::CollisionType::EXIT)
 		m_isPressed = false;
 }
-
 
 void ButtonComponent::draw()
 {

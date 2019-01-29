@@ -13,4 +13,7 @@ public:
 	void draw() override;
 	void init() override;
 	void exit() override;
+	void pause(bool b) { m_pause = b; };
+private:
+	bool m_pause;
 };

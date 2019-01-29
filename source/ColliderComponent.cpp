@@ -21,6 +21,8 @@ void ColliderComponent::draw()
 
 void ColliderComponent::init()
 {
+	m_shape.left += m_displacement.x;
+	m_shape.top += m_displacement.y;
 }
 
 std::shared_ptr<Rigidbody> ColliderComponent::getRigidbody()
@@ -41,8 +43,8 @@ bool ColliderComponent::isTrigger()
 
 void ColliderComponent::setPosition(const sf::Vector2f& position)
 {
-	m_shape.left = position.x;
-	m_shape.top = position.y;
+	m_shape.left = position.x + m_displacement.x;
+	m_shape.top = position.y + m_displacement.y;
 }
 
 void ColliderComponent::setRotation(float angle)

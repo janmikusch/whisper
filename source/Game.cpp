@@ -71,7 +71,11 @@ bool Game::init()
 
 	m_gameStateManager.addState(State::StateType::STATE_MENU,menuState);
 	m_gameStateManager.addState(State::StateType::STATE_GAMEPLAY,gameplayState);
+
 	EventBus::getInstance().addObserver(engine::EventType::GAMESTART,&m_gameStateManager);
+	EventBus::getInstance().addObserver(engine::EventType::GAMEQUIT,&m_gameStateManager);
+	EventBus::getInstance().addObserver(engine::EventType::GAMECONTINUE,&m_gameStateManager);
+	EventBus::getInstance().addObserver(engine::EventType::GAMECOMPLETE,&m_gameStateManager);
 
 	AudioManager& sm = AudioManager::getInstance();
 
