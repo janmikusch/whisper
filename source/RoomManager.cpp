@@ -184,6 +184,10 @@ void RoomManager::onNotify(engine::EventType type, std::shared_ptr<engine::GameE
 	{
 		getDamange();
 	}
+	if (type == engine::EventType::ROOMUNLOCKED)
+	{
+		getCurrentRoom()->setCompleted(true);
+	}
 }
 
 void RoomManager::getDamange()
@@ -199,6 +203,7 @@ RoomManager::RoomManager():EventObserver()
 {
 	EventBus::getInstance().addObserver(engine::DOORENTER, this);
 	EventBus::getInstance().addObserver(engine::DAMAGETAKEN, this);
+	EventBus::getInstance().addObserver(engine::ROOMUNLOCKED, this);
 
 }
 

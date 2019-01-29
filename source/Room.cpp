@@ -95,5 +95,5 @@ void Room::removeRoomObjectsFromGame()
 void Room::setCompleted(bool state)
 {
 	m_completed = state;
-	EventBus::getInstance().notify(engine::EventType::ROOMUNLOCKED, std::make_shared<engine::GameEvent>());
+	//EventBus::getInstance().notify(engine::EventType::ROOMUNLOCKED, std::make_shared<engine::GameEvent>());
 }
