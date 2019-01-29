@@ -264,6 +264,12 @@
     <ClCompile Include="..\..\source\Room.cpp">
       <Filter>Source Files\Room</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\Room.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\ButtonComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">
@@ -441,6 +447,12 @@
       <Filter>Header Files\GameObject\Components\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\GUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ButtonComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ButtonColor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
