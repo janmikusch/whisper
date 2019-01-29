@@ -73,7 +73,7 @@ void RoomManager::createRooms()
 	roomObjects_11.push_back(fader);
 	roomObjects_12.push_back(fader);
 
-	createObjectsForButtonRoom(roomObjects_00,engine::Random::getIntBetween(3,6));
+	createButtons(roomObjects_00,engine::Random::getIntBetween(3,6));
 
 	room_00->setRoomObjects(roomObjects_00);
 	room_01->setRoomObjects(roomObjects_01);
@@ -201,7 +201,6 @@ void RoomManager::createObjectsForButtonRoom(std::vector<std::shared_ptr<GameObj
 {
 	createButtons(room_objects, i);
 	createTorches(room_objects);
-	createButtonRoomComponentObject(room_objects);
 }
 
 void RoomManager::createButtons(std::vector<std::shared_ptr<GameObject>>& room_objects, int i)
