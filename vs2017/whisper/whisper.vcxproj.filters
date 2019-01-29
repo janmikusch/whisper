@@ -443,5 +443,8 @@
     <ClInclude Include="..\..\include\ButtonComponent.h">
       <Filter>Header Files\GameObject\Components\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\ButtonColor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

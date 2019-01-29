@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "GameStateManager.h"
 #include "Room.h"
+#include "ButtonColor.h"
 
 class GameObjectCreator
 {
@@ -20,7 +21,7 @@ public:
 
 	std::shared_ptr<GameObject> createDoor(Room::Direction dir, sf::Vector2f position = sf::Vector2f());
 	std::shared_ptr<GameObject> createFade(sf::Vector2f position = sf::Vector2f());
-	std::shared_ptr<GameObject> createButton(sf::Vector2f position);
+	std::shared_ptr<GameObject> createButton(sf::Vector2f position, ButtonColor c);
 
 private:
 	GameObjectCreator() = default;

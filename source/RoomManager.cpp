@@ -4,6 +4,7 @@
 #include "FadeComponent.h"
 #include "GameObjectCreator.h"
 #include "window.h"
+#include "ButtonColor.h"
 
 RoomManager& RoomManager::getInstance()
 {
@@ -203,11 +204,13 @@ void RoomManager::createButtons(std::vector<std::shared_ptr<GameObject>> &room_o
 
 	for (int i = 0; i < 6; i++)
 	{
+		ButtonColor c = static_cast<ButtonColor>(i);
+
 		buttonPosition.x += rangeX / 4;
 
 		sf::Vector2f positionWithOffset = sf::Vector2f(buttonPosition.x - buttonWidth / 2, buttonPosition.y - buttonWidth / 2);
 
-		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset);
+		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, c);
 
 		if (buttonPosition.x >= borderSize + (rangeX / 4) * 3)
 		{

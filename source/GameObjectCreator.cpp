@@ -371,28 +371,45 @@ std::shared_ptr<GameObject> GameObjectCreator::createFade(sf::Vector2f position)
 	return fader;
 }
 
-std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f position)
+std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f position, ButtonColor c)
 {
 	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(64, 64));
 
-	TextureManager::getInstance().loadTexture("button_black.png");
-	sf::Texture& buttonBlackTex = TextureManager::getInstance().getTexture("button_black.png");
-	TextureManager::getInstance().loadTexture("button_blue.png");
-	sf::Texture& buttonBlueTex = TextureManager::getInstance().getTexture("button_blue.png");
-	TextureManager::getInstance().loadTexture("button_green.png");
-	sf::Texture& buttonGreenTex = TextureManager::getInstance().getTexture("button_green.png");
-	TextureManager::getInstance().loadTexture("button_red.png");
-	sf::Texture& buttonRedTex = TextureManager::getInstance().getTexture("button_red.png");
-	TextureManager::getInstance().loadTexture("button_yellow.png");
-	sf::Texture& buttonYellowTex = TextureManager::getInstance().getTexture("button_yellow.png");
-	TextureManager::getInstance().loadTexture("button_white.png");
-	sf::Texture& buttonWhiteTex = TextureManager::getInstance().getTexture("button_white.png");
+	sf::Texture *texture = nullptr;
+
+	switch (c)
+	{
+	case BLACK:
+		TextureManager::getInstance().loadTexture("button_black.png");
+		texture = &TextureManager::getInstance().getTexture("button_black.png");
+		break;
+	case BLUE:
+		TextureManager::getInstance().loadTexture("button_blue.png");
+		texture = &TextureManager::getInstance().getTexture("button_blue.png");
+		break;
+	case GREEN:
+		TextureManager::getInstance().loadTexture("button_green.png");
+		texture = &TextureManager::getInstance().getTexture("button_green.png");
+		break;
+	case RED:
+		TextureManager::getInstance().loadTexture("button_red.png");
+		texture = &TextureManager::getInstance().getTexture("button_red.png");
+		break;
+	case YELLOW:
+		TextureManager::getInstance().loadTexture("button_yellow.png");
+		texture = &TextureManager::getInstance().getTexture("button_yellow.png");
+		break;
+	case WHITE:
+		TextureManager::getInstance().loadTexture("button_white.png");
+		texture = &TextureManager::getInstance().getTexture("button_white.png");
+		break;
+	}
 	
 	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "button");
 
 	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, rect, true);
 	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(button, 1, false, true);
-	std::shared_ptr<ButtonComponent> buttonComp = std::make_shared<ButtonComponent>(button, Layer::BACKGROUND3, buttonRedTex);
+	std::shared_ptr<ButtonComponent> buttonComp = std::make_shared<ButtonComponent>(button, Layer::BACKGROUND3, *texture);
 
 	button->addComponent(collider);
 	button->addComponent(rigidbody);
