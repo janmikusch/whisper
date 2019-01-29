@@ -380,8 +380,8 @@ std::shared_ptr<GameObject> GameObjectCreator::createFade(sf::Vector2f position)
 
 std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f position, ButtonColor c)
 {
-	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(64, 64));
-
+	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(54, 56));
+	sf::Vector2f displacement = sf::Vector2f(5, 0);
 	sf::Texture *texture = nullptr;
 
 	switch (c)
@@ -418,12 +418,15 @@ std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f positio
 	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(button, 1, false, true);
 	std::shared_ptr<ButtonComponent> buttonComp = std::make_shared<ButtonComponent>(button, Layer::BACKGROUND3, *texture);
 
+	collider->setDisplacement(displacement);
+
 	button->addComponent(collider);
 	button->addComponent(rigidbody);
 	button->addComponent(buttonComp);
 
 #ifdef _DEBUG
 	auto boundingbox = std::make_shared <BoundingboxComponent>(button, rect, Layer::DEBUG_BOUNDINGBOX);
+	boundingbox->setDisplacement(displacement);
 	button->addComponent(boundingbox);
 #endif
 
