@@ -181,3 +181,8 @@ RoomManager::RoomManager():EventObserver()
 {
 	EventBus::getInstance().addObserver(engine::DOORENTER, this);
 }
+
+std::shared_ptr<Room> RoomManager::getRoom(int i)
+{
+	return m_rooms[i];
+}
