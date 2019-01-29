@@ -21,6 +21,7 @@ public:
 private:
 	RoomManager();
 
+	void createButtons(std::vector<std::shared_ptr<GameObject>> &room_objects);
 	std::shared_ptr<Room> m_currentRoom;
 	std::vector<std::shared_ptr<Room>> m_rooms{};
 };

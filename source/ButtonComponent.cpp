@@ -5,8 +5,8 @@
 #include "RoomManager.h"
 #include "EventBus.h"
 
-ButtonComponent::ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, std::shared_ptr<Room> room) :
-	RenderComponent(parent, layer), m_room(room)
+ButtonComponent::ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture) :
+	RenderComponent(parent, layer)
 {
 	m_buttonPressed.setTexture(texture);
 	m_buttonReleased.setTexture(texture);
@@ -90,8 +90,5 @@ void ButtonComponent::draw()
 {
 	auto window = engine::Window::getInstance().getWindow();
 
-	if (RoomManager::getInstance().getCurrentRoom() == m_room)
-	{
-		window->draw(m_currentState);
-	}
+	window->draw(m_currentState);
 }

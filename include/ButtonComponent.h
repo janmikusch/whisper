@@ -12,7 +12,7 @@
 class ButtonComponent : public RenderComponent, public TransformableComponent, public CollisionObserver
 {
 public:
-	explicit ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, std::shared_ptr<Room> room);
+	explicit ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture);
 
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;
@@ -32,5 +32,4 @@ protected:
 	sf::Sprite m_buttonReleased;
 	sf::Sprite m_currentState;
 	bool m_isPressed = false; 
-	std::shared_ptr<Room> m_room;
 };
