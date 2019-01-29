@@ -145,7 +145,7 @@ void GUI::createMenuGui()
 
 
 
-	tgui::Label::Ptr label = tgui::Label::create("Wisper");
+	tgui::Label::Ptr label = tgui::Label::create("Whisper");
 	label->setTextSize(150);
 	label->setInheritedFont(FontManager::getInstance().getFont("Neverwinter"));
 	label->setPosition({ "50% - width / 2", "10%" });

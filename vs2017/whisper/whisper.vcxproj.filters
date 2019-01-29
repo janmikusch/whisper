@@ -273,6 +273,9 @@
     <ClCompile Include="..\..\source\TorchAnimationComponent.cpp">
       <Filter>Source Files\GameObject\Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\ButtonRoomComponent.cpp">
+      <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">
@@ -460,6 +463,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\GameStateManager.h">
       <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ButtonRoomComponent.h">
+      <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

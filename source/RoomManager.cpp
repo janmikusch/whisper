@@ -7,6 +7,8 @@
 #include "Color.h"
 #include "RandomNumber.h"
 #include "ButtonComponent.h"
+#include "ButtonRoomComponent.h"
+#include "RigidbodyComponent.h"
 
 RoomManager& RoomManager::getInstance()
 {
@@ -74,7 +76,7 @@ void RoomManager::createRooms()
 	roomObjects_11.push_back(fader);
 	roomObjects_12.push_back(fader);
 
-	createObjectsForButtonRoom(roomObjects_00,engine::Random::getIntBetween(3,6));
+	createObjectsForButtonRoom(roomObjects_00, 3);//engine::Random::getIntBetween(3,6));
 
 	createTorches(roomObjects_00);
 
@@ -277,22 +279,38 @@ void RoomManager::createTorches(std::vector<std::shared_ptr<GameObject>>& room_o
 
 void RoomManager::createButtonRoomChecker(std::vector<std::shared_ptr<GameObject>>& room_objects, int i)
 {
+	std::shared_ptr<GameObject> correctButton = nullptr;
 	switch (i)
 	{
 	case 3:
+		correctButton = calcCorrectButtonFrom3(room_objects);
 		break;
 	case 4:
+		correctButton = calcCorrectButtonFrom4(room_objects);
 		break;
 	case 5:
+		correctButton = calcCorrectButtonFrom5(room_objects);
 		break;
 	case 6:
+		correctButton = calcCorrectButtonFrom6(room_objects);
 		break;
 	default:
 		sf::err() << "wrong int input " << std::endl;
 		return;
 	}
 
-	//auto brc = GameObjectCreator::getInstance().createButtonRoomChecker()
+	auto brc = GameObjectCreator::getInstance().createButtonRoomChecker(sf::Vector2f{ 0,0 }, correctButton);
+
+	auto brComp = brc->getComponent<ButtonRoomComponent>();
+
+	for(auto it:room_objects)
+	{
+		if(it->getName() != "button")
+			continue;
+		it->getComponent<Rigidbody>()->addObserver(*brComp);
+	}
+
+	room_objects.push_back(brc);
 }
 
 void RoomManager::create3Buttons(std::vector<std::shared_ptr<GameObject>>& room_objects)
@@ -495,7 +513,7 @@ std::shared_ptr<Room> RoomManager::getRoom(int i)
 }
 
 
-std::shared_ptr<GameObject> findButton(std::vector<std::shared_ptr<GameObject>> buttons, int id)
+std::shared_ptr<GameObject> RoomManager::findButton(std::vector<std::shared_ptr<GameObject>> buttons, int id)
 {
 	for (auto b : buttons)
 	{

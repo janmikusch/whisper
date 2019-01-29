@@ -30,8 +30,8 @@ public:
 	void addObserver(CollisionObserver& observer);
 	void removeObserver(CollisionObserver& observer);
 
-	float getMass() { return m_mass; };
-	float getInvMass() { return m_invMass; };
+	float getMass() { return !m_isStatic ? m_mass : 0; };
+	float getInvMass() { return !m_isStatic ? m_invMass : 0; };
 	bool isStatic() { return m_isStatic; }
 	void setGrounded(bool isGrounded) { m_isGrounded = isGrounded; };
 private:
