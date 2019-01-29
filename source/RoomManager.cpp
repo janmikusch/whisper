@@ -3,6 +3,8 @@
 #include "GameObjectManager.h"
 #include "FadeComponent.h"
 #include "GameObjectCreator.h"
+#include "window.h"
+#include "ButtonColor.h"
 
 RoomManager& RoomManager::getInstance()
 {
@@ -76,6 +78,7 @@ void RoomManager::createRooms()
 	roomObjects_11.push_back(fader);
 	roomObjects_12.push_back(fader);
 
+	createButtons(roomObjects_00);
 
 	room_00->setRoomObjects(roomObjects_00);
 	room_01->setRoomObjects(roomObjects_01);
@@ -180,4 +183,41 @@ void RoomManager::onNotify(engine::EventType type, std::shared_ptr<engine::GameE
 RoomManager::RoomManager():EventObserver()
 {
 	EventBus::getInstance().addObserver(engine::DOORENTER, this);
+}
+
+std::shared_ptr<Room> RoomManager::getRoom(int i)
+{
+	return m_rooms[i];
+}
+
+void RoomManager::createButtons(std::vector<std::shared_ptr<GameObject>> &room_objects)
+{
+	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
+
+	int borderSize = 120;
+	int buttonWidth = 64;
+
+	float rangeX = winSize.x - 2 * borderSize;
+	float rangeY = winSize.y - 2 * borderSize;
+
+	sf::Vector2f buttonPosition = sf::Vector2f(borderSize, borderSize + rangeY / 3);
+
+	for (int i = 0; i < 6; i++)
+	{
+		ButtonColor c = static_cast<ButtonColor>(i);
+
+		buttonPosition.x += rangeX / 4;
+
+		sf::Vector2f positionWithOffset = sf::Vector2f(buttonPosition.x - buttonWidth / 2, buttonPosition.y - buttonWidth / 2);
+
+		std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButton(positionWithOffset, c);
+
+		if (buttonPosition.x >= borderSize + (rangeX / 4) * 3)
+		{
+			buttonPosition.x = borderSize;
+			buttonPosition.y += rangeY / 3;
+		}
+
+		room_objects.push_back(button);
+	}
 }

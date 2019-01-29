@@ -29,7 +29,7 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 	{	
 		if (m_state != AnimationState::ATTACK)
 		{
-			const float speed = 100.0f;
+			const float speed = 150.0f;
 			sf::Vector2f movement = m_moveBehaviour->getMovement();
 
 			float length = std::sqrt((movement.x * movement.x) + (movement.y * movement.y));
