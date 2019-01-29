@@ -19,7 +19,8 @@ void GUI::init()
 	tgui::Theme::setDefault(&m_theme);
 	//register to EventBus
 	//TODO
-	//EventBus::getInstance().addObserver(engine::EventType::,this)
+	EventBus::getInstance().addObserver(engine::EventType::GAMEPAUSE, this);
+
 }
 
 void GUI::init(GameplayState::StateType type)
@@ -43,6 +44,10 @@ void GUI::draw()
 void GUI::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent)
 {
 	//TODO
+	if(type == EventType::GAMEPAUSE)
+	{
+		m_gui.get("pausemenu")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
+	}
 }
 
 tgui::Gui& GUI::getGui()
@@ -144,4 +149,42 @@ void GUI::createMenuGui()
 void GUI::createGameplayGui()
 {
 	m_gui.removeAllWidgets();
+
+
+	tgui::Panel::Ptr pausemenu = tgui::Panel::create();
+	pausemenu->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(1));
+	pausemenu->setSize("60%", "40%");
+	pausemenu->setPosition("20%", "30%");
+	auto bgcolor = tgui::Color(8, 43, 43, 255);
+	pausemenu->getRenderer()->setBackgroundColor(bgcolor);
+	m_gui.add(pausemenu, "pausemenu");
+
+	
+	tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
+	layout->setInheritedFont(FontManager::getInstance().getFont("Arial"));
+	layout->setSize("60%", "50%");
+	layout->setPosition("20%", "40%");
+	pausemenu->add(layout);
+
+	tgui::Label::Ptr title = tgui::Label::create("Pause");
+	title->setTextSize(50);
+	title->setPosition({ "50% - width / 2", "10%" });
+	pausemenu->add(title);
+
+	tgui::Button::Ptr btn_continue = tgui::Button::create("Continue");
+	btn_continue->setTextSize(30);
+	btn_continue->connect("pressed", [&]()
+	{
+		m_gui.get("pausemenu")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));		
+		EventBus::getInstance().notify(engine::GAMECONTINUE, make_shared<GameEvent>());
+	});
+	layout->add(btn_continue);
+	
+	tgui::Button::Ptr btn_quit = tgui::Button::create("Give Up");
+	btn_quit->setTextSize(30);
+	btn_quit->connect("pressed", [&]() { EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>()); });
+	layout->add(btn_quit);
+
+	layout->insertSpace(1, 0.3f);
+
 }
