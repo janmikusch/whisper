@@ -4,7 +4,7 @@
 #include "FadeComponent.h"
 #include "GameObjectCreator.h"
 #include "window.h"
-#include "ButtonColor.h"
+#include "Color.h"
 
 RoomManager& RoomManager::getInstance()
 {
@@ -204,7 +204,7 @@ void RoomManager::createButtons(std::vector<std::shared_ptr<GameObject>> &room_o
 
 	for (int i = 0; i < 6; i++)
 	{
-		ButtonColor c = static_cast<ButtonColor>(i);
+		Color c = static_cast<Color>(i);
 
 		buttonPosition.x += rangeX / 4;
 
