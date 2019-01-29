@@ -7,6 +7,6 @@ namespace engine
 	{
 	public:
 		static int getIntBetween(int min, int max);
-		static float getFloatBetween(float min, float max);
+		static float getDoubleBetween(double min, double max);
 	};
 }
