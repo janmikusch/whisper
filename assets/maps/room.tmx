@@ -39,7 +39,7 @@
   <object id="4" name="Door" type="door_entry_bottom" x="446.848" y="575.909" width="64" height="64"/>
   <object id="5" name="Door" type="door_entry_left" x="63.4545" y="319.727" width="64" height="64"/>
   <object id="7" name="static_collider" type="static_collider" x="0" y="585.333" width="960" height="117.333"/>
-  <object id="8" name="static_collider" x="0" y="0" width="960" height="109"/>
+  <object id="8" name="static_collider" type="static_collider" x="0" y="0" width="960" height="109"/>
   <object id="9" name="static_collider" type="static_collider" x="-1" y="1" width="115" height="704"/>
   <object id="10" name="static_collider" type="static_collider" x="847" y="-2" width="113" height="705"/>
   <object id="14" name="character" type="character" x="449" y="319" width="63" height="66">
