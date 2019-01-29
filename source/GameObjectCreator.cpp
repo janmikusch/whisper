@@ -212,6 +212,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 	aabb.height -= 19;
 	aabb.width -= 36;
 
+
 	auto rigidbody = std::make_shared<Rigidbody>(character, 1, false, false);
 	auto collider = std::make_shared<ColliderComponent>(character, aabb, false);
 	collider->setDisplacement(displacement);
