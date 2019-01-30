@@ -647,3 +647,15 @@ std::shared_ptr<GameObject> GameObjectCreator::createButtonForLavaRiddle(sf::Vec
 
 	return button;
 }
+
+std::shared_ptr<GameObject> GameObjectCreator::createWaterForLavaRiddle(sf::Vector2f position)
+{
+	TextureManager::getInstance().loadTexture("lava_map_water.png");
+	sf::Texture& texture = TextureManager::getInstance().getTexture("lava_map_water.png");
+
+	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "buttonForLavaRiddle");
+
+
+
+	return button;
+}
