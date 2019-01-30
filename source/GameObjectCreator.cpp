@@ -20,6 +20,7 @@
 #include "ButtonComponent.h"
 #include "TorchAnimationComponent.h"
 #include "ButtonRoomComponent.h"
+#include "TorchRoomSolverComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -540,4 +541,17 @@ std::shared_ptr<GameObject> GameObjectCreator::createToggleTorch(sf::Vector2f po
 #endif
 
 	return toggleTorch;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createToggleAnswerObject(sf::Vector2f position, int answer)
+{
+	std::shared_ptr<GameObject> torchAnswer = std::make_shared<GameObject>(position, "torchAnswer");
+
+	TextureManager::getInstance().loadTexture("answer_background.png");
+	sf::Texture& texture = TextureManager::getInstance().getTexture("answer_background.png");
+
+	torchAnswer->addComponent(std::make_shared<TorchRoomSolverComponent>(torchAnswer, answer, texture));
+
+
+	return torchAnswer;
 }
