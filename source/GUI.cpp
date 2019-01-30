@@ -80,7 +80,7 @@ void GUI::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> ga
 	if(type == engine::EventType::ROOMUNLOCKED)
 	{
 		int count = RoomManager::getInstance().countNotCompleted();
-		std::string text = "Rooms reft: ";
+		std::string text = "Rooms left: ";
 		m_gui.get<tgui::Label>("roomsleft")->setText(text + std::to_string(count));
 	}
 
@@ -303,7 +303,7 @@ void GUI::createGameplayGui()
 	heart3->setPosition({ "5% + width * 2", "1%" });
 	m_gui.add(heart3, "heart3");
 
-	tgui::Label::Ptr rooms = tgui::Label::create("Rooms reft: 5");
+	tgui::Label::Ptr rooms = tgui::Label::create("Rooms left: XXX");
 	rooms->setTextSize(20);
 	rooms->setPosition({ "95% - width", "1%" });
 	m_gui.add(rooms, "roomsleft");
