@@ -481,7 +481,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createTorch(sf::Vector2f position
 	TextureManager::getInstance().loadTexture("torch_handle.png");
 	sf::Texture &handleTex = TextureManager::getInstance().getTexture("torch_handle.png");
 
-	std::shared_ptr<AnimationComponent> animComp = std::make_shared<TorchAnimationComponent>(torch, Layer::BACKGROUND3, handleTex, 0.1f);
+	std::shared_ptr<AnimationComponent> animComp = std::make_shared<TorchAnimationComponent>(torch, Layer::MIDDLE1, handleTex, 0.1f);
 
 	torch->addComponent(animComp);
 
@@ -521,9 +521,9 @@ std::shared_ptr<GameObject> GameObjectCreator::createToggleTorch(sf::Vector2f po
 
 	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(64, 64));
 
-	sf::Vector2f displacement(18, 40);
+	sf::Vector2f displacement(18, 50);
 
-	rect.height -= 45;
+	rect.height -= 35;
 	rect.width -= 36;
 	
 	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(toggleTorch, rect, false);
