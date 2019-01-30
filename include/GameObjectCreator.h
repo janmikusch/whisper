@@ -28,6 +28,8 @@ public:
 	std::shared_ptr<GameObject> createToggleTorch(sf::Vector2f position, engine::Color c);
 	std::shared_ptr<GameObject> createToggleAnswerObject(sf::Vector2f position, int answer);
 
+	std::shared_ptr<GameObject> createLava(sf::Vector2f position);
+
 private:
 	GameObjectCreator() = default;
 };

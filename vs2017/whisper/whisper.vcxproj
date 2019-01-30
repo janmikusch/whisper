@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\include\LavaComponent.cpp" />
     <ClCompile Include="..\..\source\AiMoveBehaviour.cpp" />
     <ClCompile Include="..\..\source\AnimatedSprite.cpp" />
     <ClCompile Include="..\..\source\Animation.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="..\..\include\HeroAnimationComponent.h" />
     <ClInclude Include="..\..\include\InputComponent.h" />
     <ClInclude Include="..\..\include\InputManager.h" />
+    <ClInclude Include="..\..\include\LavaComponent.h" />
     <ClInclude Include="..\..\include\Layer.h" />
     <ClInclude Include="..\..\include\LayerComponent.h" />
     <ClInclude Include="..\..\include\MenuState.h" />
