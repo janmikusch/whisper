@@ -7,7 +7,7 @@
 
 enum Layer
 {
-	NOTDEFINED,BACKGROUND1, BACKGROUND2, BACKGROUND3,MIDDLE1, MIDDLE2, MIDDLE3, FOREGROUND1, FOREGROUND2, FOREGROUND3, DEBUG_BOUNDINGBOX
+	NOTDEFINED,BACKGROUND1, BACKGROUND2, BACKGROUND3, BACKGROUND4,BACKGROUND5,MIDDLE1, MIDDLE2, MIDDLE3, FOREGROUND1, FOREGROUND2, FOREGROUND3, DEBUG_BOUNDINGBOX
 };
 
 class StringToLayer
@@ -24,7 +24,9 @@ public:
 			{"middle3",Layer::MIDDLE3},
 			{"background1",Layer::BACKGROUND1},
 			{"background2",Layer::BACKGROUND2},
-			{"background3",Layer::BACKGROUND3}
+			{"background3",Layer::BACKGROUND3},
+			{"background3",Layer::BACKGROUND4},
+			{"background3",Layer::BACKGROUND5}
 		};
 
 		if (stringToLayer.find(str) == stringToLayer.end())
