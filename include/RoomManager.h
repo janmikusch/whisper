@@ -24,25 +24,6 @@ public:
 private:
 	RoomManager();
 
-	//ButtonRoom
-	void createObjectsForButtonRoom(std::vector<std::shared_ptr<GameObject>> &room_objects, int i);
-	void createButtons(std::vector<std::shared_ptr<GameObject>> &room_objects, int i);
-	void createTorches(std::vector<std::shared_ptr<GameObject>> &room_objects);
-	void createButtonRoomChecker(std::vector<std::shared_ptr<GameObject>> &room_objects, int i);
-	void create3Buttons(std::vector<std::shared_ptr<GameObject>> &room_objects);
-	void create4Buttons(std::vector<std::shared_ptr<GameObject>> &room_objects);
-	void create5Buttons(std::vector<std::shared_ptr<GameObject>> &room_objects);
-	void create6Buttons(std::vector<std::shared_ptr<GameObject>> &room_objects);
-
-	std::shared_ptr<GameObject> calcCorrectButtonFrom3(std::vector<std::shared_ptr<GameObject>> &room_objects);
-	std::shared_ptr<GameObject> calcCorrectButtonFrom4(std::vector<std::shared_ptr<GameObject>> &room_objects);
-	std::shared_ptr<GameObject> calcCorrectButtonFrom5(std::vector<std::shared_ptr<GameObject>> &room_objects);
-	std::shared_ptr<GameObject> calcCorrectButtonFrom6(std::vector<std::shared_ptr<GameObject>> &room_objects);
-
-	std::shared_ptr<GameObject> findButton(std::vector<std::shared_ptr<GameObject>> buttons, int id);
-
-	engine::Color randomColor();
-
 	std::shared_ptr<Room> m_currentRoom;
 	std::vector<std::shared_ptr<Room>> m_rooms{};
 
