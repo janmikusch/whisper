@@ -618,3 +618,32 @@ std::shared_ptr<GameObject> GameObjectCreator::createLava(sf::Vector2f position)
 
 	return lava;
 }
+
+std::shared_ptr<GameObject> GameObjectCreator::createButtonForLavaRiddle(sf::Vector2f position)
+{
+	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(54, 56));
+	sf::Vector2f displacement = sf::Vector2f(5, 0);
+
+	TextureManager::getInstance().loadTexture("button_green.png");
+	sf::Texture& texture = TextureManager::getInstance().getTexture("button_green.png");
+
+	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "buttonForLavaRiddle");
+
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, rect, true, displacement);
+	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(button, 1, false, true);
+	std::shared_ptr<ButtonComponent> buttonComp = std::make_shared<ButtonComponent>(button, Layer::BACKGROUND3, texture, engine::Color::GREEN, 1);
+
+	button->addComponent(collider);
+	button->addComponent(rigidbody);
+	button->addComponent(buttonComp);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(button, rect, Layer::DEBUG_BOUNDINGBOX);
+	boundingbox->setDisplacement(displacement);
+	button->addComponent(boundingbox);
+#endif
+
+	rigidbody->addObserver(*buttonComp);
+
+	return button;
+}
