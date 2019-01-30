@@ -12,10 +12,7 @@ int engine::Random::getIntBetween(int min, int max)
 	std::mt19937 engX(random());
 	std::uniform_int_distribution<> distrX(min, max);
 	auto res = distrX(engX);
-#ifdef _DEBUG
-	sf::err() << "Random int: " << res << std::endl;
-#endif
-		return res;
+	return res;
 }
 
 ///https://stackoverflow.com/questions/686353/random-float-number-generation
