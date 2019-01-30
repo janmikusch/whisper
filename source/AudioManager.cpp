@@ -8,6 +8,11 @@
 
 AudioManager::AudioManager():m_volume(100.0f)
 {
+	//Max paralell sounds
+	for(int i = 0; i < 10; i++)
+	{
+		m_sound.push_back(sf::Sound{});
+	}
 }
 
 AudioManager& AudioManager::getInstance()
@@ -37,10 +42,11 @@ void AudioManager::playSound(std::string name)
 		return;
 	}
 
+	int i = getBufferCounter();
 	
-	m_sound.setVolume(m_volume);
-	m_sound.setBuffer(*m_bufferSounds[name]);
-	m_sound.play();
+	m_sound[i].setVolume(m_volume);
+	m_sound[i].setBuffer(*m_bufferSounds[name]);
+	m_sound[i].play();
 }
 
 void AudioManager::loadSound(std::string name, std::string file)
@@ -158,6 +164,14 @@ void AudioManager::onNotify(engine::EventType type, std::shared_ptr<engine::Game
 			playSound("death10");
 		}
 	}
+}
+
+int AudioManager::getBufferCounter()
+{
+	if (++buffercounter >= m_sound.size())
+		buffercounter = 0;
+	sf::err() << buffercounter << std::endl;
+	return buffercounter;
 }
 
 

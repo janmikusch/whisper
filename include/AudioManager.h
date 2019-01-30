@@ -30,6 +30,7 @@ public:
 
 	void onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent) override;
 
+	int getBufferCounter();;
 
 private:
 	AudioManager();
@@ -37,6 +38,8 @@ private:
 	std::map<std::string,  std::shared_ptr<sf::SoundBuffer>> m_bufferSounds{};
 	std::map<std::string,  std::string> m_musicFiles{};
 	sf::Music m_music;
-	sf::Sound m_sound;
+	std::vector<sf::Sound> m_sound;
 	float m_volume;
+
+	int buffercounter = 0;
 };
