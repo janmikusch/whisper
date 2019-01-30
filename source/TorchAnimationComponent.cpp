@@ -5,8 +5,8 @@
 #include "TextureManager.h"
 #include "CharacterMoveComponent.h"
 
-TorchAnimationComponent::TorchAnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& handle, float animationTime) :
-	AnimationComponent(parent, layer, animationTime)
+TorchAnimationComponent::TorchAnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& handle, engine::Color color, float animationTime) :
+	AnimationComponent(parent, layer, animationTime),m_color(color)
 {
 	m_handle.setTexture(handle);
 }

@@ -3,11 +3,32 @@
 #include "RandomNumber.h"
 #include "window.h"
 #include "GameObjectCreator.h"
+#include <immintrin.h>
+#include "TorchAnimationComponent.h"
 
 void TorchRoomCreator::createObjectsForTorchRoom(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
 	createTorches(room_objects);
 	createAnwerObject(room_objects);
+}
+
+int TorchRoomCreator::getValueFromColor(engine::Color c)
+{
+	switch (c) {
+	case engine::BLUE: break;
+		return 7;
+	case engine::GREEN: break;
+		return 3;
+	case engine::RED: break;
+		return 5;
+	case engine::WHITE: break;
+		return -6;
+	case engine::YELLOW: break;
+		return -4;
+	case engine::VIOLET: break;
+		return -2;
+	}
+	return 0;
 }
 
 void TorchRoomCreator::createTorches(std::vector<std::shared_ptr<GameObject>>& room_objects)
@@ -42,6 +63,38 @@ void TorchRoomCreator::createTorches(std::vector<std::shared_ptr<GameObject>>& r
 
 void TorchRoomCreator::createAnwerObject(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
+	int answer1 = calcAnswer(room_objects);
+	int answer2 = calcAnswer(room_objects);
+	int answer3 = calcAnswer(room_objects);
+	int finalAnwer = 3;
+
+	if (answer1 != 0)
+		finalAnwer = answer1;
+	else if (answer2 != 0)
+		finalAnwer = answer2;
+	
+
+}
+
+int TorchRoomCreator::calcAnswer(std::vector<std::shared_ptr<GameObject>>& room_objects)
+{
+	int answer = 0;
+	for (auto it : room_objects)
+	{
+		if (it->getName() != "toggleTorch")
+		{
+			continue;
+		}
+		int colVal = it->getComponent<TorchAnimationComponent>()->getFlameColor();
+		int onOff = engine::Random::getIntBetween(0, 10);
+		if (onOff > 3)
+		{
+			answer += colVal;
+		}
+	}
+
+	sf::err() << "Answer= " << std::to_string(answer) << std::endl;
+	return answer;
 }
 
 engine::Color TorchRoomCreator::randomTorchColor()
