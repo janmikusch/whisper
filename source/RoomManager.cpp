@@ -98,6 +98,10 @@ void RoomManager::createRooms()
 
 void RoomManager::init()
 {
+	//clear old rooms if left
+	auto empty = std::vector<std::shared_ptr<Room>>();
+	m_rooms.swap(empty);
+
 	createRooms();
 
 	for(auto it:m_rooms)

@@ -28,6 +28,7 @@
     <ClCompile Include="..\..\source\BoundingBoxComponent.cpp" />
     <ClCompile Include="..\..\source\ButtonComponent.cpp" />
     <ClCompile Include="..\..\source\ButtonRoomComponent.cpp" />
+    <ClCompile Include="..\..\source\ButtonRoomCreator.cpp" />
     <ClCompile Include="..\..\source\CharacterAreaComponent.cpp" />
     <ClCompile Include="..\..\source\CharacterMoveBehaviour.cpp" />
     <ClCompile Include="..\..\source\CharacterMoveComponent.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="..\..\include\AssetsManager.h" />
     <ClInclude Include="..\..\include\BoundingBoxComponent.h" />
     <ClInclude Include="..\..\include\ButtonRoomComponent.h" />
+    <ClInclude Include="..\..\include\ButtonRoomCreator.h" />
     <ClInclude Include="..\..\include\Color.h" />
     <ClInclude Include="..\..\include\ButtonComponent.h" />
     <ClInclude Include="..\..\include\CharacterAreaComponent.h" />
