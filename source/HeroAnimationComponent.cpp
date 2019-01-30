@@ -15,8 +15,32 @@ void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 {
 	m_frameTime = m_frameClock.restart();
 	
-	if (m_currentAnimation == "fightUp" || m_currentAnimation == "fightDown" || m_currentAnimation == "fightLeft" || m_currentAnimation == "fightRight" )
+	sf::FloatRect currentAttack;
+
+	if (m_currentAnimation == "fightUp")
+	{
 		m_animatedSprite.setPosition(m_parent->getPosition() + m_diplace);
+		sf::FloatRect attackRect = attackRects["fightUp"];
+		currentAttack = sf::FloatRect(attackRect.left + m_parent->getPosition().x, attackRect.top + m_parent->getPosition().y, attackRect.width, attackRect.height);
+	}
+	else if (m_currentAnimation == "fightDown")
+	{
+		m_animatedSprite.setPosition(m_parent->getPosition() + m_diplace);
+		sf::FloatRect attackRect = attackRects["fightDown"];
+		currentAttack = sf::FloatRect(attackRect.left + m_parent->getPosition().x, attackRect.top + m_parent->getPosition().y, attackRect.width, attackRect.height);
+	}
+	else if (m_currentAnimation == "fightLeft")
+	{
+		m_animatedSprite.setPosition(m_parent->getPosition() + m_diplace);
+		sf::FloatRect attackRect = attackRects["fightLeft"];
+		currentAttack = sf::FloatRect(attackRect.left + m_parent->getPosition().x, attackRect.top + m_parent->getPosition().y, attackRect.width, attackRect.height);
+	}
+	else if (m_currentAnimation == "fightRight")
+	{
+		m_animatedSprite.setPosition(m_parent->getPosition() + m_diplace);
+		sf::FloatRect attackRect = attackRects["fightRight"];
+		currentAttack = sf::FloatRect(attackRect.left + m_parent->getPosition().x, attackRect.top + m_parent->getPosition().y, attackRect.width, attackRect.height);
+	}
 	else
 		m_animatedSprite.setPosition(m_parent->getPosition());
 
@@ -25,4 +49,19 @@ void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 
 	m_animatedSprite.play(*m_animations[m_currentAnimation]);
 	m_animatedSprite.update(m_frameTime);
+}
+
+void HeroAnimationComponent::init()
+{
+	AnimationComponent::init();
+
+	sf::FloatRect fightUp = sf::FloatRect(sf::Vector2f(-50, -100), sf::Vector2f(120, 100));
+	sf::FloatRect fightLeft = sf::FloatRect(sf::Vector2f(-100, -50), sf::Vector2f(100, 120));
+	sf::FloatRect fightDown = sf::FloatRect(sf::Vector2f(-50, 50), sf::Vector2f(120, 100));
+	sf::FloatRect fightRight = sf::FloatRect(sf::Vector2f(50, -50), sf::Vector2f(100, 120));
+
+	attackRects.insert_or_assign("fightUp", fightUp);
+	attackRects.insert_or_assign("fightLeft", fightLeft);
+	attackRects.insert_or_assign("fightDown", fightDown);
+	attackRects.insert_or_assign("fightRight", fightRight);
 }
