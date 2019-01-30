@@ -86,8 +86,8 @@ void RoomManager::createRooms()
 	roomObjects_11.push_back(fader);
 	roomObjects_12.push_back(fader);
 
-	ButtonRoomCreator::createObjectsForButtonRoom(roomObjects_00, 3);//engine::Random::getIntBetween(3,6));
-	TorchRoomCreator::createObjectsForTorchRoom(roomObjects_02);//engine::Random::getIntBetween(3,6));
+	ButtonRoomCreator::createObjectsForButtonRoom(roomObjects_00, engine::Random::getIntBetween(3,6));
+	TorchRoomCreator::createObjectsForTorchRoom(roomObjects_02);
 
 
 	room_00->setRoomObjects(roomObjects_00);
