@@ -8,12 +8,13 @@
 #include "AnimationComponent.h"
 #include "Animation.h"
 #include "AnimatedSprite.h"
+#include "Color.h"
 
 
 class TorchAnimationComponent : public AnimationComponent
 {
 public:
-	TorchAnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& handle, float animationTime = 0.2f);
+	TorchAnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& handle,engine::Color color, float animationTime = 0.2f);
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;
 
@@ -25,7 +26,13 @@ public:
 	void scale(const sf::Vector2f& factor) override;
 	void rotate(float angle) override;
 
+	void toggleFlame() { m_activeFlame = !m_activeFlame; };
+	bool isBurining() { return m_activeFlame; };
+	engine::Color getFlameColor() { return m_color; };
 private:
 	sf::Vector2f m_displace = sf::Vector2f(0,30);
 	sf::Sprite m_handle;
+
+	bool m_activeFlame = true;
+	engine::Color m_color;
 };

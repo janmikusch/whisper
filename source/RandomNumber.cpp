@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <random>
+#include <SFML/System/Err.hpp>
 
 
 int engine::Random::getIntBetween(int min, int max)
@@ -10,7 +11,8 @@ int engine::Random::getIntBetween(int min, int max)
 	static std::random_device random;
 	std::mt19937 engX(random());
 	std::uniform_int_distribution<> distrX(min, max);
-	return distrX(engX);
+	auto res = distrX(engX);
+	return res;
 }
 
 ///https://stackoverflow.com/questions/686353/random-float-number-generation

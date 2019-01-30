@@ -56,6 +56,7 @@ void Game::run()
 bool Game::init()
 {
 	m_frameClock.restart();
+	RoomManager::getInstance();
 
 	m_window = std::make_shared<sf::RenderWindow>();
 

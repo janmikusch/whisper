@@ -78,6 +78,7 @@ void Rigidbody::onCollisionResolve()
 		std::shared_ptr<Rigidbody> other;
 		std::shared_ptr<Rigidbody> thisRigidbody;
 		event.type = engine::CollisionGameEvent::ENTER;
+		event.collision = collision;
 
 		if (collision->body1 == std::make_shared<Rigidbody>(*this))
 		{

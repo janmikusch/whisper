@@ -19,6 +19,7 @@
 #include "FadeComponent.h"
 #include "ButtonComponent.h"
 #include "TorchAnimationComponent.h"
+#include "ButtonRoomComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -412,6 +413,8 @@ std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f positio
 		TextureManager::getInstance().loadTexture("button_white.png");
 		texture = &TextureManager::getInstance().getTexture("button_white.png");
 		break;
+	default:
+		sf::err() << "Color not defined";
 	}
 	
 	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "button");
@@ -466,9 +469,11 @@ std::shared_ptr<GameObject> GameObjectCreator::createTorch(sf::Vector2f position
 		texture = &TextureManager::getInstance().getTexture("flame_white.png");
 		break;
 	case engine::Color::VIOLET:
-		TextureManager::getInstance().loadTexture("flame_white.png");
-		texture = &TextureManager::getInstance().getTexture("flame_white.png");
+		TextureManager::getInstance().loadTexture("flame_violet.png");
+		texture = &TextureManager::getInstance().getTexture("flame_violet.png");
 		break;
+	default:
+		sf::err() << "Color not defined";
 	}
 
 	std::shared_ptr<GameObject> torch = std::make_shared<GameObject>(position, "torch");
@@ -476,7 +481,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createTorch(sf::Vector2f position
 	TextureManager::getInstance().loadTexture("torch_handle.png");
 	sf::Texture &handleTex = TextureManager::getInstance().getTexture("torch_handle.png");
 
-	std::shared_ptr<AnimationComponent> animComp = std::make_shared<TorchAnimationComponent>(torch, Layer::BACKGROUND3, handleTex, 0.1f);
+	std::shared_ptr<AnimationComponent> animComp = std::make_shared<TorchAnimationComponent>(torch, Layer::MIDDLE1, handleTex,c, 0.1f);
 
 	torch->addComponent(animComp);
 
@@ -494,4 +499,45 @@ std::shared_ptr<GameObject> GameObjectCreator::createTorch(sf::Vector2f position
 	animComp->setAnimation("flameAnimation");
 
 	return torch;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createButtonRoomChecker(sf::Vector2f position,std::shared_ptr<GameObject> correctButton)
+{
+	std::shared_ptr<GameObject> brc = std::make_shared<GameObject>(position, "buttonRoomChecker");
+
+	auto buttonRoomComponent = std::make_shared<ButtonRoomComponent>(brc);
+
+	buttonRoomComponent->setCorrectButton(correctButton);
+
+	brc->addComponent(buttonRoomComponent);
+
+	return brc;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createToggleTorch(sf::Vector2f position, engine::Color c)
+{
+	auto toggleTorch = createTorch(position, c);
+	toggleTorch->setName("toggleTorch");
+
+	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(64, 64));
+
+	sf::Vector2f displacement(18, 60);
+
+	rect.height -= 45;
+	rect.width -= 36;
+	
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(toggleTorch, rect, false);
+	collider->setDisplacement(displacement);
+	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(toggleTorch, 1, false, true);
+
+	toggleTorch->addComponent(collider);
+	toggleTorch->addComponent(rigidbody);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(toggleTorch, rect, Layer::DEBUG_BOUNDINGBOX);
+	boundingbox->setDisplacement(displacement);
+	toggleTorch->addComponent(boundingbox);
+#endif
+
+	return toggleTorch;
 }

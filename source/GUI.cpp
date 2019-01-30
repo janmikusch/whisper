@@ -23,7 +23,7 @@ void GUI::init()
 	EventBus::getInstance().addObserver(engine::EventType::GAMEPAUSE, this);
 	EventBus::getInstance().addObserver(engine::EventType::GAMEOVER, this);
 	EventBus::getInstance().addObserver(engine::EventType::DAMAGETAKEN, this);
-	EventBus::getInstance().addObserver(engine::EventType::ROOMUNLOCKED, this);
+	EventBus::getInstance().addObserver(engine::EventType::ROOMCOUNTCHANGED, this);
 	EventBus::getInstance().addObserver(engine::EventType::GAMECOMPLETE, this);
 }
 
@@ -77,10 +77,10 @@ void GUI::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> ga
 			m_gui.get("heart1")->hideWithEffect(tgui::ShowAnimationType::Scale, sf::milliseconds(50));
 		}
 	}
-	if(type == engine::EventType::ROOMUNLOCKED)
+	if(type == engine::EventType::ROOMCOUNTCHANGED)
 	{
 		int count = RoomManager::getInstance().countNotCompleted();
-		std::string text = "Rooms reft: ";
+		std::string text = "Rooms left: ";
 		m_gui.get<tgui::Label>("roomsleft")->setText(text + std::to_string(count));
 	}
 
@@ -145,14 +145,14 @@ void GUI::createMenuGui()
 
 
 
-	tgui::Label::Ptr label = tgui::Label::create("Wisper");
+	tgui::Label::Ptr label = tgui::Label::create("Whisper");
 	label->setTextSize(150);
 	label->setInheritedFont(FontManager::getInstance().getFont("Neverwinter"));
 	label->setPosition({ "50% - width / 2", "10%" });
 
 
 	tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
-	layout->setInheritedFont(FontManager::getInstance().getFont("Arial"));
+	layout->setInheritedFont(FontManager::getInstance().getFont("arial"));
 	layout->setSize("60%%", "50%");
 	layout->setPosition("20%", "40%");
 
@@ -198,7 +198,7 @@ void GUI::createGameplayGui()
 
 
 		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
-		layout->setInheritedFont(FontManager::getInstance().getFont("Arial"));
+		layout->setInheritedFont(FontManager::getInstance().getFont("arial"));
 		layout->setSize("60%", "50%");
 		layout->setPosition("20%", "40%");
 		pausemenu->add(layout);
@@ -237,7 +237,7 @@ void GUI::createGameplayGui()
 
 
 		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
-		layout->setInheritedFont(FontManager::getInstance().getFont("Arial"));
+		layout->setInheritedFont(FontManager::getInstance().getFont("arial"));
 		layout->setSize("60%", "50%");
 		layout->setPosition("20%", "40%");
 		gameovermenu->add(layout);
@@ -268,7 +268,7 @@ void GUI::createGameplayGui()
 
 
 		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
-		layout->setInheritedFont(FontManager::getInstance().getFont("Arial"));
+		layout->setInheritedFont(FontManager::getInstance().getFont("arial"));
 		layout->setSize("60%", "50%");
 		layout->setPosition("20%", "40%");
 		gamecomplete->add(layout);
@@ -303,7 +303,7 @@ void GUI::createGameplayGui()
 	heart3->setPosition({ "5% + width * 2", "1%" });
 	m_gui.add(heart3, "heart3");
 
-	tgui::Label::Ptr rooms = tgui::Label::create("Rooms reft: 5");
+	tgui::Label::Ptr rooms = tgui::Label::create("Rooms left: XXX");
 	rooms->setTextSize(20);
 	rooms->setPosition({ "95% - width", "1%" });
 	m_gui.add(rooms, "roomsleft");

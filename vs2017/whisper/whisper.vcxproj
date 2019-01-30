@@ -27,6 +27,8 @@
     <ClCompile Include="..\..\source\BasicEngine.cpp" />
     <ClCompile Include="..\..\source\BoundingBoxComponent.cpp" />
     <ClCompile Include="..\..\source\ButtonComponent.cpp" />
+    <ClCompile Include="..\..\source\ButtonRoomComponent.cpp" />
+    <ClCompile Include="..\..\source\ButtonRoomCreator.cpp" />
     <ClCompile Include="..\..\source\CharacterAreaComponent.cpp" />
     <ClCompile Include="..\..\source\CharacterMoveBehaviour.cpp" />
     <ClCompile Include="..\..\source\CharacterMoveComponent.cpp" />
@@ -73,6 +75,7 @@
     <ClCompile Include="..\..\source\TextureManager.cpp" />
     <ClCompile Include="..\..\source\GUI.cpp" />
     <ClCompile Include="..\..\source\TorchAnimationComponent.cpp" />
+    <ClCompile Include="..\..\source\TorchRoomCreator.cpp" />
     <ClCompile Include="..\..\source\window.cpp" />
     <ClCompile Include="..\..\source\WorldBuilder.cpp" />
   </ItemGroup>
@@ -83,6 +86,8 @@
     <ClInclude Include="..\..\include\AnimationComponent.h" />
     <ClInclude Include="..\..\include\AssetsManager.h" />
     <ClInclude Include="..\..\include\BoundingBoxComponent.h" />
+    <ClInclude Include="..\..\include\ButtonRoomComponent.h" />
+    <ClInclude Include="..\..\include\ButtonRoomCreator.h" />
     <ClInclude Include="..\..\include\Color.h" />
     <ClInclude Include="..\..\include\ButtonComponent.h" />
     <ClInclude Include="..\..\include\CharacterAreaComponent.h" />
@@ -137,6 +142,7 @@
     <ClInclude Include="..\..\include\TextureManager.h" />
     <ClInclude Include="..\..\include\GUI.h" />
     <ClInclude Include="..\..\include\TorchAnimationComponent.h" />
+    <ClInclude Include="..\..\include\TorchRoomCreator.h" />
     <ClInclude Include="..\..\include\window.h" />
     <ClInclude Include="..\..\include\WorldBuilder.h" />
   </ItemGroup>

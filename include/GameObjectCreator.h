@@ -23,6 +23,9 @@ public:
 	std::shared_ptr<GameObject> createFade(sf::Vector2f position = sf::Vector2f());
 	std::shared_ptr<GameObject> createButton(sf::Vector2f position, engine::Color c, int id);
 	std::shared_ptr<GameObject> createTorch(sf::Vector2f position, engine::Color c);
+	std::shared_ptr<GameObject> createButtonRoomChecker(sf::Vector2f position, std::shared_ptr<GameObject> correctButton);
+
+	std::shared_ptr<GameObject> createToggleTorch(sf::Vector2f position, engine::Color c);
 
 private:
 	GameObjectCreator() = default;

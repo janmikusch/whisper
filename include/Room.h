@@ -17,6 +17,7 @@ public:
 	std::shared_ptr<Room> getRoom(Direction dir);
 
 	void setRoomObjects(std::vector< std::shared_ptr<GameObject>> roomObjects);
+	std::vector< std::shared_ptr<GameObject>> getRoomObjects() { return m_roomObjects; };
 	void addRoomObjectsToGame();
 	void removeRoomObjectsFromGame();
 
