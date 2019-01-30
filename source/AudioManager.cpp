@@ -3,6 +3,8 @@
 #include "InputManager.h"
 #include "AudioMapLoader.h"
 #include "AssetsManager.h"
+#include "RandomNumber.h"
+#include "RoomManager.h"
 
 AudioManager::AudioManager():m_volume(100.0f)
 {
@@ -113,13 +115,48 @@ void AudioManager::onNotify(engine::EventType type, std::shared_ptr<engine::Game
 {
 	if(type==engine::EventType::DAMAGETAKEN)
 	{
-		playSound("failure");
-		//TODO
-		// Event is triggired per frame
+		if(RoomManager::getInstance().getLives() > 0)
+			playSound("failure");
 	}
 	if(type==engine::EventType::ROOMUNLOCKED)
 	{
 		playSound("success");
+	}
+	if(type==engine::EventType::GAMEOVER)
+	{
+		int i = engine::Random::getIntBetween(0, 9);
+		switch (i)
+		{
+		case 0:
+			playSound("death1");
+			break;
+		case 1:
+			playSound("death2");
+			break;
+		case 2:
+			playSound("death3");
+			break;
+		case 3:
+			playSound("death4");
+			break;
+		case 4:
+			playSound("death5");
+			break;
+		case 5:
+			playSound("death6");
+			break;
+		case 6:
+			playSound("death7");
+			break;
+		case 7:
+			playSound("death8");
+			break;
+		case 8:
+			playSound("death9");
+			break; 
+		default:
+			playSound("death10");
+		}
 	}
 }
 
@@ -130,5 +167,6 @@ void AudioManager::init()
 	loadSoundsFromAudioXml();
 
 	EventBus::getInstance().addObserver(engine::EventType::DAMAGETAKEN, this);
+	EventBus::getInstance().addObserver(engine::EventType::GAMEOVER, this);
 	EventBus::getInstance().addObserver(engine::EventType::ROOMUNLOCKED, this);
 }

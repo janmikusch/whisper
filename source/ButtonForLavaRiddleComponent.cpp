@@ -21,7 +21,11 @@ ButtonForLavaRiddleComponent::ButtonForLavaRiddleComponent(std::shared_ptr<GameO
 
 void ButtonForLavaRiddleComponent::onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> gameEvent)
 {
-	EventBus::getInstance().notify(engine::EventType::ROOMUNLOCKED, std::shared_ptr<engine::GameEvent>());
-
 	ButtonComponent::onNotify(collidedWith, gameEvent);
+	auto cge = std::static_pointer_cast<engine::CollisionGameEvent>(gameEvent);
+
+	if (cge != nullptr && cge->type == engine::CollisionGameEvent::CollisionType::ENTER)
+	{
+		EventBus::getInstance().notify(engine::EventType::ROOMUNLOCKED, std::shared_ptr<engine::GameEvent>());
+	}
 }

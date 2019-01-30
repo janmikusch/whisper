@@ -62,7 +62,7 @@ void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 		m_countdown = 0.0f;
 	}
 	
-	if (m_toggleAble == false)
+	if (!m_toggleAble)
 	{
 		m_countdown += fDeltaTimeSeconds;
 
