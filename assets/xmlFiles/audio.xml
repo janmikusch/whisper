@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <audio>
 	<sounds>
+		<item name="failure" file="voice_female_c_hurt_pain_01.wav" />
+		<item name="success" file="ui_menu_button_confirm_11.wav" />
 	</sounds>
 	<music>
 		<item name="backgroundMusic" file="thetimehascome.ogg" />

@@ -3,8 +3,9 @@
 #include <SFML/System/Err.hpp>
 #include <SFML/Audio.hpp>
 #include <map>
+#include "EventObserver.h"
 
-class AudioManager
+class AudioManager : public EventObserver
 {
 public:
 	static AudioManager& getInstance();
@@ -27,8 +28,12 @@ public:
 	void init();
 	void exit();
 
+	void onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent) override;
+
+
 private:
 	AudioManager();
+
 	std::map<std::string,  std::shared_ptr<sf::SoundBuffer>> m_bufferSounds{};
 	std::map<std::string,  std::string> m_musicFiles{};
 	sf::Music m_music;

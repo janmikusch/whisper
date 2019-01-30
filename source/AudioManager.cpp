@@ -109,11 +109,26 @@ void AudioManager::exit()
 	stopMusic();
 }
 
-
+void AudioManager::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent)
+{
+	if(type==engine::EventType::DAMAGETAKEN)
+	{
+		playSound("failure");
+		//TODO
+		// Event is triggired per frame
+	}
+	if(type==engine::EventType::ROOMUNLOCKED)
+	{
+		playSound("success");
+	}
+}
 
 
 void AudioManager::init()
 {
 	loadMusicFromAudioXml();
 	loadSoundsFromAudioXml();
+
+	EventBus::getInstance().addObserver(engine::EventType::DAMAGETAKEN, this);
+	EventBus::getInstance().addObserver(engine::EventType::ROOMUNLOCKED, this);
 }
