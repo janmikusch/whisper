@@ -158,8 +158,6 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 			}
 		}
 	}
-	std::shared_ptr<GameObject> button = m_gameObjectCreator.createButtonForLavaRiddle(sf::Vector2f(200,200));
-	objects.push_back(button);
 
 	if( positionsForButtons.size() != 0)
 	{
