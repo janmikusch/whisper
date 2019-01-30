@@ -8,6 +8,7 @@
 #include "RoomManager.h"
 #include "PhysicsManager.h"
 #include "ColliderComponent.h"
+#include"TorchAnimationComponent.h"
 
 HeroAnimationComponent::HeroAnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, float animationTime) :
 	AnimationComponent(parent, layer, animationTime)
@@ -29,7 +30,7 @@ void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 		m_animatedSprite.setPosition(m_parent->getPosition() + m_diplace);
 		currentAttack = attackRects["fightUp"];
 		currentAttack.left += m_parent->getPosition().x;
-		currentAttack.top + m_parent->getPosition().y;
+		currentAttack.top += m_parent->getPosition().y;
 		hitWithSword = checkCollisions(currentAttack, roomObjects);
 	}
 	else if (m_currentAnimation == "fightDown")
@@ -37,7 +38,7 @@ void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 		m_animatedSprite.setPosition(m_parent->getPosition() + m_diplace);
 		currentAttack = attackRects["fightDown"];
 		currentAttack.left += m_parent->getPosition().x;
-		currentAttack.top + m_parent->getPosition().y;
+		currentAttack.top += m_parent->getPosition().y;
 		hitWithSword = checkCollisions(currentAttack, roomObjects);
 	}
 	else if (m_currentAnimation == "fightLeft")
@@ -45,7 +46,7 @@ void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 		m_animatedSprite.setPosition(m_parent->getPosition() + m_diplace);
 		currentAttack = attackRects["fightLeft"];
 		currentAttack.left += m_parent->getPosition().x;
-		currentAttack.top + m_parent->getPosition().y;
+		currentAttack.top += m_parent->getPosition().y;
 		hitWithSword = checkCollisions(currentAttack, roomObjects);
 	}
 	else if (m_currentAnimation == "fightRight")
@@ -53,12 +54,14 @@ void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 		m_animatedSprite.setPosition(m_parent->getPosition() + m_diplace);
 		currentAttack = attackRects["fightRight"];
 		currentAttack.left += m_parent->getPosition().x;
-		currentAttack.top + m_parent->getPosition().y;
+		currentAttack.top += m_parent->getPosition().y;
 		hitWithSword = checkCollisions(currentAttack, roomObjects);
 	}
 	else
 		m_animatedSprite.setPosition(m_parent->getPosition());
-
+	
+	if (hitWithSword != nullptr)
+		hitWithSword->getComponent<TorchAnimationComponent>()->toggleFlame();
 
 	m_animatedSprite.setRotation(m_parent->getRotation());
 	m_animatedSprite.setOrigin(m_parent->getOrigin());
@@ -125,7 +128,10 @@ std::shared_ptr<GameObject> HeroAnimationComponent::checkCollisions(sf::FloatRec
 		float p;
 
 		if (PhysicsManager::getInstance().AABBvsAABB(aabb, o->getComponent<ColliderComponent>()->getShape(), n, p))
+		{
+			std::cout << "true" << std::endl;
 			return o;
+		}
 	}
 	return nullptr;
 }
