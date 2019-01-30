@@ -243,34 +243,34 @@ std::shared_ptr<GameObject> ButtonRoomCreator::calcCorrectButtonFrom3(std::vecto
 
 	for (auto o : room_objects)
 	{
-		if (o->getName() == "button")
+		if (o->getName() != "button")
+			continue;
+		
+		buttons.push_back(o);
+		engine::Color c;
+
+		c = o->getComponent<ButtonComponent>()->getColor();
+
+		switch (c)
 		{
-			buttons.push_back(o);
-			engine::Color c;
-
-			c = o->getComponent<ButtonComponent>()->getColor();
-
-			switch (c)
-			{
-			case engine::Color::BLACK:
-				countBlack++;
-				break;
-			case engine::Color::BLUE:
-				countBlue++;
-				break;
-			case engine::Color::GREEN:
-				countGreen++;
-				break;
-			case engine::Color::RED:
-				countRed++;
-				break;
-			case engine::Color::WHITE:
-				countWhite++;
-				break;
-			case engine::Color::YELLOW:
-				countYellow++;
-				break;
-			}
+		case engine::Color::BLACK:
+			countBlack++;
+			break;
+		case engine::Color::BLUE:
+			countBlue++;
+			break;
+		case engine::Color::GREEN:
+			countGreen++;
+			break;
+		case engine::Color::RED:
+			countRed++;
+			break;
+		case engine::Color::WHITE:
+			countWhite++;
+			break;
+		case engine::Color::YELLOW:
+			countYellow++;
+			break;			
 		}
 	}
 
@@ -296,17 +296,202 @@ std::shared_ptr<GameObject> ButtonRoomCreator::calcCorrectButtonFrom3(std::vecto
 
 std::shared_ptr<GameObject> ButtonRoomCreator::calcCorrectButtonFrom4(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
-	return std::shared_ptr<GameObject>();
+	int countBlack = 0;
+	int countViolet = 0;
+	int countBlue = 0;
+	int countRed = 0;
+	int countGreen = 0;
+	int countWhite = 0;
+	int countYellow = 0;
+
+	std::shared_ptr<GameObject> targetButton = nullptr;
+
+	std::vector<std::shared_ptr<GameObject>> buttons;
+	std::vector<std::shared_ptr<GameObject>> torches;
+
+	for (auto o : room_objects)
+	{
+		if (o->getName() == "torch")
+			torches.push_back(o);
+
+		if (o->getName() != "button")
+			continue;
+
+		buttons.push_back(o);
+		engine::Color c;
+
+		c = o->getComponent<ButtonComponent>()->getColor();
+
+		switch (c)
+		{
+		case engine::Color::BLACK:
+			countBlack++;
+			break;
+		case engine::Color::BLUE:
+			countBlue++;
+			break;
+		case engine::Color::GREEN:
+			countGreen++;
+			break;
+		case engine::Color::RED:
+			countRed++;
+			break;
+		case engine::Color::WHITE:
+			countWhite++;
+			break;
+		case engine::Color::YELLOW:
+			countYellow++;
+			break;			
+		}
+	}
+	
+	if (countRed > 1 && torches.size() == 2)
+		targetButton = findButton(buttons, 2);
+	else if (findButton(buttons, 2)->getComponent<ButtonComponent>()->getColor() == engine::Color::YELLOW && countRed == 0)
+		targetButton = findButton(buttons, 1);
+	else if (countBlue == 1)
+		targetButton = findButton(buttons, 1);
+	else if (countBlack == 0 && countWhite == 1)
+		targetButton = findButtonByColor(buttons, engine::Color::WHITE);
+	else
+		targetButton = findButton(buttons, 2);
+
+	return targetButton;
 }
 
 std::shared_ptr<GameObject> ButtonRoomCreator::calcCorrectButtonFrom5(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
-	return std::shared_ptr<GameObject>();
+	int countBlack = 0;
+	int countViolet = 0;
+	int countBlue = 0;
+	int countRed = 0;
+	int countGreen = 0;
+	int countWhite = 0;
+	int countYellow = 0;
+
+	std::shared_ptr<GameObject> targetButton = nullptr;
+
+	std::vector<std::shared_ptr<GameObject>> buttons;
+	std::vector<std::shared_ptr<GameObject>> torches;
+
+	for (auto o : room_objects)
+	{
+		if (o->getName() == "torch")
+			torches.push_back(o);
+
+		if (o->getName() != "button")
+			continue;
+
+		buttons.push_back(o);
+		engine::Color c;
+
+		c = o->getComponent<ButtonComponent>()->getColor();
+
+		switch (c)
+		{
+		case engine::Color::BLACK:
+			countBlack++;
+			break;
+		case engine::Color::BLUE:
+			countBlue++;
+			break;
+		case engine::Color::GREEN:
+			countGreen++;
+			break;
+		case engine::Color::RED:
+			countRed++;
+			break;
+		case engine::Color::WHITE:
+			countWhite++;
+			break;
+		case engine::Color::YELLOW:
+			countYellow++;
+			break;
+		}
+	}
+
+	if (findButton(buttons, 4)->getComponent<ButtonComponent>()->getColor() == engine::Color::WHITE)
+		targetButton = findButton(buttons, 1);
+	else if (torches.size() % 2 != 0)
+		targetButton = findButton(buttons, 4);
+	else if (countBlue == 2)
+		targetButton = findButton(buttons, 1);
+	else if (countGreen == 1)
+		targetButton = findButtonByColor(buttons, engine::Color::GREEN);
+	else
+		targetButton = findButton(buttons, 2);
+
+	return targetButton;
 }
 
 std::shared_ptr<GameObject> ButtonRoomCreator::calcCorrectButtonFrom6(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
-	return std::shared_ptr<GameObject>();
+	int countBlack = 0;
+	int countViolet = 0;
+	int countBlue = 0;
+	int countRed = 0;
+	int countGreen = 0;
+	int countWhite = 0;
+	int countYellow = 0;
+
+	std::shared_ptr<GameObject> targetButton = nullptr;
+
+	std::vector<std::shared_ptr<GameObject>> buttons;
+	std::vector<std::shared_ptr<GameObject>> torches;
+
+	for (auto o : room_objects)
+	{
+		if (o->getName() == "torch")
+			torches.push_back(o);
+
+		if (o->getName() != "button")
+			continue;
+
+		buttons.push_back(o);
+		engine::Color c;
+
+		c = o->getComponent<ButtonComponent>()->getColor();
+
+		switch (c)
+		{
+		case engine::Color::BLACK:
+			countBlack++;
+			break;
+		case engine::Color::BLUE:
+			countBlue++;
+			break;
+		case engine::Color::GREEN:
+			countGreen++;
+			break;
+		case engine::Color::RED:
+			countRed++;
+			break;
+		case engine::Color::WHITE:
+			countWhite++;
+			break;
+		case engine::Color::YELLOW:
+			countYellow++;
+			break;
+		}
+	}
+
+	if (countYellow == 0 && torches.size() == 0)
+		targetButton = findButton(buttons, 1);
+	else if (countGreen == 2 && countBlack == 1)
+		targetButton = findButtonByColor(buttons, engine::Color::BLACK);
+	else if (torches.size() == 1 && countYellow >= 1)
+		targetButton = findButton(buttons, 3);
+	else if (countRed == 3)
+	{
+		if (findButton(buttons, 2)->getComponent<ButtonComponent>()->getColor() == engine::Color::WHITE)
+			targetButton = findButton(buttons, 2);
+		else
+			targetButton = findButton(buttons, 5);
+	}
+	else
+		targetButton = findButton(buttons, 0);
+
+	return targetButton;
 }
 
 std::shared_ptr<GameObject> ButtonRoomCreator::findButton(std::vector<std::shared_ptr<GameObject>> buttons, int id)
@@ -314,6 +499,17 @@ std::shared_ptr<GameObject> ButtonRoomCreator::findButton(std::vector<std::share
 	for (auto b : buttons)
 	{
 		if (b->getComponent<ButtonComponent>()->getId() == id)
+			return b;
+	}
+
+	return nullptr;
+}
+
+std::shared_ptr<GameObject> ButtonRoomCreator::findButtonByColor(std::vector<std::shared_ptr<GameObject>> buttons, engine::Color c)
+{
+	for (auto b : buttons)
+	{
+		if (b->getComponent<ButtonComponent>()->getColor() == c)
 			return b;
 	}
 
