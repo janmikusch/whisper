@@ -8,29 +8,16 @@
 #include "CollisionObserver.h"
 #include "Room.h"
 #include "Color.h"
+#include "ButtonComponent.h"
 
 
-class ButtonComponent : public RenderComponent, public TransformableComponent, public CollisionObserver
+class ButtonForLavaRiddleComponent : public ButtonComponent
 {
 public:
-	explicit ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, engine::Color c, int id);
-
-	void update(const float fDeltaTimeSeconds) override;
-	void draw() override;
-	void init() override;
-
-	void setPosition(const sf::Vector2f &position) override;
-	void setRotation(float angle) override;
-	void setScale(const sf::Vector2f& factors) override;
-	void setOrigin(const sf::Vector2f &origin) override;
-	void move(const sf::Vector2f &movement) override;
-	void scale(const sf::Vector2f& factor) override;
-	void rotate(float angle) override;
-
-	engine::Color getColor() { return m_color; };
-	int getId() { return m_id; };
+	explicit ButtonForLavaRiddleComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, engine::Color c, int id);
 
 	void onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> event) override;
+
 protected:
 	sf::Sprite m_buttonPressed;
 	sf::Sprite m_buttonReleased;

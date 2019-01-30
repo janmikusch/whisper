@@ -144,13 +144,8 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 			}
 		}
 	}
-
-	std::shared_ptr<GameObject> lava = m_gameObjectCreator.createLava(sf::Vector2f(200, 200));
-	std::shared_ptr<GameObject> lava2 = m_gameObjectCreator.createLava(sf::Vector2f(264, 200));
-	std::shared_ptr<GameObject> lava3 = m_gameObjectCreator.createLava(sf::Vector2f(328, 200));
-	objects.push_back(lava);
-	objects.push_back(lava2);
-	objects.push_back(lava3);
+	std::shared_ptr<GameObject> button = m_gameObjectCreator.createButtonForLavaRiddle(sf::Vector2f(200,200));
+	objects.push_back(button);
 
 	return objects;
 }

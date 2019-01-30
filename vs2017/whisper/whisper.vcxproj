@@ -28,6 +28,7 @@
     <ClCompile Include="..\..\source\BasicEngine.cpp" />
     <ClCompile Include="..\..\source\BoundingBoxComponent.cpp" />
     <ClCompile Include="..\..\source\ButtonComponent.cpp" />
+    <ClCompile Include="..\..\source\ButtonForLavaRiddleComponent.cpp" />
     <ClCompile Include="..\..\source\ButtonRoomComponent.cpp" />
     <ClCompile Include="..\..\source\ButtonRoomCreator.cpp" />
     <ClCompile Include="..\..\source\CharacterAreaComponent.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="..\..\include\AnimationComponent.h" />
     <ClInclude Include="..\..\include\AssetsManager.h" />
     <ClInclude Include="..\..\include\BoundingBoxComponent.h" />
+    <ClInclude Include="..\..\include\ButtonForLavaRiddleComponent.h" />
     <ClInclude Include="..\..\include\ButtonRoomComponent.h" />
     <ClInclude Include="..\..\include\ButtonRoomCreator.h" />
     <ClInclude Include="..\..\include\Color.h" />

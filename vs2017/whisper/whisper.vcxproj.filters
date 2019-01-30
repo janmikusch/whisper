@@ -288,6 +288,9 @@
     <ClCompile Include="..\..\include\LavaComponent.cpp">
       <Filter>Source Files\GameObject\Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\ButtonForLavaRiddleComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">
@@ -489,6 +492,9 @@
       <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\LavaComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ButtonForLavaRiddleComponent.h">
       <Filter>Header Files\GameObject\Components\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
