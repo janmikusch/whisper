@@ -23,6 +23,7 @@
 #include "TorchRoomSolverComponent.h"
 #include "LavaComponent.h"
 #include "RandomNumber.h"
+#include "ButtonForLavaRiddleComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -631,7 +632,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createButtonForLavaRiddle(sf::Vec
 
 	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, rect, true, displacement);
 	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(button, 1, false, true);
-	std::shared_ptr<ButtonComponent> buttonComp = std::make_shared<ButtonComponent>(button, Layer::BACKGROUND3, texture, engine::Color::GREEN, 1);
+	std::shared_ptr<ButtonForLavaRiddleComponent> buttonComp = std::make_shared<ButtonForLavaRiddleComponent>(button, Layer::BACKGROUND3, texture, engine::Color::GREEN, 1);
 
 	button->addComponent(collider);
 	button->addComponent(rigidbody);
