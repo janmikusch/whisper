@@ -35,7 +35,7 @@ void TorchRoomSolverComponent::update(const float fDeltaTimeSeconds)
 		EventBus::getInstance().notify(engine::EventType::ROOMUNLOCKED, std::shared_ptr<engine::GameEvent>());
 	}
 
-	sf::err() << std::to_string(valueSum) << std::endl;
+	//sf::err() << std::to_string(valueSum) << std::endl;
 
 	setPosition(m_parent->getPosition());
 }

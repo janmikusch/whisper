@@ -2,16 +2,29 @@
 #include "LabyrinthCreator.h"
 #include "RandomNumber.h"
 #include "WorldBuilder.h"
+#include "RigidbodyComponent.h"
+#include "WaterComponent.h"
 
 void LabyrinthCreator::createObjectsForLabyrinthRoom(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
-	WorldBuilder::loadTextures("lava_map_1.tmx");
-	auto objects = WorldBuilder::loadWorld("lava_map_1.tmx",sf::Vector2f{0,0});
+	auto name = getRandomLabyrinthName();
+	WorldBuilder::loadTextures(name);
+	auto objects = WorldBuilder::loadWorld(name,sf::Vector2f{0,0});
+
+
+	auto water = GameObjectCreator::getInstance().createWaterForLavaRiddle(sf::Vector2f{ 0,0 });
+	room_objects.push_back(water);
 
 	for(auto it:objects)
 	{
 		room_objects.push_back(it);
+
+		if(it->getName()=="buttonForLavaRiddle")
+		{
+			it->getComponent<Rigidbody>()->addObserver(*water->getComponent<WaterComponent>());
+		}
 	}
+
 }
 
 std::string LabyrinthCreator::getRandomLabyrinthName()

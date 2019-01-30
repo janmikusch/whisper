@@ -100,8 +100,6 @@ int TorchRoomCreator::calcAnswer(std::vector<std::shared_ptr<GameObject>>& room_
 			answer += colVal;
 		}
 	}
-
-	sf::err() << "Answer= " << std::to_string(answer) << std::endl;
 	return answer;
 }
 

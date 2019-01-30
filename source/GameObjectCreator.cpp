@@ -23,6 +23,8 @@
 #include "TorchRoomSolverComponent.h"
 #include "LavaComponent.h"
 #include "RandomNumber.h"
+#include "ButtonForLavaRiddleComponent.h"
+#include "WaterComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -631,7 +633,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createButtonForLavaRiddle(sf::Vec
 
 	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, rect, true, displacement);
 	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(button, 1, false, true);
-	std::shared_ptr<ButtonComponent> buttonComp = std::make_shared<ButtonComponent>(button, Layer::BACKGROUND3, texture, engine::Color::GREEN, 1);
+	std::shared_ptr<ButtonForLavaRiddleComponent> buttonComp = std::make_shared<ButtonForLavaRiddleComponent>(button, Layer::BACKGROUND3, texture, engine::Color::GREEN, 1);
 
 	button->addComponent(collider);
 	button->addComponent(rigidbody);
@@ -646,4 +648,18 @@ std::shared_ptr<GameObject> GameObjectCreator::createButtonForLavaRiddle(sf::Vec
 	rigidbody->addObserver(*buttonComp);
 
 	return button;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createWaterForLavaRiddle(sf::Vector2f position)
+{
+	TextureManager::getInstance().loadTexture("lava_map_water.png");
+	sf::Texture& texture = TextureManager::getInstance().getTexture("lava_map_water.png");
+
+	std::shared_ptr<GameObject> waterObj = std::make_shared<GameObject>(position, "water");
+
+	auto water = std::make_shared<WaterComponent>(waterObj, Layer::BACKGROUND4, texture);
+
+	waterObj->addComponent(water);
+
+	return waterObj;
 }

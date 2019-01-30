@@ -4,6 +4,7 @@
 #include "window.h"
 #include "TextureManager.h"
 #include "CharacterMoveComponent.h"
+#include "AudioManager.h"
 
 TorchAnimationComponent::TorchAnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& handle, engine::Color color, float animationTime) :
 	AnimationComponent(parent, layer, animationTime),m_color(color)
@@ -72,4 +73,17 @@ void TorchAnimationComponent::scale(const sf::Vector2f & factor)
 void TorchAnimationComponent::rotate(float angle)
 {
 	AnimationComponent::rotate(angle);
+}
+
+void TorchAnimationComponent::toggleFlame()
+{
+	m_activeFlame = !m_activeFlame;
+	if(m_activeFlame)
+	{
+		AudioManager::getInstance().playSound("igniteFlame");
+	}
+	else
+	{
+		AudioManager::getInstance().playSound("extinguishFlame");
+	}
 }
