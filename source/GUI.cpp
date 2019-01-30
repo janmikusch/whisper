@@ -23,7 +23,7 @@ void GUI::init()
 	EventBus::getInstance().addObserver(engine::EventType::GAMEPAUSE, this);
 	EventBus::getInstance().addObserver(engine::EventType::GAMEOVER, this);
 	EventBus::getInstance().addObserver(engine::EventType::DAMAGETAKEN, this);
-	EventBus::getInstance().addObserver(engine::EventType::ROOMUNLOCKED, this);
+	EventBus::getInstance().addObserver(engine::EventType::ROOMCOUNTCHANGED, this);
 	EventBus::getInstance().addObserver(engine::EventType::GAMECOMPLETE, this);
 }
 
@@ -77,7 +77,7 @@ void GUI::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> ga
 			m_gui.get("heart1")->hideWithEffect(tgui::ShowAnimationType::Scale, sf::milliseconds(50));
 		}
 	}
-	if(type == engine::EventType::ROOMUNLOCKED)
+	if(type == engine::EventType::ROOMCOUNTCHANGED)
 	{
 		int count = RoomManager::getInstance().countNotCompleted();
 		std::string text = "Rooms left: ";
