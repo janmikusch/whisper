@@ -9,6 +9,8 @@ public:
 	//ButtonRoom
 	static void createObjectsForButtonRoom(std::vector<std::shared_ptr<GameObject>> &room_objects, int i);
 private:
+	ButtonRoomCreator() = default;
+
 	static void createButtons(std::vector<std::shared_ptr<GameObject>> &room_objects, int i);
 	static void createTorches(std::vector<std::shared_ptr<GameObject>> &room_objects);
 	static void createButtonRoomChecker(std::vector<std::shared_ptr<GameObject>> &room_objects, int i);

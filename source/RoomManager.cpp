@@ -11,6 +11,7 @@
 #include "RigidbodyComponent.h"
 #include "ButtonRoomCreator.h"
 #include "TorchRoomCreator.h"
+#include "LabyrinthCreator.h"
 
 RoomManager::RoomManager() :EventObserver()
 {
@@ -88,6 +89,7 @@ void RoomManager::createRooms()
 
 	ButtonRoomCreator::createObjectsForButtonRoom(roomObjects_00, engine::Random::getIntBetween(3,6));
 	TorchRoomCreator::createObjectsForTorchRoom(roomObjects_02);
+	LabyrinthCreator::createObjectsForLabyrinthRoom(roomObjects_11);
 
 
 	room_00->setRoomObjects(roomObjects_00);
@@ -153,19 +155,19 @@ void RoomManager::changeRoom(Room::Direction dir)
 	{
 	case Room::TOP:
 		newPos.x = 448;
-		newPos.y = 512 - 8;
+		newPos.y = 512;
 		break;
 	case Room::RIGHT:
-		newPos.x = 128 + 8;
-		newPos.y = 320;
+		newPos.x = 128 - 10;
+		newPos.y = 320 - 16;
 		break;
 	case Room::BOTTOM:
 		newPos.x = 448;
-		newPos.y = 128 + 8;
+		newPos.y = 128 - 20;
 		break;
 	case Room::LEFT:
-		newPos.x = 768 - 8;
-		newPos.y = 320;
+		newPos.x = 768 + 10;
+		newPos.y = 320 - 16;
 		break;
 	}
 

@@ -51,6 +51,7 @@
     <ClCompile Include="..\..\source\HeroAnimationComponent.cpp" />
     <ClCompile Include="..\..\source\InputComponent.cpp" />
     <ClCompile Include="..\..\source\InputManager.cpp" />
+    <ClCompile Include="..\..\source\LabyrinthCreator.cpp" />
     <ClCompile Include="..\..\source\LayerComponent.cpp" />
     <ClCompile Include="..\..\source\MenuState.cpp" />
     <ClCompile Include="..\..\source\AudioMapLoader.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="..\..\include\HeroAnimationComponent.h" />
     <ClInclude Include="..\..\include\InputComponent.h" />
     <ClInclude Include="..\..\include\InputManager.h" />
+    <ClInclude Include="..\..\include\LabyrinthCreator.h" />
     <ClInclude Include="..\..\include\LavaComponent.h" />
     <ClInclude Include="..\..\include\Layer.h" />
     <ClInclude Include="..\..\include\LayerComponent.h" />

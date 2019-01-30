@@ -101,6 +101,9 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 	std::shared_ptr<GameObject> map = m_gameObjectCreator.createMap(sf::Vector2f(0.0f, 0.0f), m_layers);
 	objects.push_back(map);
 
+
+	std::vector<sf::Vector2f> positionsForButtons{};
+
 	
 	// go through all object layers
 	for (auto group : tilemap->groups)
@@ -142,10 +145,29 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 				std::shared_ptr<GameObject> character = m_gameObjectCreator.createCharacter(box, id, position);
 				objects.push_back(character);
 			}
+			else if( object->type == "button")
+			{
+				positionsForButtons.push_back(Vector2f{ static_cast<float>(object->x), static_cast<float>(object->y) });
+			}
+			else if(object->type == "lava")
+			{
+				sf::Vector2f position{ static_cast<float>(object->x), static_cast<float>(object->y) };
+
+				std::shared_ptr<GameObject> character = m_gameObjectCreator.createLava(position);
+				objects.push_back(character);
+			}
 		}
 	}
 	std::shared_ptr<GameObject> button = m_gameObjectCreator.createButtonForLavaRiddle(sf::Vector2f(200,200));
 	objects.push_back(button);
+
+	if( positionsForButtons.size() != 0)
+	{
+		int i = engine::Random::getIntBetween(0, positionsForButtons.size() - 1);
+		std::shared_ptr<GameObject> button = m_gameObjectCreator.createButtonForLavaRiddle(positionsForButtons[i]);
+		objects.push_back(button);
+	}
+
 
 	return objects;
 }

@@ -26,6 +26,8 @@ void engine::RenderManager::renderAll()
 	renderLayer(Layer::BACKGROUND1);
 	renderLayer(Layer::BACKGROUND2);
 	renderLayer(Layer::BACKGROUND3);
+	renderLayer(Layer::BACKGROUND4);
+	renderLayer(Layer::BACKGROUND5);
 	renderLayer(Layer::MIDDLE1);
 	renderLayer(Layer::MIDDLE2);
 	renderLayer(Layer::MIDDLE3);
