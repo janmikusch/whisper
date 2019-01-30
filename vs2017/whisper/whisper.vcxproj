@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\include\LavaComponent.cpp" />
     <ClCompile Include="..\..\source\AiMoveBehaviour.cpp" />
     <ClCompile Include="..\..\source\AnimatedSprite.cpp" />
     <ClCompile Include="..\..\source\Animation.cpp" />
@@ -52,6 +51,7 @@
     <ClCompile Include="..\..\source\InputComponent.cpp" />
     <ClCompile Include="..\..\source\InputManager.cpp" />
     <ClCompile Include="..\..\source\LabyrinthCreator.cpp" />
+    <ClCompile Include="..\..\source\LavaComponent.cpp" />
     <ClCompile Include="..\..\source\LayerComponent.cpp" />
     <ClCompile Include="..\..\source\MenuState.cpp" />
     <ClCompile Include="..\..\source\AudioMapLoader.cpp" />
@@ -80,6 +80,7 @@
     <ClCompile Include="..\..\source\TorchAnimationComponent.cpp" />
     <ClCompile Include="..\..\source\TorchRoomCreator.cpp" />
     <ClCompile Include="..\..\source\TorchRoomSolverComponent.cpp" />
+    <ClCompile Include="..\..\source\WaterComponent.cpp" />
     <ClCompile Include="..\..\source\window.cpp" />
     <ClCompile Include="..\..\source\WorldBuilder.cpp" />
   </ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="..\..\include\TorchAnimationComponent.h" />
     <ClInclude Include="..\..\include\TorchRoomCreator.h" />
     <ClInclude Include="..\..\include\TorchRoomSolverComponent.h" />
+    <ClInclude Include="..\..\include\WaterComponent.h" />
     <ClInclude Include="..\..\include\window.h" />
     <ClInclude Include="..\..\include\WorldBuilder.h" />
   </ItemGroup>

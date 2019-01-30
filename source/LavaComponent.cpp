@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "LavaComponent.h"
 #include "window.h"
+#include "RoomManager.h"
 
 LavaComponent::LavaComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture & texture, sf::IntRect textureRect)
 	: SpriteComponent(parent, layer, texture)
@@ -63,7 +64,7 @@ void LavaComponent::rotate(float angle)
 
 void LavaComponent::onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> gameEvent)
 {
-	if (collidedWith.getName() != "hero")
+	if (collidedWith.getName() != "hero" || RoomManager::getInstance().getCurrentRoom()->isCompleted())
 	{
 		return;
 	}

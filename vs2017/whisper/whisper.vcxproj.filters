@@ -285,14 +285,17 @@
     <ClCompile Include="..\..\source\TorchRoomSolverComponent.cpp">
       <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\include\LavaComponent.cpp">
-      <Filter>Source Files\GameObject\Components\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\ButtonForLavaRiddleComponent.cpp">
       <Filter>Source Files\GameObject\Components\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\LabyrinthCreator.cpp">
       <Filter>Source Files\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\LavaComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\WaterComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -501,6 +504,9 @@
       <Filter>Header Files\Room</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\ButtonForLavaRiddleComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\WaterComponent.h">
       <Filter>Header Files\GameObject\Components\Rendering</Filter>
     </ClInclude>
   </ItemGroup>

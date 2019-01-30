@@ -36,6 +36,7 @@ State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 	{
 		RoomManager::getInstance().getCurrentRoom()->setCompleted();
 	}
+
 	//ENDTESTING
 
 	if(m_pause)
@@ -90,8 +91,6 @@ void GameplayState::init()
 	objManager.add(rightDoor);
 	objManager.add(bottomDoor);
 	objManager.add(leftDoor);
-
-
 
 
 	objManager.applyChanges();

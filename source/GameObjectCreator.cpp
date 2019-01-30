@@ -24,6 +24,7 @@
 #include "LavaComponent.h"
 #include "RandomNumber.h"
 #include "ButtonForLavaRiddleComponent.h"
+#include "WaterComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -654,9 +655,11 @@ std::shared_ptr<GameObject> GameObjectCreator::createWaterForLavaRiddle(sf::Vect
 	TextureManager::getInstance().loadTexture("lava_map_water.png");
 	sf::Texture& texture = TextureManager::getInstance().getTexture("lava_map_water.png");
 
-	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "buttonForLavaRiddle");
+	std::shared_ptr<GameObject> waterObj = std::make_shared<GameObject>(position, "water");
 
+	auto water = std::make_shared<WaterComponent>(waterObj, Layer::BACKGROUND4, texture);
 
+	waterObj->addComponent(water);
 
-	return button;
+	return waterObj;
 }
