@@ -285,6 +285,9 @@
     <ClCompile Include="..\..\source\TorchRoomSolverComponent.cpp">
       <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\include\LavaComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">
@@ -484,6 +487,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\TorchRoomSolverComponent.h">
       <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LavaComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
