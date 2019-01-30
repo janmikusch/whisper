@@ -21,6 +21,8 @@
 #include "TorchAnimationComponent.h"
 #include "ButtonRoomComponent.h"
 #include "TorchRoomSolverComponent.h"
+#include "LavaComponent.h"
+#include "RandomNumber.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -550,4 +552,98 @@ std::shared_ptr<GameObject> GameObjectCreator::createToggleAnswerObject(sf::Vect
 
 
 	return torchAnswer;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createLava(sf::Vector2f position)
+{
+	std::shared_ptr<GameObject> lava = std::make_shared<GameObject>(position, "lava");
+
+	sf::FloatRect aabb = sf::FloatRect(position, sf::Vector2f(64, 64));
+
+	int randomNr = engine::Random::getIntBetween(0, 6);
+
+	sf::IntRect textureRect;
+	textureRect.width = 64;
+	textureRect.height = 64;
+
+	switch (randomNr)
+	{
+	case 0:
+		textureRect.left = 0;
+		textureRect.top = 0;
+		break;
+	case 1:
+		textureRect.left = 64;
+		textureRect.top = 0;
+		break;
+	case 2:
+		textureRect.left = 0;
+		textureRect.top = 64;
+		break;
+	case 3:
+		textureRect.left = 64;
+		textureRect.top = 64;
+		break;
+	case 4:
+		textureRect.left = 128;
+		textureRect.top = 64;
+		break;
+	case 5:
+		textureRect.left = 192;
+		textureRect.top = 64;
+		break;
+	case 6:
+		textureRect.left = 256;
+		textureRect.top = 64;
+		break;
+	}
+
+	TextureManager::getInstance().loadTexture("lava_spritesheet.png");
+	sf::Texture& texture = TextureManager::getInstance().getTexture("lava_spritesheet.png");
+
+	auto collider = std::make_shared<ColliderComponent>(lava, aabb, true);
+	auto rigidbody = std::make_shared<Rigidbody>(lava, 1, false, true);
+	auto lavaComp = std::make_shared<LavaComponent>(lava, Layer::BACKGROUND3, texture, textureRect);
+
+	lava->addComponent(collider);
+	lava->addComponent(rigidbody);
+	lava->addComponent(lavaComp);
+
+	rigidbody->addObserver(*lavaComp);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(lava, aabb, Layer::DEBUG_BOUNDINGBOX);
+	lava->addComponent(boundingbox);
+#endif
+
+	return lava;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createButtonForLavaRiddle(sf::Vector2f position)
+{
+	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(54, 56));
+	sf::Vector2f displacement = sf::Vector2f(5, 0);
+
+	TextureManager::getInstance().loadTexture("button_green.png");
+	sf::Texture& texture = TextureManager::getInstance().getTexture("button_green.png");
+
+	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "buttonForLavaRiddle");
+
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, rect, true, displacement);
+	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(button, 1, false, true);
+	std::shared_ptr<ButtonComponent> buttonComp = std::make_shared<ButtonComponent>(button, Layer::BACKGROUND3, texture, engine::Color::GREEN, 1);
+
+	button->addComponent(collider);
+	button->addComponent(rigidbody);
+	button->addComponent(buttonComp);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(button, rect, Layer::DEBUG_BOUNDINGBOX);
+	boundingbox->setDisplacement(displacement);
+	button->addComponent(boundingbox);
+#endif
+
+	rigidbody->addObserver(*buttonComp);
+
+	return button;
 }
