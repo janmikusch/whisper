@@ -8,6 +8,7 @@
 #include "RoomManager.h"
 #include "PhysicsManager.h"
 #include "ColliderComponent.h"
+#include"TorchAnimationComponent.h"
 
 HeroAnimationComponent::HeroAnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, float animationTime) :
 	AnimationComponent(parent, layer, animationTime)
@@ -18,9 +19,7 @@ HeroAnimationComponent::HeroAnimationComponent(std::shared_ptr<GameObject> paren
 void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 {
 	m_frameTime = m_frameClock.restart();
-
 	std::vector<std::shared_ptr<GameObject>> roomObjects = RoomManager::getInstance().getCurrentRoomObjects();
-	std::shared_ptr<GameObject> hitWithSword = nullptr;
 
 	sf::FloatRect currentAttack;
 
@@ -29,36 +28,54 @@ void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 		m_animatedSprite.setPosition(m_parent->getPosition() + m_diplace);
 		currentAttack = attackRects["fightUp"];
 		currentAttack.left += m_parent->getPosition().x;
-		currentAttack.top + m_parent->getPosition().y;
-		hitWithSword = checkCollisions(currentAttack, roomObjects);
+		currentAttack.top += m_parent->getPosition().y;
+		m_toggleAble = false;
 	}
 	else if (m_currentAnimation == "fightDown")
 	{
 		m_animatedSprite.setPosition(m_parent->getPosition() + m_diplace);
 		currentAttack = attackRects["fightDown"];
 		currentAttack.left += m_parent->getPosition().x;
-		currentAttack.top + m_parent->getPosition().y;
-		hitWithSword = checkCollisions(currentAttack, roomObjects);
+		currentAttack.top += m_parent->getPosition().y;
+		m_toggleAble = false;
 	}
 	else if (m_currentAnimation == "fightLeft")
 	{
 		m_animatedSprite.setPosition(m_parent->getPosition() + m_diplace);
 		currentAttack = attackRects["fightLeft"];
 		currentAttack.left += m_parent->getPosition().x;
-		currentAttack.top + m_parent->getPosition().y;
-		hitWithSword = checkCollisions(currentAttack, roomObjects);
+		currentAttack.top += m_parent->getPosition().y;
+		m_toggleAble = false;
 	}
 	else if (m_currentAnimation == "fightRight")
 	{
 		m_animatedSprite.setPosition(m_parent->getPosition() + m_diplace);
 		currentAttack = attackRects["fightRight"];
 		currentAttack.left += m_parent->getPosition().x;
-		currentAttack.top + m_parent->getPosition().y;
-		hitWithSword = checkCollisions(currentAttack, roomObjects);
+		currentAttack.top += m_parent->getPosition().y;
+		m_toggleAble = false; 
 	}
 	else
+	{
 		m_animatedSprite.setPosition(m_parent->getPosition());
+		m_toggleAble = true;
+		m_countdown = 0.0f;
+	}
+	
+	if (m_toggleAble == false)
+	{
+		m_countdown += fDeltaTimeSeconds;
 
+		if (m_countdown > 0.5f)
+		{
+			m_countdown = 0.0f;
+			std::shared_ptr<GameObject> hit = checkCollisions(currentAttack, roomObjects);
+			if (hit != nullptr)
+			{
+				hit->getComponent<TorchAnimationComponent>()->toggleFlame();
+			}
+		}
+	}
 
 	m_animatedSprite.setRotation(m_parent->getRotation());
 	m_animatedSprite.setOrigin(m_parent->getOrigin());
@@ -80,38 +97,6 @@ void HeroAnimationComponent::init()
 	attackRects.insert_or_assign("fightLeft", fightLeft);
 	attackRects.insert_or_assign("fightDown", fightDown);
 	attackRects.insert_or_assign("fightRight", fightRight);
-
-	/*sf::Vector2f displacementUp(fightUp.left, fightUp.top);
-	sf::FloatRect up = sf::FloatRect(0, 0, fightUp.width, fightUp.height);
-
-	auto bbUp = std::make_shared<BoundingboxComponent>(m_parent, up);
-	bbUp->setDisplacement(displacementUp);
-	m_parent->addComponent(bbUp);*/
-
-	/*sf::Vector2f displacementDown(fightDown.left, fightDown.top);
-	sf::FloatRect down = sf::FloatRect(0, 0, fightDown.width, fightDown.height);
-
-	auto bbDown = std::make_shared<BoundingboxComponent>(m_parent, down);
-	bbDown->setDisplacement(displacementDown);
-	m_parent->addComponent(bbDown);*/
-
-	/*sf::Vector2f displacementLeft(fightLeft.left, fightLeft.top);
-	sf::FloatRect left = sf::FloatRect(0, 0, fightLeft.width, fightLeft.height);
-
-	auto bbLeft = std::make_shared<BoundingboxComponent>(m_parent, left);
-	bbLeft->setDisplacement(displacementLeft);
-	m_parent->addComponent(bbLeft);*/
-
-	sf::Vector2f displacementRight(fightRight.left, fightRight.top);
-	sf::FloatRect Right = sf::FloatRect(0, 0, fightRight.width, fightRight.height);
-
-	auto bbRight = std::make_shared<BoundingboxComponent>(m_parent, Right);
-	bbRight->setDisplacement(displacementRight);
-	m_parent->addComponent(bbRight);
-
-	//m_parent->addComponent(std::make_shared<BoundingboxComponent>(m_parent, fightDown));
-	//m_parent->addComponent(std::make_shared<BoundingboxComponent>(m_parent, fightLeft));
-	//m_parent->addComponent(std::make_shared<BoundingboxComponent>(m_parent, fightRight));
 }
 
 std::shared_ptr<GameObject> HeroAnimationComponent::checkCollisions(sf::FloatRect aabb, std::vector<std::shared_ptr<GameObject>> objects)
