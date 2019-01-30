@@ -34,6 +34,7 @@ public:
 	
 
 	std::string getName() const { return  m_name; };
+	void setName(std::string name) { m_name = name; };
 	int getId() const { return  m_identifier; };
 
 	template<class T>

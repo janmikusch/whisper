@@ -481,7 +481,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createTorch(sf::Vector2f position
 	TextureManager::getInstance().loadTexture("torch_handle.png");
 	sf::Texture &handleTex = TextureManager::getInstance().getTexture("torch_handle.png");
 
-	std::shared_ptr<AnimationComponent> animComp = std::make_shared<TorchAnimationComponent>(torch, Layer::BACKGROUND3, handleTex, 0.1f);
+	std::shared_ptr<AnimationComponent> animComp = std::make_shared<TorchAnimationComponent>(torch, Layer::MIDDLE1, handleTex,c, 0.1f);
 
 	torch->addComponent(animComp);
 
@@ -512,4 +512,32 @@ std::shared_ptr<GameObject> GameObjectCreator::createButtonRoomChecker(sf::Vecto
 	brc->addComponent(buttonRoomComponent);
 
 	return brc;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createToggleTorch(sf::Vector2f position, engine::Color c)
+{
+	auto toggleTorch = createTorch(position, c);
+	toggleTorch->setName("toggleTorch");
+
+	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(64, 64));
+
+	sf::Vector2f displacement(18, 60);
+
+	rect.height -= 45;
+	rect.width -= 36;
+	
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(toggleTorch, rect, false);
+	collider->setDisplacement(displacement);
+	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(toggleTorch, 1, false, true);
+
+	toggleTorch->addComponent(collider);
+	toggleTorch->addComponent(rigidbody);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(toggleTorch, rect, Layer::DEBUG_BOUNDINGBOX);
+	boundingbox->setDisplacement(displacement);
+	toggleTorch->addComponent(boundingbox);
+#endif
+
+	return toggleTorch;
 }

@@ -6,6 +6,9 @@ void engine::RenderManager::renderLayer(Layer l)
 	if(m_renderMap.find(l) == m_renderMap.end())
 		return;
 	auto currentLayer = m_renderMap[l];
+	std::sort(currentLayer.begin(), currentLayer.end(),
+		[](std::shared_ptr<RenderComponent> const& a, std::shared_ptr<RenderComponent> const& b)
+		{ return a->getGameObject().getPosition().y < b->getGameObject().getPosition().y; });
 	for (auto renderObject : currentLayer)
 	{
 		renderObject->draw();

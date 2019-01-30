@@ -279,6 +279,9 @@
     <ClCompile Include="..\..\source\ButtonRoomCreator.cpp">
       <Filter>Source Files\Room</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\TorchRoomCreator.cpp">
+      <Filter>Source Files\Room</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">
@@ -471,6 +474,9 @@
       <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\ButtonRoomCreator.h">
+      <Filter>Header Files\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\TorchRoomCreator.h">
       <Filter>Header Files\Room</Filter>
     </ClInclude>
   </ItemGroup>
