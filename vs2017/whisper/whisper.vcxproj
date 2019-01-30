@@ -76,6 +76,7 @@
     <ClCompile Include="..\..\source\GUI.cpp" />
     <ClCompile Include="..\..\source\TorchAnimationComponent.cpp" />
     <ClCompile Include="..\..\source\TorchRoomCreator.cpp" />
+    <ClCompile Include="..\..\source\TorchRoomSolverComponent.cpp" />
     <ClCompile Include="..\..\source\window.cpp" />
     <ClCompile Include="..\..\source\WorldBuilder.cpp" />
   </ItemGroup>
@@ -143,6 +144,7 @@
     <ClInclude Include="..\..\include\GUI.h" />
     <ClInclude Include="..\..\include\TorchAnimationComponent.h" />
     <ClInclude Include="..\..\include\TorchRoomCreator.h" />
+    <ClInclude Include="..\..\include\TorchRoomSolverComponent.h" />
     <ClInclude Include="..\..\include\window.h" />
     <ClInclude Include="..\..\include\WorldBuilder.h" />
   </ItemGroup>

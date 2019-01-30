@@ -15,18 +15,24 @@ void TorchRoomCreator::createObjectsForTorchRoom(std::vector<std::shared_ptr<Gam
 int TorchRoomCreator::getValueFromColor(engine::Color c)
 {
 	switch (c) {
-	case engine::BLUE: break;
+	case engine::BLUE: 
 		return 7;
-	case engine::GREEN: break;
+		break;
+	case engine::GREEN: 
 		return 3;
-	case engine::RED: break;
+		break;
+	case engine::RED: 
 		return 5;
-	case engine::WHITE: break;
+		break;
+	case engine::WHITE: 
 		return -6;
-	case engine::YELLOW: break;
+		break;
+	case engine::YELLOW: 
 		return -4;
-	case engine::VIOLET: break;
+		break;
+	case engine::VIOLET: 
 		return -2;
+		break;
 	}
 	return 0;
 }
@@ -72,8 +78,10 @@ void TorchRoomCreator::createAnwerObject(std::vector<std::shared_ptr<GameObject>
 		finalAnwer = answer1;
 	else if (answer2 != 0)
 		finalAnwer = answer2;
-	
 
+	auto obj = GameObjectCreator::getInstance().createToggleAnswerObject(sf::Vector2f{700,130}, finalAnwer);
+	
+	room_objects.push_back(obj);
 }
 
 int TorchRoomCreator::calcAnswer(std::vector<std::shared_ptr<GameObject>>& room_objects)
@@ -85,9 +93,9 @@ int TorchRoomCreator::calcAnswer(std::vector<std::shared_ptr<GameObject>>& room_
 		{
 			continue;
 		}
-		int colVal = it->getComponent<TorchAnimationComponent>()->getFlameColor();
+		int colVal = getValueFromColor(it->getComponent<TorchAnimationComponent>()->getFlameColor());
 		int onOff = engine::Random::getIntBetween(0, 10);
-		if (onOff > 3)
+		if (onOff > 5)
 		{
 			answer += colVal;
 		}

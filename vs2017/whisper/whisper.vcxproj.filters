@@ -282,6 +282,9 @@
     <ClCompile Include="..\..\source\TorchRoomCreator.cpp">
       <Filter>Source Files\Room</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\TorchRoomSolverComponent.cpp">
+      <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">
@@ -478,6 +481,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\TorchRoomCreator.h">
       <Filter>Header Files\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\TorchRoomSolverComponent.h">
+      <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
