@@ -413,6 +413,8 @@ std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f positio
 		TextureManager::getInstance().loadTexture("button_white.png");
 		texture = &TextureManager::getInstance().getTexture("button_white.png");
 		break;
+	default:
+		sf::err() << "Color not defined";
 	}
 	
 	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "button");
@@ -467,9 +469,11 @@ std::shared_ptr<GameObject> GameObjectCreator::createTorch(sf::Vector2f position
 		texture = &TextureManager::getInstance().getTexture("flame_white.png");
 		break;
 	case engine::Color::VIOLET:
-		TextureManager::getInstance().loadTexture("flame_white.png");
-		texture = &TextureManager::getInstance().getTexture("flame_white.png");
+		TextureManager::getInstance().loadTexture("flame_violet.png");
+		texture = &TextureManager::getInstance().getTexture("flame_violet.png");
 		break;
+	default:
+		sf::err() << "Color not defined";
 	}
 
 	std::shared_ptr<GameObject> torch = std::make_shared<GameObject>(position, "torch");

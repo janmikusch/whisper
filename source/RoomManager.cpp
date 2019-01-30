@@ -238,7 +238,7 @@ void RoomManager::createButtons(std::vector<std::shared_ptr<GameObject>>& room_o
 
 void RoomManager::createTorches(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
-	engine::Color c = engine::Color::RED;
+	engine::Color c = engine::Color::BLACK;
 
 	int randomMin = 0;
 	int randomMax = 8;
