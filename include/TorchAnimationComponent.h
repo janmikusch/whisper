@@ -25,7 +25,11 @@ public:
 	void scale(const sf::Vector2f& factor) override;
 	void rotate(float angle) override;
 
+	void toggleFlame() { m_activeFlame = !m_activeFlame; };
+	bool isBurining() { return m_activeFlame; };
 private:
 	sf::Vector2f m_displace = sf::Vector2f(0,30);
 	sf::Sprite m_handle;
+
+	bool m_activeFlame = true;
 };

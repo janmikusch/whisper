@@ -24,7 +24,10 @@ void TorchAnimationComponent::update( const float fDeltaTimeSeconds)
 void TorchAnimationComponent::draw()
 {
 	engine::Window::getInstance().getWindow()->draw(m_handle);
-	AnimationComponent::draw();
+	if (m_activeFlame)
+	{
+		AnimationComponent::draw();
+	}
 }
 
 void TorchAnimationComponent::setPosition(const sf::Vector2f & position)

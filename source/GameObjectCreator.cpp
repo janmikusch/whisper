@@ -509,3 +509,31 @@ std::shared_ptr<GameObject> GameObjectCreator::createButtonRoomChecker(sf::Vecto
 
 	return brc;
 }
+
+std::shared_ptr<GameObject> GameObjectCreator::createToggleTorch(sf::Vector2f position, engine::Color c)
+{
+	auto toggleTorch = createTorch(position, c);
+	toggleTorch->setName("toggleTorch");
+
+	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(64, 64));
+
+	sf::Vector2f displacement(18, 40);
+
+	rect.height -= 45;
+	rect.width -= 36;
+	
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(toggleTorch, rect, false);
+	collider->setDisplacement(displacement);
+	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(toggleTorch, 1, false, true);
+
+	toggleTorch->addComponent(collider);
+	toggleTorch->addComponent(rigidbody);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(toggleTorch, rect, Layer::DEBUG_BOUNDINGBOX);
+	boundingbox->setDisplacement(displacement);
+	toggleTorch->addComponent(boundingbox);
+#endif
+
+	return toggleTorch;
+}

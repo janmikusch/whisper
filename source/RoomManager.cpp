@@ -10,6 +10,7 @@
 #include "ButtonRoomComponent.h"
 #include "RigidbodyComponent.h"
 #include "ButtonRoomCreator.h"
+#include "TorchRoomCreator.h"
 
 RoomManager::RoomManager() :EventObserver()
 {
@@ -86,6 +87,7 @@ void RoomManager::createRooms()
 	roomObjects_12.push_back(fader);
 
 	ButtonRoomCreator::createObjectsForButtonRoom(roomObjects_00, 3);//engine::Random::getIntBetween(3,6));
+	TorchRoomCreator::createObjectsForTorchRoom(roomObjects_02);//engine::Random::getIntBetween(3,6));
 
 
 	room_00->setRoomObjects(roomObjects_00);
