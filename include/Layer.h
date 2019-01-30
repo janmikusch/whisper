@@ -25,8 +25,8 @@ public:
 			{"background1",Layer::BACKGROUND1},
 			{"background2",Layer::BACKGROUND2},
 			{"background3",Layer::BACKGROUND3},
-			{"background3",Layer::BACKGROUND4},
-			{"background3",Layer::BACKGROUND5}
+			{"background4",Layer::BACKGROUND4},
+			{"background5",Layer::BACKGROUND5}
 		};
 
 		if (stringToLayer.find(str) == stringToLayer.end())

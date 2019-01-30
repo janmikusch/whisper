@@ -288,6 +288,9 @@
     <ClCompile Include="..\..\include\LavaComponent.cpp">
       <Filter>Source Files\GameObject\Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\LabyrinthCreator.cpp">
+      <Filter>Source Files\Room</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">
@@ -490,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\LavaComponent.h">
       <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LabyrinthCreator.h">
+      <Filter>Header Files\Room</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
