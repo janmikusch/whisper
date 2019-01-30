@@ -8,7 +8,7 @@
 class ColliderComponent : public Component, public TransformableComponent
 {
 public:
-	ColliderComponent(std::shared_ptr<GameObject> parent, const sf::FloatRect &aabb, bool isTrigger = false);
+	ColliderComponent(std::shared_ptr<GameObject> parent, const sf::FloatRect &aabb, bool isTrigger = false, sf::Vector2f displacement = sf::Vector2f{ 0,0 });
 
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;

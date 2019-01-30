@@ -217,8 +217,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 
 
 	auto rigidbody = std::make_shared<Rigidbody>(character, 1, false, false);
-	auto collider = std::make_shared<ColliderComponent>(character, aabb, false);
-	collider->setDisplacement(displacement);
+	auto collider = std::make_shared<ColliderComponent>(character, aabb, false, displacement);
 	character->addComponent(rigidbody);
 	character->addComponent(collider);
 
@@ -420,11 +419,9 @@ std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f positio
 	
 	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "button");
 
-	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, rect, true);
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, rect, true, displacement);
 	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(button, 1, false, true);
 	std::shared_ptr<ButtonComponent> buttonComp = std::make_shared<ButtonComponent>(button, Layer::BACKGROUND3, *texture, c, id);
-
-	collider->setDisplacement(displacement);
 
 	button->addComponent(collider);
 	button->addComponent(rigidbody);
@@ -527,8 +524,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createToggleTorch(sf::Vector2f po
 	rect.height -= 45;
 	rect.width -= 36;
 	
-	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(toggleTorch, rect, false);
-	collider->setDisplacement(displacement);
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(toggleTorch, rect, false, displacement);
 	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(toggleTorch, 1, false, true);
 
 	toggleTorch->addComponent(collider);
