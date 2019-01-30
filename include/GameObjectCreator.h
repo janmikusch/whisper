@@ -26,6 +26,7 @@ public:
 	std::shared_ptr<GameObject> createButtonRoomChecker(sf::Vector2f position, std::shared_ptr<GameObject> correctButton);
 
 	std::shared_ptr<GameObject> createToggleTorch(sf::Vector2f position, engine::Color c);
+	std::shared_ptr<GameObject> createToggleAnswerObject(sf::Vector2f position, int answer);
 
 private:
 	GameObjectCreator() = default;
