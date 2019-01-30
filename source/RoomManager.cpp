@@ -3,6 +3,23 @@
 #include "GameObjectManager.h"
 #include "FadeComponent.h"
 #include "GameObjectCreator.h"
+#include "window.h"
+#include "Color.h"
+#include "RandomNumber.h"
+#include "ButtonComponent.h"
+#include "ButtonRoomComponent.h"
+#include "RigidbodyComponent.h"
+#include "ButtonRoomCreator.h"
+#include "TorchRoomCreator.h"
+#include "LabyrinthCreator.h"
+
+RoomManager::RoomManager() :EventObserver()
+{
+	EventBus::getInstance().addObserver(engine::DOORENTER, this);
+	EventBus::getInstance().addObserver(engine::DAMAGETAKEN, this);
+	EventBus::getInstance().addObserver(engine::ROOMUNLOCKED, this);
+
+}
 
 RoomManager& RoomManager::getInstance()
 {
@@ -31,12 +48,7 @@ void RoomManager::createRooms()
 	m_rooms.push_back(room_11);
 	m_rooms.push_back(room_12);
 
-	room_00->setCompleted();
 	room_01->setCompleted();
-	room_02->setCompleted();
-	room_10->setCompleted();
-	room_11->setCompleted();
-	room_12->setCompleted();
 	m_currentRoom = room_01;
 
 	room_00->setRoom(Room::Direction::RIGHT, room_01);
@@ -66,7 +78,6 @@ void RoomManager::createRooms()
 	std::vector<std::shared_ptr<GameObject>> roomObjects_11;
 	std::vector<std::shared_ptr<GameObject>> roomObjects_12;
 
-	//add fader
 	auto fader = GameObjectCreator::getInstance().createFade();
 
 	roomObjects_00.push_back(fader);
@@ -75,6 +86,10 @@ void RoomManager::createRooms()
 	roomObjects_10.push_back(fader);
 	roomObjects_11.push_back(fader);
 	roomObjects_12.push_back(fader);
+
+	ButtonRoomCreator::createObjectsForButtonRoom(roomObjects_00, engine::Random::getIntBetween(3,6));
+	TorchRoomCreator::createObjectsForTorchRoom(roomObjects_02);
+	LabyrinthCreator::createObjectsForLabyrinthRoom(roomObjects_11);
 
 
 	room_00->setRoomObjects(roomObjects_00);
@@ -87,12 +102,18 @@ void RoomManager::createRooms()
 
 void RoomManager::init()
 {
+	//clear old rooms if left
+	auto empty = std::vector<std::shared_ptr<Room>>();
+	m_rooms.swap(empty);
+
 	createRooms();
 
 	for(auto it:m_rooms)
 	{
 		it->init();
 	}
+
+	m_lives = 3;
 }
 
 void RoomManager::changeRoom(Room::Direction dir)
@@ -134,19 +155,19 @@ void RoomManager::changeRoom(Room::Direction dir)
 	{
 	case Room::TOP:
 		newPos.x = 448;
-		newPos.y = 512 - 8;
+		newPos.y = 512;
 		break;
 	case Room::RIGHT:
-		newPos.x = 128 + 8;
-		newPos.y = 320;
+		newPos.x = 128 - 10;
+		newPos.y = 320 - 16;
 		break;
 	case Room::BOTTOM:
 		newPos.x = 448;
-		newPos.y = 128 + 8;
+		newPos.y = 128 - 20;
 		break;
 	case Room::LEFT:
-		newPos.x = 768 - 8;
-		newPos.y = 320;
+		newPos.x = 768 + 10;
+		newPos.y = 320 - 16;
 		break;
 	}
 
@@ -175,9 +196,26 @@ void RoomManager::onNotify(engine::EventType type, std::shared_ptr<engine::GameE
 		if(ev != nullptr)
 			changeRoom(ev->direction);
 	}
+	if(type == engine::EventType::DAMAGETAKEN)
+	{
+		getDamange();
+	}
+	if (type == engine::EventType::ROOMUNLOCKED)
+	{
+		getCurrentRoom()->setCompleted(true);
+	}
 }
 
-RoomManager::RoomManager():EventObserver()
+void RoomManager::getDamange()
 {
-	EventBus::getInstance().addObserver(engine::DOORENTER, this);
+	m_lives--;
+	if(m_lives == 0)
+	{
+		EventBus::getInstance().notify(engine::EventType::GAMEOVER, std::make_shared<engine::GameEvent>());
+	}
+}
+
+std::shared_ptr<Room> RoomManager::getRoom(int i)
+{
+	return m_rooms[i];
 }

@@ -4,10 +4,17 @@
 #include "window.h"
 #include "RenderComponent.h"
 #include "RenderManager.h"
+#include "RandomNumber.h"
 
+
+GameObject::GameObject()
+{
+	m_identifier = engine::Random::getIntBetween(0, std::numeric_limits<int>::max());
+}
 
 GameObject::GameObject(sf::Vector2f position,std::string name):m_name(name)
 {
+	m_identifier = engine::Random::getIntBetween(0, std::numeric_limits<int>::max());
 	this->setPosition(position);
 }
 

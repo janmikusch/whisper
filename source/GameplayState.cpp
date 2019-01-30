@@ -12,6 +12,7 @@
 #include "window.h"
 #include "WorldBuilder.h"
 #include "RoomManager.h"
+#include "GUI.h"
 
 GameplayState::GameplayState(StateType type) :State(type)
 {
@@ -22,9 +23,23 @@ State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 	GameObjectManager& objManager = GameObjectManager::getInstance();
 	if (InputManager::getInstance().isKeyDown("EndGame",0))
 	{
-		exit();
-		return State::StateType::STATE_MENU;
+		EventBus::getInstance().notify(engine::GAMEPAUSE, make_shared<engine::GameEvent>());
+		pause(true);
 	}
+
+	//TESTING
+	if (InputManager::getInstance().isKeyDown(sf::Keyboard::Key::P))
+	{
+		EventBus::getInstance().notify(engine::DAMAGETAKEN, make_shared<engine::GameEvent>());
+	}
+	if (InputManager::getInstance().isKeyDown(sf::Keyboard::Key::U))
+	{
+		RoomManager::getInstance().getCurrentRoom()->setCompleted();
+	}
+	//ENDTESTING
+
+	if(m_pause)
+		return m_type;
 
 	for (std::shared_ptr<GameObject> o : objManager.getList())
 	{
@@ -50,6 +65,10 @@ void GameplayState::draw()
 
 void GameplayState::init()
 {
+	m_pause = false;
+
+	engine::GUI::getInstance().init(m_type);
+
 	RoomManager::getInstance().init();
 
 	GameObjectManager& objManager = GameObjectManager::getInstance();
@@ -86,6 +105,6 @@ void GameplayState::init()
 void GameplayState::exit()
 {
 	GameObjectManager& objManager = GameObjectManager::getInstance();
-	
+	m_pause = false;
 	objManager.clear();
 }

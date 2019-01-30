@@ -3,10 +3,12 @@
 #include "RenderManager.h"
 #include "window.h"
 
-ColliderComponent::ColliderComponent(std::shared_ptr<GameObject> parent, const sf::FloatRect& aabb, bool isTrigger) : 
-	Component(parent), m_shape(aabb)
+ColliderComponent::ColliderComponent(std::shared_ptr<GameObject> parent, const sf::FloatRect& aabb, bool isTrigger, sf::Vector2f displacement) : 
+	Component(parent), m_shape(aabb), m_displacement(displacement)
 {
 	m_isTrigger = isTrigger;
+	m_shape.left += m_displacement.x;
+	m_shape.top += m_displacement.y;
 }
 
 void ColliderComponent::update(const float fDeltaTimeSeconds)
@@ -41,8 +43,8 @@ bool ColliderComponent::isTrigger()
 
 void ColliderComponent::setPosition(const sf::Vector2f& position)
 {
-	m_shape.left = position.x;
-	m_shape.top = position.y;
+	m_shape.left = position.x + m_displacement.x;
+	m_shape.top = position.y + m_displacement.y;
 }
 
 void ColliderComponent::setRotation(float angle)

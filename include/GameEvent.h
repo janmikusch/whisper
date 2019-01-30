@@ -7,7 +7,8 @@ struct Collision;
 
 namespace engine
 {
-	enum EventType { DOORENTER };
+	enum EventType { DOORENTER, GAMESTART,GAMEQUIT, GAMECONTINUE, GAMEPAUSE, GAMEOVER, DAMAGETAKEN, ROOMUNLOCKED, ROOMCOUNTCHANGED, GAMECOMPLETE
+	};
 
 	struct GameEvent
 	{

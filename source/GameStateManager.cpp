@@ -2,6 +2,7 @@
 #include "GameStateManager.h"
 #include <SFML/Graphics.hpp>
 #include "RenderManager.h"
+#include "GameplayState.h"
 
 void GameStateManager::update(const float fDeltaTimeSeconds)
 {
@@ -37,4 +38,27 @@ void GameStateManager::setState(State::StateType state)
 void GameStateManager::addState(State::StateType stateType, std::shared_ptr<State> state)
 {
 	m_states.insert_or_assign(stateType, state);
+}
+
+
+void GameStateManager::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent)
+{
+	if(type == engine::EventType::GAMESTART)
+	{
+		m_states[m_currentState]->exit();
+		setState(State::STATE_GAMEPLAY);
+	}
+	else if(type == engine::EventType::GAMEQUIT)
+	{
+		m_states[m_currentState]->exit();
+		setState(State::STATE_MENU);
+	}
+	else if (type == engine::EventType::GAMECONTINUE || type == engine::EventType::GAMEOVER)
+	{
+		std::static_pointer_cast<GameplayState>(m_states[State::STATE_GAMEPLAY])->pause(false);
+	}
+	else if (type == engine::EventType::GAMECOMPLETE)
+	{
+		std::static_pointer_cast<GameplayState>(m_states[State::STATE_GAMEPLAY])->pause(true);
+	}
 }

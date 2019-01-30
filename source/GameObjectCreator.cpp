@@ -17,6 +17,12 @@
 #include "CharacterAreaComponent.h"
 #include "DoorComponent.h"
 #include "FadeComponent.h"
+#include "ButtonComponent.h"
+#include "TorchAnimationComponent.h"
+#include "ButtonRoomComponent.h"
+#include "TorchRoomSolverComponent.h"
+#include "LavaComponent.h"
+#include "RandomNumber.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -206,13 +212,20 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 
 	animComp->setAnimation("standingDown");
 
+	sf::Vector2f displacement(18, 40);
+
+	aabb.height -= 45;
+	aabb.width -= 36;
+
+
 	auto rigidbody = std::make_shared<Rigidbody>(character, 1, false, false);
-	auto collider = std::make_shared<ColliderComponent>(character, aabb, false);
+	auto collider = std::make_shared<ColliderComponent>(character, aabb, false, displacement);
 	character->addComponent(rigidbody);
 	character->addComponent(collider);
 
 #ifdef _DEBUG
 	auto boundingbox = std::make_shared <BoundingboxComponent>(character, aabb);
+	boundingbox->setDisplacement(displacement);
 	character->addComponent(boundingbox);
 #endif
 
@@ -368,4 +381,269 @@ std::shared_ptr<GameObject> GameObjectCreator::createFade(sf::Vector2f position)
 
 	fader->addComponent(std::make_shared<FadeComponent>(fader, Layer::FOREGROUND3));
 	return fader;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createButton(sf::Vector2f position, engine::Color c, int id)
+{
+	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(54, 56));
+	sf::Vector2f displacement = sf::Vector2f(5, 0);
+	sf::Texture *texture = nullptr;
+
+	switch (c)
+	{
+	case engine::Color::BLACK:
+		TextureManager::getInstance().loadTexture("button_black.png");
+		texture = &TextureManager::getInstance().getTexture("button_black.png");
+		break;
+	case engine::Color::BLUE:
+		TextureManager::getInstance().loadTexture("button_blue.png");
+		texture = &TextureManager::getInstance().getTexture("button_blue.png");
+		break;
+	case engine::Color::GREEN:
+		TextureManager::getInstance().loadTexture("button_green.png");
+		texture = &TextureManager::getInstance().getTexture("button_green.png");
+		break;
+	case engine::Color::RED:
+		TextureManager::getInstance().loadTexture("button_red.png");
+		texture = &TextureManager::getInstance().getTexture("button_red.png");
+		break;
+	case engine::Color::YELLOW:
+		TextureManager::getInstance().loadTexture("button_yellow.png");
+		texture = &TextureManager::getInstance().getTexture("button_yellow.png");
+		break;
+	case engine::Color::WHITE:
+		TextureManager::getInstance().loadTexture("button_white.png");
+		texture = &TextureManager::getInstance().getTexture("button_white.png");
+		break;
+	default:
+		sf::err() << "Color not defined";
+	}
+	
+	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "button");
+
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, rect, true, displacement);
+	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(button, 1, false, true);
+	std::shared_ptr<ButtonComponent> buttonComp = std::make_shared<ButtonComponent>(button, Layer::BACKGROUND3, *texture, c, id);
+
+	button->addComponent(collider);
+	button->addComponent(rigidbody);
+	button->addComponent(buttonComp);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(button, rect, Layer::DEBUG_BOUNDINGBOX);
+	boundingbox->setDisplacement(displacement);
+	button->addComponent(boundingbox);
+#endif
+
+	rigidbody->addObserver(*buttonComp);
+
+	return button;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createTorch(sf::Vector2f position, engine::Color c)
+{
+	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(64, 64));
+	sf::Vector2f displacement = sf::Vector2f(0, 0);
+	sf::Texture *texture = nullptr;
+
+	switch (c)
+	{
+	case engine::Color::BLUE:
+		TextureManager::getInstance().loadTexture("flame_blue.png");
+		texture = &TextureManager::getInstance().getTexture("flame_blue.png");
+		break;
+	case engine::Color::GREEN:
+		TextureManager::getInstance().loadTexture("flame_green.png");
+		texture = &TextureManager::getInstance().getTexture("flame_green.png");
+		break;
+	case engine::Color::RED:
+		TextureManager::getInstance().loadTexture("flame_red.png");
+		texture = &TextureManager::getInstance().getTexture("flame_red.png");
+		break;
+	case engine::Color::YELLOW:
+		TextureManager::getInstance().loadTexture("flame_yellow.png");
+		texture = &TextureManager::getInstance().getTexture("flame_yellow.png");
+		break;
+	case engine::Color::WHITE:
+		TextureManager::getInstance().loadTexture("flame_white.png");
+		texture = &TextureManager::getInstance().getTexture("flame_white.png");
+		break;
+	case engine::Color::VIOLET:
+		TextureManager::getInstance().loadTexture("flame_violet.png");
+		texture = &TextureManager::getInstance().getTexture("flame_violet.png");
+		break;
+	default:
+		sf::err() << "Color not defined";
+	}
+
+	std::shared_ptr<GameObject> torch = std::make_shared<GameObject>(position, "torch");
+
+	TextureManager::getInstance().loadTexture("torch_handle.png");
+	sf::Texture &handleTex = TextureManager::getInstance().getTexture("torch_handle.png");
+
+	std::shared_ptr<AnimationComponent> animComp = std::make_shared<TorchAnimationComponent>(torch, Layer::MIDDLE1, handleTex,c, 0.1f);
+
+	torch->addComponent(animComp);
+
+	Animation flameAnimation;
+	flameAnimation.setSpriteSheet(*texture);
+	flameAnimation.addFrame(sf::IntRect(0, 0, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(64, 0, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(128, 0, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(192, 0, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(0, 64, 64, 64));
+	flameAnimation.addFrame(sf::IntRect(64, 64, 64, 64));
+
+	animComp->addAnimation(flameAnimation, "flameAnimation");
+
+	animComp->setAnimation("flameAnimation");
+
+	return torch;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createButtonRoomChecker(sf::Vector2f position,std::shared_ptr<GameObject> correctButton)
+{
+	std::shared_ptr<GameObject> brc = std::make_shared<GameObject>(position, "buttonRoomChecker");
+
+	auto buttonRoomComponent = std::make_shared<ButtonRoomComponent>(brc);
+
+	buttonRoomComponent->setCorrectButton(correctButton);
+
+	brc->addComponent(buttonRoomComponent);
+
+	return brc;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createToggleTorch(sf::Vector2f position, engine::Color c)
+{
+	auto toggleTorch = createTorch(position, c);
+	toggleTorch->setName("toggleTorch");
+
+	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(64, 64));
+
+	sf::Vector2f displacement(18, 60);
+
+	rect.height -= 45;
+	rect.width -= 36;
+	
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(toggleTorch, rect, false, displacement);
+	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(toggleTorch, 1, false, true);
+
+	toggleTorch->addComponent(collider);
+	toggleTorch->addComponent(rigidbody);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(toggleTorch, rect, Layer::DEBUG_BOUNDINGBOX);
+	boundingbox->setDisplacement(displacement);
+	toggleTorch->addComponent(boundingbox);
+#endif
+
+	return toggleTorch;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createToggleAnswerObject(sf::Vector2f position, int answer)
+{
+	std::shared_ptr<GameObject> torchAnswer = std::make_shared<GameObject>(position, "torchAnswer");
+
+	TextureManager::getInstance().loadTexture("answer_background.png");
+	sf::Texture& texture = TextureManager::getInstance().getTexture("answer_background.png");
+
+	torchAnswer->addComponent(std::make_shared<TorchRoomSolverComponent>(torchAnswer, answer, texture));
+
+
+	return torchAnswer;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createLava(sf::Vector2f position)
+{
+	std::shared_ptr<GameObject> lava = std::make_shared<GameObject>(position, "lava");
+
+	sf::FloatRect aabb = sf::FloatRect(position, sf::Vector2f(64, 64));
+
+	int randomNr = engine::Random::getIntBetween(0, 6);
+
+	sf::IntRect textureRect;
+	textureRect.width = 64;
+	textureRect.height = 64;
+
+	switch (randomNr)
+	{
+	case 0:
+		textureRect.left = 0;
+		textureRect.top = 0;
+		break;
+	case 1:
+		textureRect.left = 64;
+		textureRect.top = 0;
+		break;
+	case 2:
+		textureRect.left = 0;
+		textureRect.top = 64;
+		break;
+	case 3:
+		textureRect.left = 64;
+		textureRect.top = 64;
+		break;
+	case 4:
+		textureRect.left = 128;
+		textureRect.top = 64;
+		break;
+	case 5:
+		textureRect.left = 192;
+		textureRect.top = 64;
+		break;
+	case 6:
+		textureRect.left = 256;
+		textureRect.top = 64;
+		break;
+	}
+
+	TextureManager::getInstance().loadTexture("lava_spritesheet.png");
+	sf::Texture& texture = TextureManager::getInstance().getTexture("lava_spritesheet.png");
+
+	auto collider = std::make_shared<ColliderComponent>(lava, aabb, true);
+	auto rigidbody = std::make_shared<Rigidbody>(lava, 1, false, true);
+	auto lavaComp = std::make_shared<LavaComponent>(lava, Layer::BACKGROUND3, texture, textureRect);
+
+	lava->addComponent(collider);
+	lava->addComponent(rigidbody);
+	lava->addComponent(lavaComp);
+
+	rigidbody->addObserver(*lavaComp);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(lava, aabb, Layer::DEBUG_BOUNDINGBOX);
+	lava->addComponent(boundingbox);
+#endif
+
+	return lava;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createButtonForLavaRiddle(sf::Vector2f position)
+{
+	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(54, 56));
+	sf::Vector2f displacement = sf::Vector2f(5, 0);
+
+	TextureManager::getInstance().loadTexture("button_green.png");
+	sf::Texture& texture = TextureManager::getInstance().getTexture("button_green.png");
+
+	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "buttonForLavaRiddle");
+
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, rect, true, displacement);
+	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(button, 1, false, true);
+	std::shared_ptr<ButtonComponent> buttonComp = std::make_shared<ButtonComponent>(button, Layer::BACKGROUND3, texture, engine::Color::GREEN, 1);
+
+	button->addComponent(collider);
+	button->addComponent(rigidbody);
+	button->addComponent(buttonComp);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(button, rect, Layer::DEBUG_BOUNDINGBOX);
+	boundingbox->setDisplacement(displacement);
+	button->addComponent(boundingbox);
+#endif
+
+	rigidbody->addObserver(*buttonComp);
+
+	return button;
 }

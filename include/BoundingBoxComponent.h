@@ -23,6 +23,7 @@ public:
 	void move(const sf::Vector2f &movement) override;
 	void scale(const sf::Vector2f& factor) override;
 	void rotate(float angle) override;
+	void setDisplacement(sf::Vector2f displacement) { m_displacement = displacement; };
 
 	void setColor(sf::Color c);
 

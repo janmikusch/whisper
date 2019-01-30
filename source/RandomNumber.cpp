@@ -2,22 +2,24 @@
 #include "RandomNumber.h"
 #include <cstdlib>
 #include <ctime>
+#include <random>
+#include <SFML/System/Err.hpp>
 
-///https://www.daniweb.com/programming/software-development/threads/1769/c-random-numbers#
+
 int engine::Random::getIntBetween(int min, int max)
 {
-	srand((unsigned)time(0));
-	int result;
-	int range = (max - min) + 1;
-
-	result = min + int(range*rand() / (RAND_MAX + 1.0));;
-
-	return  result;
+	static std::random_device random;
+	std::mt19937 engX(random());
+	std::uniform_int_distribution<> distrX(min, max);
+	auto res = distrX(engX);
+	return res;
 }
 
 ///https://stackoverflow.com/questions/686353/random-float-number-generation
-float engine::Random::getFloatBetween(float min, float max)
+float engine::Random::getDoubleBetween(double min, double max)
 {
-	float result = min + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (max - min)));
-	return result;
+	static std::random_device random;
+	std::mt19937 engX(random());
+	std::uniform_real_distribution<> distrX(min, max);
+	return distrX(engX);
 }

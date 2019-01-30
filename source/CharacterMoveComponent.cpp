@@ -29,7 +29,7 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 	{	
 		if (m_state != AnimationState::ATTACK)
 		{
-			const float speed = 100.0f;
+			const float speed = 150.0f;
 			sf::Vector2f movement = m_moveBehaviour->getMovement();
 
 			float length = std::sqrt((movement.x * movement.x) + (movement.y * movement.y));
@@ -139,6 +139,22 @@ void CharacterMoveComponent::keepInArea(sf::Vector2f& movement)
 void CharacterMoveComponent::dontCollide(sf::Vector2f& movement)
 {
 	for(auto it:GameObjectManager::getInstance().getGameObjectList("staticCollider"))
+	{
+		auto charBoundingBox = m_parent->getComponent<ColliderComponent>()->getShape();
+		auto otherBoundingBox = it->getComponent<ColliderComponent>()->getShape();
+
+		charBoundingBox.width += movement.x;
+		charBoundingBox.height += movement.y;
+		charBoundingBox.top += movement.y;
+		charBoundingBox.left += movement.x;
+
+		sf::Vector2f normal;
+		float penetration;
+
+		if(PhysicsManager::getInstance().AABBvsAABB(charBoundingBox, otherBoundingBox, normal, penetration))
+			movement += normal * penetration;
+	}	
+	for(auto it:GameObjectManager::getInstance().getGameObjectList("toggleTorch"))
 	{
 		auto charBoundingBox = m_parent->getComponent<ColliderComponent>()->getShape();
 		auto otherBoundingBox = it->getComponent<ColliderComponent>()->getShape();
