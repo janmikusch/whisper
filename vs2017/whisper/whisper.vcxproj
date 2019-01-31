@@ -37,6 +37,7 @@
     <ClCompile Include="..\..\source\Collision.cpp" />
     <ClCompile Include="..\..\source\Component.cpp" />
     <ClCompile Include="..\..\source\DoorComponent.cpp" />
+    <ClCompile Include="..\..\source\EnemyMoveComponent.cpp" />
     <ClCompile Include="..\..\source\EventBus.cpp" />
     <ClCompile Include="..\..\source\FadeComponent.cpp" />
     <ClCompile Include="..\..\source\FontManager.cpp" />
@@ -104,6 +105,7 @@
     <ClInclude Include="..\..\include\Component.h" />
     <ClInclude Include="..\..\include\DoorComponent.h" />
     <ClInclude Include="..\..\include\Element.h" />
+    <ClInclude Include="..\..\include\EnemyMoveComponent.h" />
     <ClInclude Include="..\..\include\EventBus.h" />
     <ClInclude Include="..\..\include\EventObserver.h" />
     <ClInclude Include="..\..\include\FadeComponent.h" />

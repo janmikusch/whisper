@@ -297,6 +297,9 @@
     <ClCompile Include="..\..\source\WaterComponent.cpp">
       <Filter>Source Files\GameObject\Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\EnemyMoveComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">
@@ -511,6 +514,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\Element.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\EnemyMoveComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
