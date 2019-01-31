@@ -25,6 +25,7 @@
 #include "RandomNumber.h"
 #include "ButtonForLavaRiddleComponent.h"
 #include "WaterComponent.h"
+#include "EnemyMoveComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -662,4 +663,105 @@ std::shared_ptr<GameObject> GameObjectCreator::createWaterForLavaRiddle(sf::Vect
 	waterObj->addComponent(water);
 
 	return waterObj;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, engine::Element e, std::shared_ptr<GameObject> target, int id, sf::Vector2f position)
+{
+	std::shared_ptr<GameObject> enemy = std::make_shared<GameObject>(position, "enemy");
+
+	TextureManager::getInstance().loadTexture("elemental.png");
+	sf::Texture& texture = TextureManager::getInstance().getTexture("elemental.png");
+
+	std::shared_ptr<AnimationComponent> animComp = std::make_shared<AnimationComponent>(enemy, Layer::MIDDLE1, 0.2f);
+
+	enemy->addComponent(animComp);
+	enemy->addComponent(std::make_shared<EnemyMoveComponent>(enemy, target, id));
+
+	int elementOffset = 0;
+
+	switch (e)
+	{
+	case engine::Element::WATER:
+		elementOffset = 0;
+		break;
+	case engine::Element::FIRE:
+		elementOffset = 360;
+		break;
+	case engine::Element::AIR:
+		elementOffset = 720;
+		break;
+	case engine::Element::EARTH:
+		elementOffset = 1080;
+		break;
+	default:
+		sf::err() << "Element not defined";
+	}
+
+	Animation walkingAnimationUp;
+	walkingAnimationUp.setSpriteSheet(texture);
+	walkingAnimationUp.addFrame(sf::IntRect(0 + elementOffset, 384, 120, 128));
+	walkingAnimationUp.addFrame(sf::IntRect(120 + elementOffset, 384, 120, 128));
+	walkingAnimationUp.addFrame(sf::IntRect(240 + elementOffset, 384, 120, 128));
+	walkingAnimationUp.addFrame(sf::IntRect(120 + elementOffset, 384, 120, 128));
+
+	animComp->addAnimation(walkingAnimationUp, "up");
+
+	Animation walkingAnimationLeft;
+	walkingAnimationLeft.setSpriteSheet(texture);
+	walkingAnimationLeft.addFrame(sf::IntRect(0 + elementOffset, 128, 120, 128));
+	walkingAnimationLeft.addFrame(sf::IntRect(120 + elementOffset, 128, 120, 128));
+	walkingAnimationLeft.addFrame(sf::IntRect(240 + elementOffset, 128, 120, 128));
+	walkingAnimationLeft.addFrame(sf::IntRect(120 + elementOffset, 128, 120, 128));
+
+	animComp->addAnimation(walkingAnimationLeft, "left");
+
+
+	Animation walkingAnimationDown;
+	walkingAnimationDown.setSpriteSheet(texture);
+	walkingAnimationDown.addFrame(sf::IntRect(0 + elementOffset, 0, 120, 128));
+	walkingAnimationDown.addFrame(sf::IntRect(120 + elementOffset, 0, 120, 128));
+	walkingAnimationDown.addFrame(sf::IntRect(240 + elementOffset, 0, 120, 128));
+	walkingAnimationDown.addFrame(sf::IntRect(120 + elementOffset, 0, 120, 128));
+
+	animComp->addAnimation(walkingAnimationDown, "down");
+
+
+	Animation walkingAnimationRight;
+	walkingAnimationRight.setSpriteSheet(texture);
+	walkingAnimationRight.addFrame(sf::IntRect(0 + elementOffset, 256, 120, 128));
+	walkingAnimationRight.addFrame(sf::IntRect(120 + elementOffset, 256, 120, 128));
+	walkingAnimationRight.addFrame(sf::IntRect(240 + elementOffset, 256, 120, 128));
+	walkingAnimationRight.addFrame(sf::IntRect(120 + elementOffset, 256, 120, 128));
+
+	animComp->addAnimation(walkingAnimationRight, "right");
+
+
+	Animation idle;
+	idle.setSpriteSheet(texture);
+	idle.addFrame(sf::IntRect(120 + elementOffset, 512, 120, 128));
+	idle.addFrame(sf::IntRect(120 + elementOffset, 640, 120, 128));
+	idle.addFrame(sf::IntRect(120 + elementOffset, 768, 120, 128));
+	idle.addFrame(sf::IntRect(120 + elementOffset, 896, 120, 128));
+
+	animComp->addAnimation(idle, "idle");
+
+	animComp->setAnimation("idle");
+
+	sf::Vector2f displacement(35, 65);
+
+	aabb.height -= 65;
+	aabb.width -= 70;
+
+	auto rigidbody = std::make_shared<Rigidbody>(enemy, 1, false, false);
+	auto collider = std::make_shared<ColliderComponent>(enemy, aabb, false, displacement);
+	enemy->addComponent(rigidbody);
+	enemy->addComponent(collider);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(enemy, aabb);
+	boundingbox->setDisplacement(displacement);
+	enemy->addComponent(boundingbox);
+#endif
+
+	return enemy;
 }

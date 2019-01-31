@@ -46,7 +46,7 @@ void Rigidbody::update(const float fDeltaTimeSeconds)
 		// symplectic Euler
 		m_acceleration = forces * m_invMass;
 		m_velocity += m_acceleration * fDeltaTimeSeconds;
-		m_velocity = m_velocity * 0.99f; // simple "friction"
+		m_velocity = m_velocity * 0.9f; // simple "friction"
 		if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y < m_minVelocity)
 		{
 			m_velocity.x = 0.0f;
