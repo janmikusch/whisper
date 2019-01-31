@@ -46,6 +46,8 @@ void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std
 
 			nextEnemy = m_enemies.begin();
 			enemiesLoaded = true;
+			areAttacking = true;
+			nextEnemy = m_enemies.begin();
 		}
 	}
 	if (cge != nullptr && cge->type == engine::CollisionGameEvent::CollisionType::EXIT)
@@ -65,14 +67,17 @@ void ButtonForEnemyRiddleComponent::update(const float fDeltaTimeSeconds)
 	if (m_enemies.empty())
 		return;
 
-	if(nextEnemy != m_enemies.end())
-		m_timer += fDeltaTimeSeconds;
-
-	if (m_timer > 1.0f && nextEnemy != m_enemies.end())
+	if (!areAttacking)
 	{
-		(*nextEnemy)->getComponent<EnemyMoveComponent>()->setStandingAnimation();
-		m_timer = 0;
-		nextEnemy++;
+		if (nextEnemy != m_enemies.end())
+			m_timer += fDeltaTimeSeconds;
+
+		if (m_timer > 1.0f && nextEnemy != m_enemies.end())
+		{
+			(*nextEnemy)->getComponent<EnemyMoveComponent>()->setStandingAnimation();
+			m_timer = 0;
+			nextEnemy++;
+		}
 	}
 }
 
@@ -80,4 +85,23 @@ void ButtonForEnemyRiddleComponent::init()
 {
 	m_timer = 0.0f;
 	enemiesLoaded = false;
+	areAttacking = false;
+}
+
+void ButtonForEnemyRiddleComponent::enemyAttacked(std::shared_ptr<GameObject> enemy)
+{
+	if(areAttacking && nextEnemy != m_enemies.end())
+	{
+		if(enemy == *nextEnemy)
+		{
+			nextEnemy++;
+			if(nextEnemy == m_enemies.end())
+				EventBus::getInstance().notify(engine::EventType::ROOMUNLOCKED, std::shared_ptr<engine::GameEvent>());
+		}
+		else
+		{
+			RoomManager::getInstance().resetCurrentRoom();
+			EventBus::getInstance().notify(engine::EventType::DAMAGETAKEN, std::shared_ptr<engine::GameEvent>());
+		}
+	}
 }

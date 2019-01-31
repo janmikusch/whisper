@@ -20,6 +20,8 @@ public:
 	void update(const float fDeltaTimeSeconds) override;
 	void init() override;
 
+	void enemyAttacked(std::shared_ptr<GameObject> enemy);
+
 protected:
 	sf::Sprite m_buttonPressed;
 	sf::Sprite m_buttonReleased;
@@ -32,4 +34,6 @@ protected:
 	std::vector<std::shared_ptr<GameObject>>::iterator nextEnemy;
 
 	bool enemiesLoaded;
+
+	bool areAttacking;
 };
