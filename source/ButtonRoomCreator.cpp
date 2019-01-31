@@ -123,7 +123,7 @@ void ButtonRoomCreator::createButtonRoomChecker(std::vector<std::shared_ptr<Game
 
 void ButtonRoomCreator::create3Buttons(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
-	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
+	sf::Vector2f winSize{ 960, 704 };
 
 	int borderSize = 120;
 	int buttonWidth = 64;
@@ -149,7 +149,7 @@ void ButtonRoomCreator::create3Buttons(std::vector<std::shared_ptr<GameObject>>&
 
 void ButtonRoomCreator::create4Buttons(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
-	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
+	sf::Vector2f winSize{ 960, 704 };
 
 	int borderSize = 120;
 	int buttonWidth = 64;
@@ -180,8 +180,8 @@ void ButtonRoomCreator::create4Buttons(std::vector<std::shared_ptr<GameObject>>&
 void ButtonRoomCreator::create5Buttons(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
 	create4Buttons(room_objects);
+		sf::Vector2f winSize{ 960, 704 };
 
-	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
 
 	int borderSize = 120;
 	int buttonWidth = 64;
@@ -199,7 +199,7 @@ void ButtonRoomCreator::create5Buttons(std::vector<std::shared_ptr<GameObject>>&
 
 void ButtonRoomCreator::create6Buttons(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
-	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
+	sf::Vector2f winSize{ 960, 704 };
 
 	int borderSize = 120;
 	int buttonWidth = 64;

@@ -39,7 +39,7 @@ int TorchRoomCreator::getValueFromColor(engine::Color c)
 
 void TorchRoomCreator::createTorches(std::vector<std::shared_ptr<GameObject>>& room_objects)
 {
-	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
+	sf::Vector2f winSize{ 960, 704 };
 
 	int borderSize = 120;
 	int buttonWidth = 64;

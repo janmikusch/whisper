@@ -60,7 +60,15 @@ bool Game::init()
 
 	m_window = std::make_shared<sf::RenderWindow>();
 
-	m_window->create(sf::VideoMode(m_width, m_height), m_gameName);
+	sf::Vector2f winSize{ 960, 704 };
+
+	m_window->create(sf::VideoMode(m_width, m_height), m_gameName, sf::Style::Fullscreen);
+
+	sf::View view;
+	view.setSize(winSize);
+	view.setCenter(sf::Vector2f { 480, 352 });
+	m_window->setView(view);
+
 	m_window->setFramerateLimit(60);
 
 	//init gui
@@ -106,7 +114,7 @@ bool Game::init()
 
 	
 	//sm.playSound("testSound");
-	//sm.setMusic("testMusic");
+	sm.setMusic("testMusic");
 
 	return true;
 }
