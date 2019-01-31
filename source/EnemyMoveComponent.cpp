@@ -36,7 +36,7 @@ void EnemyMoveComponent::update(const float fDeltaTimeSeconds)
 		movement = m_target->getPosition() - m_parent->getPosition();
 
 	float length = std::sqrt((movement.x * movement.x) + (movement.y * movement.y));
-	if (isFighting && length > 0.1f && RoomManager::getInstance().getLives() > 0)
+	if (m_isFighting && length > 0.1f && RoomManager::getInstance().getLives() > 0)
 	{
 		m_state = AnimationState::WALK;
 
@@ -131,6 +131,7 @@ void EnemyMoveComponent::dontCollide(sf::Vector2f& movement)
 
 		if (PhysicsManager::getInstance().AABBvsAABB(charBoundingBox, otherBoundingBox, normal, penetration))
 		{
+			m_isFighting = false;
 			RoomManager::getInstance().resetCurrentRoom();
 			EventBus::getInstance().notify(engine::EventType::DAMAGETAKEN, std::shared_ptr<engine::GameEvent>());
 		}

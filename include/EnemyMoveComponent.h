@@ -17,6 +17,8 @@ public:
 	void dontCollide(sf::Vector2f& movement);
 	AnimationState getState() { return m_state; };
 
+	void setFightingState(bool isFighting) { m_isFighting = isFighting; };
+
 	void setTarget(std::shared_ptr<GameObject> target) { m_target = target; };
 
 private:
@@ -25,6 +27,6 @@ private:
 	int m_characterId;
 	AnimationState m_state;
 	std::shared_ptr<GameObject> m_target;
-	bool isFighting = false;
+	bool m_isFighting = false;
 	sf::Vector2f m_initialPos;
 };
