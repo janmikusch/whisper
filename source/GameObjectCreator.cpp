@@ -664,7 +664,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createWaterForLavaRiddle(sf::Vect
 	return waterObj;
 }
 
-std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, int id, sf::Vector2f position)
+std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, engine::Element e, int id, sf::Vector2f position)
 {
 	std::shared_ptr<GameObject> enemy = std::make_shared<GameObject>(position, "enemy");
 
@@ -726,12 +726,11 @@ std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, 
 
 	animComp->setAnimation("idle");
 
-	/*sf::Vector2f displacement(18, 40);
+	sf::Vector2f displacement(27, 65);
 
-	aabb.height -= 45;
-	aabb.width -= 36;*/
+	aabb.height -= 65;
+	aabb.width -= 57;
 
-	sf::Vector2f displacement(0, 0);
 	auto rigidbody = std::make_shared<Rigidbody>(enemy, 1, false, false);
 	auto collider = std::make_shared<ColliderComponent>(enemy, aabb, false, displacement);
 	enemy->addComponent(rigidbody);
