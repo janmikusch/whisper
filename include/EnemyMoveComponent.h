@@ -9,7 +9,7 @@ public:
 	enum Direction { UP, DOWN, LEFT, RIGHT };
 	enum AnimationState { WALK, IDLE};
 
-	explicit EnemyMoveComponent(const std::shared_ptr<GameObject>& parent, int character_id = 1);
+	explicit EnemyMoveComponent(const std::shared_ptr<GameObject>& parent, std::shared_ptr<GameObject> target, int character_id = 1);
 
 	void update(const float fDeltaTimeSeconds) override;
 	void draw() override;
@@ -25,5 +25,5 @@ private:
 	int m_characterId;
 	AnimationState m_state;
 	std::shared_ptr<GameObject> m_target;
-	bool isFighting = false;
+	bool isFighting = true;
 };

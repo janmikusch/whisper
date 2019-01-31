@@ -25,6 +25,7 @@
 #include "RandomNumber.h"
 #include "ButtonForLavaRiddleComponent.h"
 #include "WaterComponent.h"
+#include "EnemyMoveComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -664,7 +665,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createWaterForLavaRiddle(sf::Vect
 	return waterObj;
 }
 
-std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, engine::Element e, int id, sf::Vector2f position)
+std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, engine::Element e, std::shared_ptr<GameObject> target, int id, sf::Vector2f position)
 {
 	std::shared_ptr<GameObject> enemy = std::make_shared<GameObject>(position, "enemy");
 
@@ -674,7 +675,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, 
 	std::shared_ptr<AnimationComponent> animComp = std::make_shared<AnimationComponent>(enemy, Layer::MIDDLE1, 0.2f);
 
 	enemy->addComponent(animComp);
-	enemy->addComponent(std::make_shared<CharacterMoveComponent>(enemy, id));
+	enemy->addComponent(std::make_shared<EnemyMoveComponent>(enemy, target, id));
 
 	int elementOffset = 0;
 

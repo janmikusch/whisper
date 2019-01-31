@@ -18,7 +18,7 @@ public:
 	std::shared_ptr<GameObject> createStaticCollider(sf::FloatRect& aabb, sf::Vector2f position = sf::Vector2f());
 
 	std::shared_ptr<GameObject> createCharacter(sf::FloatRect& aabb, int id = 1, sf::Vector2f position = sf::Vector2f());
-	std::shared_ptr<GameObject> createEnemy(sf::FloatRect& aabb, engine::Element e, int id = 1, sf::Vector2f position = sf::Vector2f());
+	std::shared_ptr<GameObject> createEnemy(sf::FloatRect& aabb, engine::Element e, std::shared_ptr<GameObject> target, int id = 1, sf::Vector2f position = sf::Vector2f());
 	std::shared_ptr<GameObject> createCharacterArea(sf::FloatRect& aabb, int id = 1, sf::Vector2f position = sf::Vector2f());
 
 	std::shared_ptr<GameObject> createDoor(Room::Direction dir, sf::Vector2f position = sf::Vector2f());

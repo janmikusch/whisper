@@ -35,6 +35,8 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 	
 	std::map<std::string, vector<shared_ptr<sf::Sprite>>> m_layers;
 
+	std::shared_ptr<GameObject> target;
+
 	auto mapBuffer = AssetsManager::getInstance().getMapBuffer(filename);
 
 	// now lets load a NLTmxMap
@@ -144,6 +146,7 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 				sf::FloatRect box{ static_cast<float>(object->x), static_cast<float>(object->y), static_cast<float>(object->width), static_cast<float>(object->height) };
 
 				std::shared_ptr<GameObject> character = m_gameObjectCreator.createCharacter(box, id, position);
+				target = character;
 				objects.push_back(character);
 			}
 			else if( object->type == "button")
@@ -166,20 +169,21 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 		std::shared_ptr<GameObject> button = m_gameObjectCreator.createButtonForLavaRiddle(positionsForButtons[i]);
 		objects.push_back(button);
 	}
+
 	sf::FloatRect rectW = sf::FloatRect(200, 200, 120, 128);
-	std::shared_ptr<GameObject> enemyWater = m_gameObjectCreator.createEnemy(rectW, engine::Element::WATER, 1, sf::Vector2f(200, 200));
+	std::shared_ptr<GameObject> enemyWater = m_gameObjectCreator.createEnemy(rectW, engine::Element::WATER, target, 1, sf::Vector2f(200, 200));
 	objects.push_back(enemyWater);
 
 	sf::FloatRect rectF = sf::FloatRect(400, 200, 120, 128);
-	std::shared_ptr<GameObject> enemyFire = m_gameObjectCreator.createEnemy(rectF, engine::Element::FIRE, 1, sf::Vector2f(400, 200));
+	std::shared_ptr<GameObject> enemyFire = m_gameObjectCreator.createEnemy(rectF, engine::Element::FIRE, target, 1, sf::Vector2f(400, 200));
 	objects.push_back(enemyFire);
 
 	sf::FloatRect rectA = sf::FloatRect(200, 400, 120, 128);
-	std::shared_ptr<GameObject> enemyAir = m_gameObjectCreator.createEnemy(rectA, engine::Element::AIR, 1, sf::Vector2f(200, 400));
+	std::shared_ptr<GameObject> enemyAir = m_gameObjectCreator.createEnemy(rectA, engine::Element::AIR, target, 1, sf::Vector2f(200, 400));
 	objects.push_back(enemyAir);
 
 	sf::FloatRect rectE = sf::FloatRect(400, 400, 120, 128);
-	std::shared_ptr<GameObject> enemyEarth = m_gameObjectCreator.createEnemy(rectE, engine::Element::EARTH, 1, sf::Vector2f(400, 400));
+	std::shared_ptr<GameObject> enemyEarth = m_gameObjectCreator.createEnemy(rectE, engine::Element::EARTH, target, 1, sf::Vector2f(400, 400));
 	objects.push_back(enemyEarth);
 
 	return objects;

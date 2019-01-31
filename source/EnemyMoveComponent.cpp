@@ -14,7 +14,7 @@
 #include <SFML/Audio.hpp>
 #include "AudioManager.h"
 
-EnemyMoveComponent::EnemyMoveComponent(const std::shared_ptr<GameObject>& parent, int character_id): Component(parent)
+EnemyMoveComponent::EnemyMoveComponent(const std::shared_ptr<GameObject>& parent, std::shared_ptr<GameObject> target, int character_id): Component(parent), m_target(target)
 {
 	m_characterId = character_id;
 	m_direction = Direction::DOWN;
@@ -27,13 +27,17 @@ void EnemyMoveComponent::update(const float fDeltaTimeSeconds)
 
 	auto animComponent = m_parent->getComponent<AnimationComponent>();
 
+	const float speed = 100.0f;
+	sf::Vector2f movement = sf::Vector2f(0, 0);
 
-	const float speed = 150.0f;
-	sf::Vector2f movement = m_parent->getPosition() - m_target->getPosition();
+	if(m_target != nullptr)
+		movement = m_target->getPosition() - m_parent->getPosition();
 
 	float length = std::sqrt((movement.x * movement.x) + (movement.y * movement.y));
 	if (isFighting)
 	{
+		std::cout << movement.x << " " << movement.y << std::endl;
+
 		m_state = AnimationState::WALK;
 
 		movement = movement / length; //normalize
