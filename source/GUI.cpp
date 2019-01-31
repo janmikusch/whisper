@@ -146,6 +146,12 @@ void GUI::update()
 					EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
 				}
 			}
+			else if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::START))
+			{
+				m_gui.get("pausemenu")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+				inPauseMenu = false;
+			}
+
 		}
 		else if(inGameOverMenu)
 		{

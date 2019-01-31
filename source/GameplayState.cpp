@@ -13,6 +13,7 @@
 #include "WorldBuilder.h"
 #include "RoomManager.h"
 #include "GUI.h"
+#include <pmmintrin.h>
 
 GameplayState::GameplayState(StateType type) :State(type)
 {
@@ -21,7 +22,7 @@ GameplayState::GameplayState(StateType type) :State(type)
 State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 {
 	GameObjectManager& objManager = GameObjectManager::getInstance();
-	if (InputManager::getInstance().isKeyDown("EndGame",0))
+	if (InputManager::getInstance().isKeyDown("EndGame",0) || InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::START))
 	{
 		EventBus::getInstance().notify(engine::GAMEPAUSE, make_shared<engine::GameEvent>());
 		pause(true);
