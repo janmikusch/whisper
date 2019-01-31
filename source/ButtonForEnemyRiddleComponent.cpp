@@ -6,6 +6,8 @@
 #include "EventBus.h"
 #include "ButtonForEnemyRiddleComponent.h"
 #include "EnemyMoveComponent.h"
+#include <random>
+#include <chrono>
 
 ButtonForEnemyRiddleComponent::ButtonForEnemyRiddleComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, engine::Color c, int id) :
 	ButtonComponent(parent, layer, texture, c, id)
@@ -33,18 +35,24 @@ void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std
 
 	if (cge != nullptr && cge->type == engine::CollisionGameEvent::CollisionType::ENTER)
 	{
-		std::vector<std::shared_ptr<GameObject>> emptyvec;
-		m_enemies.swap(emptyvec);
-
-		for (auto o : RoomManager::getInstance().getCurrentRoomObjects())
+		if (!enemiesLoaded)
 		{
-			if (o->getName() == "enemy")
-				m_enemies.push_back(o);
+			std::vector<std::shared_ptr<GameObject>> emptyvec;
+			m_enemies.swap(emptyvec);
+
+			for (auto o : RoomManager::getInstance().getCurrentRoomObjects())
+			{
+				if (o->getName() == "enemy")
+					m_enemies.push_back(o);
+			}
+
+			unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+			std::default_random_engine e(seed);
+			std::shuffle(m_enemies.begin(), m_enemies.end(),e);
+
+			nextEnemy = m_enemies.begin();
+			enemiesLoaded = true;
 		}
-
-		std::random_shuffle(m_enemies.begin(), m_enemies.end());
-
-		nextEnemy = m_enemies.begin();
 	}
 	if (cge != nullptr && cge->type == engine::CollisionGameEvent::CollisionType::EXIT)
 	{
@@ -79,5 +87,5 @@ void ButtonForEnemyRiddleComponent::update(const float fDeltaTimeSeconds)
 void ButtonForEnemyRiddleComponent::init()
 {
 	m_timer = 0.0f;
-	m_wasPressed = false;
+	enemiesLoaded = false;
 }
