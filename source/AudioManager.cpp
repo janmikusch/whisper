@@ -126,7 +126,7 @@ void AudioManager::onNotify(engine::EventType type, std::shared_ptr<engine::Game
 	}
 	if(type==engine::EventType::ROOMUNLOCKED)
 	{
-		playSound("success");
+		
 	}
 	if(type==engine::EventType::GAMEOVER)
 	{

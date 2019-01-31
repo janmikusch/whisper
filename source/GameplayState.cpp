@@ -92,6 +92,11 @@ void GameplayState::init()
 	objManager.add(leftDoor);
 
 
+	auto dmgFader = GameObjectCreator::getInstance().createDmgFade();
+
+	objManager.add(dmgFader);
+
+
 	objManager.applyChanges();
 
 	for (auto it : objManager.getList())
