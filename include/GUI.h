@@ -18,6 +18,8 @@ namespace engine
 		void onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent) override;
 
 		tgui::Gui& getGui();
+
+		void setxDisplacement(float xDisplace);
 	private:
 		GUI(std::shared_ptr<sf::RenderWindow> window);
 		tgui::Gui m_gui;
@@ -27,5 +29,6 @@ namespace engine
 		void createGameplayGui();
 
 		int m_hearts = 3;
+		float m_xDisplace;
 	};
 }
