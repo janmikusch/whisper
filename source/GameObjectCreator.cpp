@@ -663,3 +663,78 @@ std::shared_ptr<GameObject> GameObjectCreator::createWaterForLavaRiddle(sf::Vect
 
 	return waterObj;
 }
+
+std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, int id, sf::Vector2f position)
+{
+	std::shared_ptr<GameObject> enemy = std::make_shared<GameObject>(position, "enemy");
+
+	TextureManager::getInstance().loadTexture("elemental.png");
+	sf::Texture& texture = TextureManager::getInstance().getTexture("elemental.png");
+
+	std::shared_ptr<AnimationComponent> animComp = std::make_shared<HeroAnimationComponent>(enemy, Layer::MIDDLE1, 0.1f);
+
+	enemy->addComponent(animComp);
+	enemy->addComponent(std::make_shared<CharacterMoveComponent>(enemy, id));
+
+	Animation walkingAnimationUp;
+	walkingAnimationUp.setSpriteSheet(texture);
+	walkingAnimationUp.addFrame(sf::IntRect(0, 192, 64, 64));
+	walkingAnimationUp.addFrame(sf::IntRect(64, 192, 64, 64));
+	walkingAnimationUp.addFrame(sf::IntRect(128, 192, 64, 64));
+
+	animComp->addAnimation(walkingAnimationUp, "up");
+
+	Animation walkingAnimationLeft;
+	walkingAnimationLeft.setSpriteSheet(texture);
+	walkingAnimationLeft.addFrame(sf::IntRect(0, 64, 64, 64));
+	walkingAnimationLeft.addFrame(sf::IntRect(64, 64, 64, 64));
+	walkingAnimationLeft.addFrame(sf::IntRect(128, 64, 64, 64));
+
+	animComp->addAnimation(walkingAnimationLeft, "left");
+
+
+	Animation walkingAnimationDown;
+	walkingAnimationDown.setSpriteSheet(texture);
+	walkingAnimationDown.addFrame(sf::IntRect(0, 0, 64, 64));
+	walkingAnimationDown.addFrame(sf::IntRect(64, 0, 64, 64));
+	walkingAnimationDown.addFrame(sf::IntRect(128, 0, 64, 64));
+
+	animComp->addAnimation(walkingAnimationDown, "down");
+
+
+	Animation walkingAnimationRight;
+	walkingAnimationRight.setSpriteSheet(texture);
+	walkingAnimationRight.addFrame(sf::IntRect(0, 128, 64, 64));
+	walkingAnimationRight.addFrame(sf::IntRect(64, 128, 64, 64));
+	walkingAnimationRight.addFrame(sf::IntRect(128, 128, 64, 64));
+
+	animComp->addAnimation(walkingAnimationRight, "right");
+
+
+	Animation idle;
+	idle.setSpriteSheet(texture);
+	idle.addFrame(sf::IntRect(0, 640, 64, 64));
+
+	animComp->addAnimation(idle, "idle");
+
+	animComp->setAnimation("idle");
+
+	sf::Vector2f displacement(18, 40);
+
+	aabb.height -= 45;
+	aabb.width -= 36;
+
+
+	auto rigidbody = std::make_shared<Rigidbody>(enemy, 1, false, false);
+	auto collider = std::make_shared<ColliderComponent>(enemy, aabb, false, displacement);
+	enemy->addComponent(rigidbody);
+	enemy->addComponent(collider);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(enemy, aabb);
+	boundingbox->setDisplacement(displacement);
+	enemy->addComponent(boundingbox);
+#endif
+
+	return enemy;
+}
