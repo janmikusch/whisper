@@ -49,7 +49,7 @@ void RoomManager::createRooms()
 	m_rooms.push_back(room_11);
 	m_rooms.push_back(room_12);
 
-	room_01->setCompleted();
+	room_01->setStartRoom();
 	m_currentRoom = room_01;
 
 	room_00->setRoom(Room::Direction::RIGHT, room_01);

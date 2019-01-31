@@ -27,6 +27,7 @@ public:
 
 	bool isCompleted() { return m_completed; };
 	void setCompleted(bool state = true);;
+	void setStartRoom();;
 
 private:
 	std::string m_name;

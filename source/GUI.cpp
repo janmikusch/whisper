@@ -56,7 +56,7 @@ void GUI::draw()
 	m_gui.draw();
 }
 
-void GUI::update()
+void GUI::update(const float fDeltaTimeSeconds)
 {
 	auto stickDir = InputManager::getInstance().getLeftJoystickDownAxis();
 
@@ -117,6 +117,7 @@ void GUI::update()
 	}
 	else
 	{
+
 		if (inPauseMenu)
 		{
 			if (stickDir == InputManager::StickDirection::DOWN)
@@ -190,6 +191,20 @@ void GUI::update()
 				inGameCompleteSceen = false;
 				EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
 			}
+		}
+		else
+		{
+			//Update Timer
+			timer += fDeltaTimeSeconds;
+			int iTimer = timer_max - timer;
+			if (iTimer <= 0)
+			{
+				iTimer = 0;
+				EventBus::getInstance().notify(engine::GAMEOVER, make_shared<GameEvent>());
+			}
+			auto timerLabel = m_gui.get<tgui::Label>("timer");
+			timerLabel->setText("Time Left:"+std::to_string(iTimer));
+
 		}
 	}
 
@@ -358,6 +373,7 @@ void GUI::createGameplayGui()
 	panel->getRenderer()->setBackgroundColor(tgui::Color::Transparent);
 	m_gui.add(panel);
 
+
 	//pausemenue
 	{
 		tgui::Panel::Ptr pausemenu = tgui::Panel::create();
@@ -484,8 +500,15 @@ void GUI::createGameplayGui()
 	heart3->setPosition({ "5% + width * 2", "2%" });
 	panel->add(heart3, "heart3");
 
-	tgui::Label::Ptr rooms = tgui::Label::create("Rooms left: XXX");
+	tgui::Label::Ptr rooms = tgui::Label::create("Rooms left: 5");
 	rooms->setTextSize(30);
 	rooms->setPosition({ "95% - width", "2%" });
 	panel->add(rooms, "roomsleft");
+
+
+	//Timer
+	tgui::Label::Ptr timerLabel = tgui::Label::create("XX");
+	timerLabel->setPosition({ "95% - width", "4% + height" });
+	timerLabel->setTextSize(30);
+	panel->add(timerLabel, "timer");
 }

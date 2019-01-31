@@ -110,3 +110,8 @@ void Room::setCompleted(bool state)
 	m_completed = state;
 	EventBus::getInstance().notify(engine::EventType::ROOMCOUNTCHANGED, std::shared_ptr<engine::GameEvent>());
 }
+
+void Room::setStartRoom()
+{
+	m_completed = true;
+}
