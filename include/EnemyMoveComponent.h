@@ -25,6 +25,6 @@ private:
 	int m_characterId;
 	AnimationState m_state;
 	std::shared_ptr<GameObject> m_target;
-	bool isFighting = true;
+	bool isFighting = false;
 	sf::Vector2f m_initialPos;
 };
