@@ -4,6 +4,7 @@
 #include "window.h"
 #include "RoomManager.h"
 #include "EventBus.h"
+#include "AudioManager.h"
 
 ButtonComponent::ButtonComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, engine::Color c, int id) :
 	RenderComponent(parent, layer), m_color(c), m_id(id)
@@ -78,11 +79,16 @@ void ButtonComponent::onNotify(const GameObject& collidedWith, std::shared_ptr<e
 
 	std::shared_ptr<engine::CollisionGameEvent> cge = std::static_pointer_cast<engine::CollisionGameEvent>(gameEvent);
 
-	if(cge->type == engine::CollisionGameEvent::CollisionType::ENTER)
+	if (cge->type == engine::CollisionGameEvent::CollisionType::ENTER)
+	{
 		m_isPressed = true;
-
+		AudioManager::getInstance().playSound("pressButton");
+	}
 	if (cge->type == engine::CollisionGameEvent::CollisionType::EXIT)
+	{
 		m_isPressed = false;
+		AudioManager::getInstance().playSound("pressButton");
+	}
 }
 
 void ButtonComponent::draw()
