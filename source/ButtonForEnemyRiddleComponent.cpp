@@ -103,6 +103,8 @@ void ButtonForEnemyRiddleComponent::init()
 	spawningSequence.push_back(1);
 	spawningSequence.push_back(2);
 	spawningSequence.push_back(3);
+
+	nextEnemy = spawningSequence.end();
 }
 
 void ButtonForEnemyRiddleComponent::enemyAttacked(std::shared_ptr<GameObject> enemy)

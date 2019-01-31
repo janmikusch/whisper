@@ -170,6 +170,22 @@ void CharacterMoveComponent::dontCollide(sf::Vector2f& movement)
 		if(PhysicsManager::getInstance().AABBvsAABB(charBoundingBox, otherBoundingBox, normal, penetration))
 			movement += normal * penetration;
 	}
+	for (auto it : GameObjectManager::getInstance().getGameObjectList("enemy"))
+	{
+		auto charBoundingBox = m_parent->getComponent<ColliderComponent>()->getShape();
+		auto otherBoundingBox = it->getComponent<ColliderComponent>()->getShape();
+
+		charBoundingBox.width += movement.x;
+		charBoundingBox.height += movement.y;
+		charBoundingBox.top += movement.y;
+		charBoundingBox.left += movement.x;
+
+		sf::Vector2f normal;
+		float penetration;
+
+		if (PhysicsManager::getInstance().AABBvsAABB(charBoundingBox, otherBoundingBox, normal, penetration))
+			movement += normal * penetration;
+	}
 }
 
 void CharacterMoveComponent::setAnimation(sf::Vector2f movement)
