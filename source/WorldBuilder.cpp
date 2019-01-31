@@ -165,8 +165,9 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 		std::shared_ptr<GameObject> button = m_gameObjectCreator.createButtonForLavaRiddle(positionsForButtons[i]);
 		objects.push_back(button);
 	}
-
-
+	sf::FloatRect rect = sf::FloatRect(200, 200, 120, 128);
+	std::shared_ptr<GameObject> enemy = m_gameObjectCreator.createEnemy(rect, 1, sf::Vector2f(200, 200));
+	objects.push_back(enemy);
 	return objects;
 }
 

@@ -671,60 +671,67 @@ std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, 
 	TextureManager::getInstance().loadTexture("elemental.png");
 	sf::Texture& texture = TextureManager::getInstance().getTexture("elemental.png");
 
-	std::shared_ptr<AnimationComponent> animComp = std::make_shared<HeroAnimationComponent>(enemy, Layer::MIDDLE1, 0.1f);
+	std::shared_ptr<AnimationComponent> animComp = std::make_shared<AnimationComponent>(enemy, Layer::MIDDLE1, 0.1f);
 
 	enemy->addComponent(animComp);
 	enemy->addComponent(std::make_shared<CharacterMoveComponent>(enemy, id));
 
 	Animation walkingAnimationUp;
 	walkingAnimationUp.setSpriteSheet(texture);
-	walkingAnimationUp.addFrame(sf::IntRect(0, 192, 64, 64));
-	walkingAnimationUp.addFrame(sf::IntRect(64, 192, 64, 64));
-	walkingAnimationUp.addFrame(sf::IntRect(128, 192, 64, 64));
+	walkingAnimationUp.addFrame(sf::IntRect(0, 384, 120, 128));
+	walkingAnimationUp.addFrame(sf::IntRect(120, 384, 120, 128));
+	walkingAnimationUp.addFrame(sf::IntRect(240, 384, 120, 128));
+	walkingAnimationUp.addFrame(sf::IntRect(120, 384, 120, 128));
 
 	animComp->addAnimation(walkingAnimationUp, "up");
 
 	Animation walkingAnimationLeft;
 	walkingAnimationLeft.setSpriteSheet(texture);
-	walkingAnimationLeft.addFrame(sf::IntRect(0, 64, 64, 64));
-	walkingAnimationLeft.addFrame(sf::IntRect(64, 64, 64, 64));
-	walkingAnimationLeft.addFrame(sf::IntRect(128, 64, 64, 64));
+	walkingAnimationLeft.addFrame(sf::IntRect(0, 128, 120, 128));
+	walkingAnimationLeft.addFrame(sf::IntRect(120, 128, 120, 128));
+	walkingAnimationLeft.addFrame(sf::IntRect(240, 128, 120, 128));
+	walkingAnimationLeft.addFrame(sf::IntRect(120, 128, 120, 128));
 
 	animComp->addAnimation(walkingAnimationLeft, "left");
 
 
 	Animation walkingAnimationDown;
 	walkingAnimationDown.setSpriteSheet(texture);
-	walkingAnimationDown.addFrame(sf::IntRect(0, 0, 64, 64));
-	walkingAnimationDown.addFrame(sf::IntRect(64, 0, 64, 64));
-	walkingAnimationDown.addFrame(sf::IntRect(128, 0, 64, 64));
+	walkingAnimationDown.addFrame(sf::IntRect(0, 0, 120, 128));
+	walkingAnimationDown.addFrame(sf::IntRect(120, 0, 120, 128));
+	walkingAnimationDown.addFrame(sf::IntRect(240, 0, 120, 128));
+	walkingAnimationDown.addFrame(sf::IntRect(120, 0, 120, 128));
 
 	animComp->addAnimation(walkingAnimationDown, "down");
 
 
 	Animation walkingAnimationRight;
 	walkingAnimationRight.setSpriteSheet(texture);
-	walkingAnimationRight.addFrame(sf::IntRect(0, 128, 64, 64));
-	walkingAnimationRight.addFrame(sf::IntRect(64, 128, 64, 64));
-	walkingAnimationRight.addFrame(sf::IntRect(128, 128, 64, 64));
+	walkingAnimationRight.addFrame(sf::IntRect(0, 256, 120, 128));
+	walkingAnimationRight.addFrame(sf::IntRect(120, 256, 120, 128));
+	walkingAnimationRight.addFrame(sf::IntRect(240, 256, 120, 128));
+	walkingAnimationRight.addFrame(sf::IntRect(120, 256, 120, 128));
 
 	animComp->addAnimation(walkingAnimationRight, "right");
 
 
 	Animation idle;
 	idle.setSpriteSheet(texture);
-	idle.addFrame(sf::IntRect(0, 640, 64, 64));
+	idle.addFrame(sf::IntRect(120, 512, 120, 128));
+	idle.addFrame(sf::IntRect(120, 640, 120, 128));
+	idle.addFrame(sf::IntRect(120, 768, 120, 128));
+	idle.addFrame(sf::IntRect(120, 896, 120, 128));
 
 	animComp->addAnimation(idle, "idle");
 
 	animComp->setAnimation("idle");
 
-	sf::Vector2f displacement(18, 40);
+	/*sf::Vector2f displacement(18, 40);
 
 	aabb.height -= 45;
-	aabb.width -= 36;
+	aabb.width -= 36;*/
 
-
+	sf::Vector2f displacement(0, 0);
 	auto rigidbody = std::make_shared<Rigidbody>(enemy, 1, false, false);
 	auto collider = std::make_shared<ColliderComponent>(enemy, aabb, false, displacement);
 	enemy->addComponent(rigidbody);
