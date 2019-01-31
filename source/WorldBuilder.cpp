@@ -6,6 +6,7 @@
 #include "RoomManager.h"
 #include "RandomNumber.h"
 #include "Color.h"
+#include "Element.h"
 
 using namespace sf;
 
@@ -165,9 +166,22 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 		std::shared_ptr<GameObject> button = m_gameObjectCreator.createButtonForLavaRiddle(positionsForButtons[i]);
 		objects.push_back(button);
 	}
-	sf::FloatRect rect = sf::FloatRect(200, 200, 120, 128);
-	std::shared_ptr<GameObject> enemy = m_gameObjectCreator.createEnemy(rect, 1, sf::Vector2f(200, 200));
-	objects.push_back(enemy);
+	sf::FloatRect rectW = sf::FloatRect(200, 200, 120, 128);
+	std::shared_ptr<GameObject> enemyWater = m_gameObjectCreator.createEnemy(rectW, engine::Element::WATER, 1, sf::Vector2f(200, 200));
+	objects.push_back(enemyWater);
+
+	sf::FloatRect rectF = sf::FloatRect(400, 200, 120, 128);
+	std::shared_ptr<GameObject> enemyFire = m_gameObjectCreator.createEnemy(rectF, engine::Element::FIRE, 1, sf::Vector2f(400, 200));
+	objects.push_back(enemyFire);
+
+	sf::FloatRect rectA = sf::FloatRect(200, 400, 120, 128);
+	std::shared_ptr<GameObject> enemyAir = m_gameObjectCreator.createEnemy(rectA, engine::Element::AIR, 1, sf::Vector2f(200, 400));
+	objects.push_back(enemyAir);
+
+	sf::FloatRect rectE = sf::FloatRect(400, 400, 120, 128);
+	std::shared_ptr<GameObject> enemyEarth = m_gameObjectCreator.createEnemy(rectE, engine::Element::EARTH, 1, sf::Vector2f(400, 400));
+	objects.push_back(enemyEarth);
+
 	return objects;
 }
 

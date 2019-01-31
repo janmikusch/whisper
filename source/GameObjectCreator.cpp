@@ -671,56 +671,76 @@ std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, 
 	TextureManager::getInstance().loadTexture("elemental.png");
 	sf::Texture& texture = TextureManager::getInstance().getTexture("elemental.png");
 
-	std::shared_ptr<AnimationComponent> animComp = std::make_shared<AnimationComponent>(enemy, Layer::MIDDLE1, 0.1f);
+	std::shared_ptr<AnimationComponent> animComp = std::make_shared<AnimationComponent>(enemy, Layer::MIDDLE1, 0.2f);
 
 	enemy->addComponent(animComp);
 	enemy->addComponent(std::make_shared<CharacterMoveComponent>(enemy, id));
 
+	float elementOffset;
+
+	switch (e)
+	{
+	case engine::Element::WATER:
+		elementOffset = 0.0f;
+		break;
+	case engine::Element::FIRE:
+		elementOffset = 360.0f;
+		break;
+	case engine::Element::AIR:
+		elementOffset = 720.0f;
+		break;
+	case engine::Element::EARTH:
+		elementOffset = 1080.0f;
+		break;
+	default:
+		sf::err() << "Element not defined";
+	}
+
 	Animation walkingAnimationUp;
 	walkingAnimationUp.setSpriteSheet(texture);
-	walkingAnimationUp.addFrame(sf::IntRect(0, 384, 120, 128));
-	walkingAnimationUp.addFrame(sf::IntRect(120, 384, 120, 128));
-	walkingAnimationUp.addFrame(sf::IntRect(240, 384, 120, 128));
-	walkingAnimationUp.addFrame(sf::IntRect(120, 384, 120, 128));
+	walkingAnimationUp.addFrame(sf::IntRect(0 + elementOffset, 384, 120, 128));
+	walkingAnimationUp.addFrame(sf::IntRect(120 + elementOffset, 384, 120, 128));
+	walkingAnimationUp.addFrame(sf::IntRect(240 + elementOffset, 384, 120, 128));
+	walkingAnimationUp.addFrame(sf::IntRect(120 + elementOffset, 384, 120, 128));
 
 	animComp->addAnimation(walkingAnimationUp, "up");
 
 	Animation walkingAnimationLeft;
 	walkingAnimationLeft.setSpriteSheet(texture);
-	walkingAnimationLeft.addFrame(sf::IntRect(0, 128, 120, 128));
-	walkingAnimationLeft.addFrame(sf::IntRect(120, 128, 120, 128));
-	walkingAnimationLeft.addFrame(sf::IntRect(240, 128, 120, 128));
-	walkingAnimationLeft.addFrame(sf::IntRect(120, 128, 120, 128));
+	walkingAnimationLeft.addFrame(sf::IntRect(0 + elementOffset, 128, 120, 128));
+	walkingAnimationLeft.addFrame(sf::IntRect(120 + elementOffset, 128, 120, 128));
+	walkingAnimationLeft.addFrame(sf::IntRect(240 + elementOffset, 128, 120, 128));
+	walkingAnimationLeft.addFrame(sf::IntRect(120 + elementOffset, 128, 120, 128));
 
 	animComp->addAnimation(walkingAnimationLeft, "left");
 
 
 	Animation walkingAnimationDown;
 	walkingAnimationDown.setSpriteSheet(texture);
-	walkingAnimationDown.addFrame(sf::IntRect(0, 0, 120, 128));
-	walkingAnimationDown.addFrame(sf::IntRect(120, 0, 120, 128));
-	walkingAnimationDown.addFrame(sf::IntRect(240, 0, 120, 128));
-	walkingAnimationDown.addFrame(sf::IntRect(120, 0, 120, 128));
+	walkingAnimationDown.addFrame(sf::IntRect(0 + elementOffset, 0, 120, 128));
+	walkingAnimationDown.addFrame(sf::IntRect(120 + elementOffset, 0, 120, 128));
+	walkingAnimationDown.addFrame(sf::IntRect(240 + elementOffset, 0, 120, 128));
+	walkingAnimationDown.addFrame(sf::IntRect(120 + elementOffset, 0, 120, 128));
 
 	animComp->addAnimation(walkingAnimationDown, "down");
 
 
 	Animation walkingAnimationRight;
 	walkingAnimationRight.setSpriteSheet(texture);
-	walkingAnimationRight.addFrame(sf::IntRect(0, 256, 120, 128));
-	walkingAnimationRight.addFrame(sf::IntRect(120, 256, 120, 128));
-	walkingAnimationRight.addFrame(sf::IntRect(240, 256, 120, 128));
-	walkingAnimationRight.addFrame(sf::IntRect(120, 256, 120, 128));
+	walkingAnimationRight.addFrame(sf::IntRect(0 + elementOffset, 256, 120, 128));
+	walkingAnimationRight.addFrame(sf::IntRect(120 + elementOffset, 256, 120, 128));
+	walkingAnimationRight.addFrame(sf::IntRect(240 + elementOffset, 256, 120, 128));
+	walkingAnimationRight.addFrame(sf::IntRect(120 + elementOffset, 256, 120, 128));
 
 	animComp->addAnimation(walkingAnimationRight, "right");
 
 
 	Animation idle;
 	idle.setSpriteSheet(texture);
-	idle.addFrame(sf::IntRect(120, 512, 120, 128));
-	idle.addFrame(sf::IntRect(120, 640, 120, 128));
-	idle.addFrame(sf::IntRect(120, 768, 120, 128));
-	idle.addFrame(sf::IntRect(120, 896, 120, 128));
+	idle.addFrame(sf::IntRect(120 + elementOffset, 512, 120, 128));
+	idle.addFrame(sf::IntRect(120 + elementOffset, 640, 120, 128));
+	idle.addFrame(sf::IntRect(120 + elementOffset, 768, 120, 128));
+	idle.addFrame(sf::IntRect(120 + elementOffset, 896, 120, 128));
 
 	animComp->addAnimation(idle, "idle");
 
