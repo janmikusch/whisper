@@ -297,6 +297,15 @@
     <ClCompile Include="..\..\source\WaterComponent.cpp">
       <Filter>Source Files\GameObject\Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\EnemyMoveComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\EnemyRoomCreator.cpp">
+      <Filter>Source Files\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\ButtonForEnemyRiddleComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">
@@ -507,6 +516,18 @@
       <Filter>Header Files\GameObject\Components\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\WaterComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Element.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\EnemyMoveComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\EnemyRoomCreator.h">
+      <Filter>Header Files\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ButtonForEnemyRiddleComponent.h">
       <Filter>Header Files\GameObject\Components\Rendering</Filter>
     </ClInclude>
   </ItemGroup>

@@ -9,6 +9,9 @@
 #include "PhysicsManager.h"
 #include "ColliderComponent.h"
 #include"TorchAnimationComponent.h"
+#include "EnemyMoveComponent.h"
+#include "GameObjectManager.h"
+#include "ButtonForEnemyRiddleComponent.h"
 
 HeroAnimationComponent::HeroAnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, float animationTime) :
 	AnimationComponent(parent, layer, animationTime)
@@ -77,6 +80,14 @@ void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 		}
 	}
 
+	std::shared_ptr<GameObject> hitEnemy = checkCollisionsWithEnemies(currentAttack, roomObjects);
+
+	if (hitEnemy != nullptr)
+	{
+		hitEnemy->getComponent<EnemyMoveComponent>()->setIdle();
+		GameObjectManager::getInstance().getFirstGameObject("buttonForEnemyRiddle")->getComponent<ButtonForEnemyRiddleComponent>()->enemyAttacked(hitEnemy);
+	}
+
 	m_animatedSprite.setRotation(m_parent->getRotation());
 	m_animatedSprite.setOrigin(m_parent->getOrigin());
 
@@ -111,6 +122,26 @@ std::shared_ptr<GameObject> HeroAnimationComponent::checkCollisions(sf::FloatRec
 
 		if (PhysicsManager::getInstance().AABBvsAABB(aabb, o->getComponent<ColliderComponent>()->getShape(), n, p))
 			return o;
+	}
+	return nullptr;
+}
+
+std::shared_ptr<GameObject> HeroAnimationComponent::checkCollisionsWithEnemies(sf::FloatRect aabb, std::vector<std::shared_ptr<GameObject>> objects)
+{
+	for (auto o : objects)
+	{
+		if (o->getName() != "enemy")
+			continue;
+
+		sf::Vector2f n;
+		float p;
+
+		if (PhysicsManager::getInstance().AABBvsAABB(aabb, o->getComponent<ColliderComponent>()->getShape(), n, p))
+		{
+			if(o->getComponent<EnemyMoveComponent>()->getState() == EnemyMoveComponent::AnimationState::WALK)
+				return o;
+		}
+			
 	}
 	return nullptr;
 }

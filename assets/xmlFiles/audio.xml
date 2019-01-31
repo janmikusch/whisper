@@ -24,6 +24,7 @@
 		
 		<item name="igniteFlame" file="gas_med_flame_ignite_02.wav" />
 		<item name="extinguishFlame" file="fuse_stop_burn_out_bomb_dynamite_02.wav" />
+		<item name="pressButton" file="switch_button_push_on_off_23.wav" />
 	</sounds>
 	<music>
 		<item name="backgroundMusic" file="thetimehascome.ogg" />

@@ -13,6 +13,7 @@
 #include "RandomNumber.h"
 #include <SFML/Audio.hpp>
 #include "AudioManager.h"
+#include "RoomManager.h"
 
 CharacterMoveComponent::CharacterMoveComponent(const std::shared_ptr<GameObject>& parent, int character_id): Component(parent)
 {
@@ -28,7 +29,7 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 
 	setMoveBehaviour();
 
-	if(m_moveBehaviour)
+	if(m_moveBehaviour && RoomManager::getInstance().getLives() > 0)
 	{	
 		if (m_state != AnimationState::ATTACK)
 		{
@@ -53,9 +54,9 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 				setStandingAnimation();
 			}
 
-			if (im.isKeyPressed("Attack", 0))
+			if (im.isKeyPressed("Attack", 0) || im.isJoystickButtonPressed(InputManager::JoystickButton::A) || im.isJoystickButtonPressed(InputManager::JoystickButton::B))
 			{
-         				setFightAnimation();
+          				setFightAnimation();
 
 				int i = engine::Random::getIntBetween(0, 5);
 				switch (i)
@@ -167,6 +168,22 @@ void CharacterMoveComponent::dontCollide(sf::Vector2f& movement)
 		float penetration;
 
 		if(PhysicsManager::getInstance().AABBvsAABB(charBoundingBox, otherBoundingBox, normal, penetration))
+			movement += normal * penetration;
+	}
+	for (auto it : GameObjectManager::getInstance().getGameObjectList("enemy"))
+	{
+		auto charBoundingBox = m_parent->getComponent<ColliderComponent>()->getShape();
+		auto otherBoundingBox = it->getComponent<ColliderComponent>()->getShape();
+
+		charBoundingBox.width += movement.x;
+		charBoundingBox.height += movement.y;
+		charBoundingBox.top += movement.y;
+		charBoundingBox.left += movement.x;
+
+		sf::Vector2f normal;
+		float penetration;
+
+		if (PhysicsManager::getInstance().AABBvsAABB(charBoundingBox, otherBoundingBox, normal, penetration))
 			movement += normal * penetration;
 	}
 }

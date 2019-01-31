@@ -6,6 +6,7 @@
 #include "GameStateManager.h"
 #include "Room.h"
 #include "Color.h"
+#include "Element.h"
 
 class GameObjectCreator
 {
@@ -17,10 +18,13 @@ public:
 	std::shared_ptr<GameObject> createStaticCollider(sf::FloatRect& aabb, sf::Vector2f position = sf::Vector2f());
 
 	std::shared_ptr<GameObject> createCharacter(sf::FloatRect& aabb, int id = 1, sf::Vector2f position = sf::Vector2f());
+	std::shared_ptr<GameObject> createEnemy(sf::FloatRect& aabb, engine::Element e, std::shared_ptr<GameObject> target, int id = 1, sf::Vector2f position = sf::Vector2f());
 	std::shared_ptr<GameObject> createCharacterArea(sf::FloatRect& aabb, int id = 1, sf::Vector2f position = sf::Vector2f());
 
 	std::shared_ptr<GameObject> createDoor(Room::Direction dir, sf::Vector2f position = sf::Vector2f());
 	std::shared_ptr<GameObject> createFade(sf::Vector2f position = sf::Vector2f());
+	std::shared_ptr<GameObject> createDmgFade(sf::Vector2f position = sf::Vector2f());
+
 	std::shared_ptr<GameObject> createButton(sf::Vector2f position, engine::Color c, int id);
 	std::shared_ptr<GameObject> createTorch(sf::Vector2f position, engine::Color c);
 	std::shared_ptr<GameObject> createButtonRoomChecker(sf::Vector2f position, std::shared_ptr<GameObject> correctButton);
@@ -32,6 +36,7 @@ public:
 	std::shared_ptr<GameObject> createButtonForLavaRiddle(sf::Vector2f position);
 	std::shared_ptr<GameObject> createWaterForLavaRiddle(sf::Vector2f position);
 
+	std::shared_ptr<GameObject> createButtonForEnemyRiddle(sf::Vector2f position);
 private:
 	GameObjectCreator() = default;
 };

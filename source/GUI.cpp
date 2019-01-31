@@ -5,6 +5,8 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "RoomManager.h"
+#include "InputManager.h"
+#include <stdbool.h>
 
 using namespace engine;
 
@@ -33,17 +35,183 @@ void GUI::init(GameplayState::StateType type)
 	{
 	case State::STATE_MENU:
 		createMenuGui();
+		inMenu = true;
+		inCredits = false;
 		break;
 	case State::STATE_GAMEPLAY:
 		createGameplayGui();
+		inMenu = false;
+		inCredits = false;
+		inGameCompleteSceen = false;
+		inGameOverMenu = false;
+		inPauseMenu = false;
 		m_hearts = 3;
 		break;
 	}
+
 }
 
 void GUI::draw()
 {
 	m_gui.draw();
+}
+
+void GUI::update(const float fDeltaTimeSeconds)
+{
+	auto stickDir = InputManager::getInstance().getLeftJoystickDownAxis();
+
+	if(inMenu)
+	{
+		if(inCredits)
+		{
+			if (stickDir == InputManager::StickDirection::DOWN)
+			{
+				auto con = m_gui.get<tgui::Container>("CreditScreen");
+				con->focusNextWidget();
+			}
+			else if (stickDir == InputManager::StickDirection::UP)
+			{
+				auto con = m_gui.get<tgui::Container>("CreditScreen");
+				con->focusPreviousWidget();
+			}
+			if(InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
+			{
+				m_gui.get("CreditScreen")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+				inCredits = false;
+			}
+		}
+		else
+		{
+			if(stickDir == InputManager::StickDirection::DOWN)
+			{
+				auto con = m_gui.get<tgui::Container>("menuButtons");
+				con->focusNextWidget();
+			}
+			else if (stickDir == InputManager::StickDirection::UP)
+			{
+				auto con = m_gui.get<tgui::Container>("menuButtons");
+				con->focusPreviousWidget();
+			}
+			else if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
+			{
+				tgui::Button::Ptr startButton = m_gui.get<tgui::Button>("startButton");
+				tgui::Button::Ptr creditsButton = m_gui.get<tgui::Button>("creditsButton");
+				tgui::Button::Ptr quitButton = m_gui.get<tgui::Button>("quitButton");
+
+				if(startButton->isFocused())
+				{
+					EventBus::getInstance().notify(engine::GAMESTART, make_shared<GameEvent>());
+				}
+				if (creditsButton->isFocused())
+				{
+					inCredits = true;
+					m_gui.get("CreditScreen")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+				}
+				if (quitButton->isFocused())
+				{
+					engine::Window::getInstance().getWindow()->close();
+				}
+
+			}
+		}
+	}
+	else
+	{
+
+		if (inPauseMenu)
+		{
+			if (stickDir == InputManager::StickDirection::DOWN)
+			{
+				auto con = m_gui.get<tgui::Container>("pausemenu");
+				con->focusNextWidget();
+			}
+			else if (stickDir == InputManager::StickDirection::UP)
+			{
+				auto con = m_gui.get<tgui::Container>("pausemenu");
+				con->focusPreviousWidget();
+			}
+			if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
+			{
+				tgui::Button::Ptr btn_continue = m_gui.get<tgui::Button>("btn_continue");
+				tgui::Button::Ptr giveupButton = m_gui.get<tgui::Button>("btn_quit");
+
+				if (btn_continue->isFocused())
+				{
+					m_gui.get("pausemenu")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+					inPauseMenu = false;
+				}
+				if (giveupButton->isFocused())
+				{
+					inPauseMenu = false;
+					m_gui.get("pausemenu")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+					EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
+				}
+			}
+			else if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::START))
+			{
+				m_gui.get("pausemenu")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+				inPauseMenu = false;
+			}
+
+		}
+		else if(inGameOverMenu)
+		{
+			if (stickDir == InputManager::StickDirection::DOWN)
+			{
+				auto con = m_gui.get<tgui::Container>("gameover");
+				con->focusNextWidget();
+			}
+			else if (stickDir == InputManager::StickDirection::UP)
+			{
+				auto con = m_gui.get<tgui::Container>("gameover");
+				con->focusPreviousWidget();
+			}
+			if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
+			{
+				m_gui.get("gameover")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+				inGameOverMenu = false;
+				EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
+			}
+		}
+		else if(inGameCompleteSceen)
+		{
+			if (stickDir == InputManager::StickDirection::DOWN)
+			{
+				auto con = m_gui.get<tgui::Container>("gamecomplete");
+				con->focusNextWidget();
+			}
+			else if (stickDir == InputManager::StickDirection::UP)
+			{
+				auto con = m_gui.get<tgui::Container>("gamecomplete");
+				con->focusPreviousWidget();
+			}
+			if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
+			{
+				m_gui.get("gamecomplete")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+				inGameCompleteSceen = false;
+				EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
+			}
+		}
+		else
+		{
+			//Update Timer
+			timer += fDeltaTimeSeconds;
+			int iTimer = timer_max - timer;
+			if (iTimer <= 0)
+			{
+				iTimer = 0;
+				EventBus::getInstance().notify(engine::GAMEOVER, make_shared<GameEvent>());
+			}
+
+			int minutes = iTimer / 60;
+			int seconds = iTimer - minutes * 60;
+
+			auto timerLabel = m_gui.get<tgui::Label>("timer");
+			timerLabel->setText("Time left: "+std::to_string(minutes) + ":" + std::to_string(seconds));
+
+		}
+	}
+
 }
 
 void GUI::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent)
@@ -52,14 +220,17 @@ void GUI::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> ga
 	if(type == EventType::GAMEPAUSE)
 	{
 		m_gui.get("pausemenu")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
+		inPauseMenu = true;
 	}
 	if (type == EventType::GAMEOVER)
 	{
 		m_gui.get("gameover")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
+		inGameOverMenu = true;
 	}
 	if (type == EventType::GAMECOMPLETE)
 	{
 		m_gui.get("gamecomplete")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
+		inGameCompleteSceen = true;
 	}
 	if (type == engine::EventType::DAMAGETAKEN)
 	{
@@ -91,6 +262,11 @@ tgui::Gui& GUI::getGui()
 	return m_gui;
 }
 
+void GUI::setxDisplacement(float xDisplace)
+{
+	m_xDisplace = xDisplace;
+}
+
 GUI::GUI(std::shared_ptr<sf::RenderWindow> window):m_gui(*window)
 {
 }
@@ -112,8 +288,12 @@ void GUI::createMenuGui()
 	tgui::Button::Ptr creditsClose = tgui::Button::create("Back");
 	creditsClose->setTextSize(30);
 	creditsClose->setPosition({ "98% - width", "2%" });
-	creditsClose->connect("pressed", [&]() { m_gui.get("CreditScreen")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100)); });
-	credits->add(creditsClose);
+	creditsClose->connect("pressed", [&]()
+	{
+		m_gui.get("CreditScreen")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+		inCredits = false;
+	});
+	credits->add(creditsClose,"creditsClose");
 
 	{
 		tgui::Label::Ptr title = tgui::Label::create("Credits");
@@ -146,7 +326,7 @@ void GUI::createMenuGui()
 
 
 	tgui::Label::Ptr label = tgui::Label::create("Whisper");
-	label->setTextSize(150);
+	label->setTextSize(170);
 	label->setInheritedFont(FontManager::getInstance().getFont("Neverwinter"));
 	label->setPosition({ "50% - width / 2", "10%" });
 
@@ -163,7 +343,11 @@ void GUI::createMenuGui()
 
 	tgui::Button::Ptr creditsButton = tgui::Button::create("Credits");
 	creditsButton->setTextSize(50);
-	creditsButton->connect("pressed", [&]() { m_gui.get("CreditScreen")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100)); });
+	creditsButton->connect("pressed", [&]()
+	{
+		m_gui.get("CreditScreen")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100)); 
+		inCredits = true;
+	});
 
 	tgui::Button::Ptr quitButton = tgui::Button::create("Quit");	
 	quitButton->setTextSize(50);
@@ -172,10 +356,10 @@ void GUI::createMenuGui()
 	m_gui.add(panel);
 	m_gui.add(credits, "CreditScreen");
 	panel->add(label);
-	panel->add(layout);
-	layout->add(startButton);
-	layout->add(creditsButton);
-	layout->add(quitButton);
+	panel->add(layout,"menuButtons");
+	layout->add(startButton,"startButton");
+	layout->add(creditsButton,"creditsButton");
+	layout->add(quitButton,"quitButton");
 
 	layout->insertSpace(1, 0.15f);
 	layout->insertSpace(3, 0.15f);
@@ -186,15 +370,23 @@ void GUI::createGameplayGui()
 {
 	m_gui.removeAllWidgets();
 
+
+	tgui::Layout2d lay = tgui::Layout2d(engine::Window::getInstance().getWindow()->getView().getSize().x, engine::Window::getInstance().getWindow()->getView().getSize().y);
+	tgui::Panel::Ptr panel = tgui::Panel::create(lay);
+	panel->setPosition(m_xDisplace, 0);
+	panel->getRenderer()->setBackgroundColor(tgui::Color::Transparent);
+	m_gui.add(panel);
+
+
 	//pausemenue
 	{
 		tgui::Panel::Ptr pausemenu = tgui::Panel::create();
 		pausemenu->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(1));
-		pausemenu->setSize("60%", "40%");
-		pausemenu->setPosition("20%", "30%");
+		pausemenu->setSize("70%", "50%");
+		pausemenu->setPosition("18%", "40%");
 		auto bgcolor = tgui::Color(8, 43, 43, 255);
 		pausemenu->getRenderer()->setBackgroundColor(bgcolor);
-		m_gui.add(pausemenu, "pausemenu");
+		panel->add(pausemenu, "pausemenu");
 
 
 		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
@@ -215,12 +407,12 @@ void GUI::createGameplayGui()
 				m_gui.get("pausemenu")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
 				EventBus::getInstance().notify(engine::GAMECONTINUE, make_shared<GameEvent>());
 			});
-		layout->add(btn_continue);
+		layout->add(btn_continue,"btn_continue");
 
 		tgui::Button::Ptr btn_quit = tgui::Button::create("Give Up");
 		btn_quit->setTextSize(30);
 		btn_quit->connect("pressed", [&]() { EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>()); });
-		layout->add(btn_quit);
+		layout->add(btn_quit,"btn_quit");
 
 		layout->insertSpace(1, 0.3f);
 	}
@@ -229,11 +421,11 @@ void GUI::createGameplayGui()
 	{
 		tgui::Panel::Ptr gameovermenu = tgui::Panel::create();
 		gameovermenu->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(1));
-		gameovermenu->setSize("60%", "40%");
-		gameovermenu->setPosition("20%", "30%");
+		gameovermenu->setSize("70%", "50%");
+		gameovermenu->setPosition("18%", "40%");
 		auto bgcolor = tgui::Color(8, 43, 43, 255);
 		gameovermenu->getRenderer()->setBackgroundColor(bgcolor);
-		m_gui.add(gameovermenu, "gameover");
+		panel->add(gameovermenu, "gameover");
 
 
 		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
@@ -250,7 +442,11 @@ void GUI::createGameplayGui()
 
 		tgui::Button::Ptr btn_quit = tgui::Button::create("Back to Menu");
 		btn_quit->setTextSize(30);
-		btn_quit->connect("pressed", [&]() { EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>()); });
+		btn_quit->connect("pressed", [&]()
+		{
+			EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
+			inGameOverMenu = false;
+		});
 		layout->add(btn_quit);
 
 		layout->insertSpace(1, 0.3f);
@@ -260,11 +456,11 @@ void GUI::createGameplayGui()
 	{
 		tgui::Panel::Ptr gamecomplete = tgui::Panel::create();
 		gamecomplete->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(1));
-		gamecomplete->setSize("60%", "40%");
-		gamecomplete->setPosition("20%", "30%");
+		gamecomplete->setSize("70%", "50%");
+		gamecomplete->setPosition("18%", "40%");
 		auto bgcolor = tgui::Color(8, 43, 43, 255);
 		gamecomplete->getRenderer()->setBackgroundColor(bgcolor);
-		m_gui.add(gamecomplete, "gamecomplete");
+		panel->add(gamecomplete, "gamecomplete");
 
 
 		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
@@ -281,30 +477,42 @@ void GUI::createGameplayGui()
 
 		tgui::Button::Ptr btn_quit = tgui::Button::create("Back to Menu");
 		btn_quit->setTextSize(30);
-		btn_quit->connect("pressed", [&]() { EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>()); });
+		btn_quit->connect("pressed", [&]()
+		{
+			EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
+			inGameCompleteSceen = false;
+		});
 		layout->add(btn_quit);
 
 		layout->insertSpace(1, 0.3f);
 	}
 
+
 	TextureManager::getInstance().loadTexture("heart.png");
 	sf::Texture& heartTexture = TextureManager::getInstance().getTexture("heart.png");
 	tgui::Picture::Ptr heart = tgui::Picture::create(heartTexture);
-	heart->setPosition({ "5%", "1%" });
-	m_gui.add(heart,"heart1");
+	heart->setPosition({ "5%", "2%" });
+	panel->add(heart,"heart1");
 
 	TextureManager::getInstance().loadTexture("heart.png");
 	tgui::Picture::Ptr heart2 = tgui::Picture::create(heartTexture);
-	heart2->setPosition({ "5% + width * 1", "1%" });
-	m_gui.add(heart2, "heart2");
+	heart2->setPosition({ "5% + width * 1", "2%" });
+	panel->add(heart2, "heart2");
 
 	TextureManager::getInstance().loadTexture("heart.png");
 	tgui::Picture::Ptr heart3 = tgui::Picture::create(heartTexture);
-	heart3->setPosition({ "5% + width * 2", "1%" });
-	m_gui.add(heart3, "heart3");
+	heart3->setPosition({ "5% + width * 2", "2%" });
+	panel->add(heart3, "heart3");
 
-	tgui::Label::Ptr rooms = tgui::Label::create("Rooms left: XXX");
-	rooms->setTextSize(20);
-	rooms->setPosition({ "95% - width", "1%" });
-	m_gui.add(rooms, "roomsleft");
+	tgui::Label::Ptr rooms = tgui::Label::create("Rooms left: 5");
+	rooms->setTextSize(30);
+	rooms->setPosition({ "95% - width", "2%" });
+	panel->add(rooms, "roomsleft");
+
+
+	//Timer
+	tgui::Label::Ptr timerLabel = tgui::Label::create("XX");
+	timerLabel->setPosition({ "95% - width", "4% + height" });
+	timerLabel->setTextSize(30);
+	panel->add(timerLabel, "timer");
 }

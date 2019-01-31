@@ -27,6 +27,7 @@
     <ClCompile Include="..\..\source\BasicEngine.cpp" />
     <ClCompile Include="..\..\source\BoundingBoxComponent.cpp" />
     <ClCompile Include="..\..\source\ButtonComponent.cpp" />
+    <ClCompile Include="..\..\source\ButtonForEnemyRiddleComponent.cpp" />
     <ClCompile Include="..\..\source\ButtonForLavaRiddleComponent.cpp" />
     <ClCompile Include="..\..\source\ButtonRoomComponent.cpp" />
     <ClCompile Include="..\..\source\ButtonRoomCreator.cpp" />
@@ -37,6 +38,8 @@
     <ClCompile Include="..\..\source\Collision.cpp" />
     <ClCompile Include="..\..\source\Component.cpp" />
     <ClCompile Include="..\..\source\DoorComponent.cpp" />
+    <ClCompile Include="..\..\source\EnemyMoveComponent.cpp" />
+    <ClCompile Include="..\..\source\EnemyRoomCreator.cpp" />
     <ClCompile Include="..\..\source\EventBus.cpp" />
     <ClCompile Include="..\..\source\FadeComponent.cpp" />
     <ClCompile Include="..\..\source\FontManager.cpp" />
@@ -91,6 +94,7 @@
     <ClInclude Include="..\..\include\AnimationComponent.h" />
     <ClInclude Include="..\..\include\AssetsManager.h" />
     <ClInclude Include="..\..\include\BoundingBoxComponent.h" />
+    <ClInclude Include="..\..\include\ButtonForEnemyRiddleComponent.h" />
     <ClInclude Include="..\..\include\ButtonForLavaRiddleComponent.h" />
     <ClInclude Include="..\..\include\ButtonRoomComponent.h" />
     <ClInclude Include="..\..\include\ButtonRoomCreator.h" />
@@ -103,6 +107,9 @@
     <ClInclude Include="..\..\include\Collision.h" />
     <ClInclude Include="..\..\include\Component.h" />
     <ClInclude Include="..\..\include\DoorComponent.h" />
+    <ClInclude Include="..\..\include\Element.h" />
+    <ClInclude Include="..\..\include\EnemyMoveComponent.h" />
+    <ClInclude Include="..\..\include\EnemyRoomCreator.h" />
     <ClInclude Include="..\..\include\EventBus.h" />
     <ClInclude Include="..\..\include\EventObserver.h" />
     <ClInclude Include="..\..\include\FadeComponent.h" />

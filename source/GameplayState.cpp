@@ -13,6 +13,7 @@
 #include "WorldBuilder.h"
 #include "RoomManager.h"
 #include "GUI.h"
+#include <pmmintrin.h>
 
 GameplayState::GameplayState(StateType type) :State(type)
 {
@@ -21,7 +22,7 @@ GameplayState::GameplayState(StateType type) :State(type)
 State::StateType GameplayState::update(const float fDeltaTimeSeconds)
 {
 	GameObjectManager& objManager = GameObjectManager::getInstance();
-	if (InputManager::getInstance().isKeyDown("EndGame",0))
+	if (InputManager::getInstance().isKeyDown("EndGame",0) || InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::START))
 	{
 		EventBus::getInstance().notify(engine::GAMEPAUSE, make_shared<engine::GameEvent>());
 		pause(true);
@@ -70,8 +71,6 @@ void GameplayState::init()
 
 	engine::GUI::getInstance().init(m_type);
 
-	RoomManager::getInstance().init();
-
 	GameObjectManager& objManager = GameObjectManager::getInstance();
 
 	WorldBuilder::loadTextures("room.tmx");
@@ -93,12 +92,19 @@ void GameplayState::init()
 	objManager.add(leftDoor);
 
 
+	auto dmgFader = GameObjectCreator::getInstance().createDmgFade();
+
+	objManager.add(dmgFader);
+
+
 	objManager.applyChanges();
 
 	for (auto it : objManager.getList())
 	{
 		it->init();
 	}
+
+	RoomManager::getInstance().init();
 }
 
 void GameplayState::exit()

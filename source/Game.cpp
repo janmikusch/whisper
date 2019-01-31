@@ -60,12 +60,28 @@ bool Game::init()
 
 	m_window = std::make_shared<sf::RenderWindow>();
 
-	m_window->create(sf::VideoMode(m_width, m_height), m_gameName);
+	sf::Vector2f winSize{ 960, 704 };
+
+	m_window->create(sf::VideoMode(m_width, m_height), m_gameName, sf::Style::Fullscreen);
+
+	auto defaultSize = m_window->getView().getSize();
+
+	float ratio = defaultSize.x / defaultSize.y;
+	winSize.x = winSize.y * ratio;
+
+	float xDisplace = winSize.x - 960;
+
+	sf::View view;
+	view.setSize(winSize);
+	view.setCenter(sf::Vector2f { 480, 352 });
+	m_window->setView(view);
+
 	m_window->setFramerateLimit(60);
 
 	//init gui
 	engine::Window::getInstance().setWindow(m_window);
 	engine::GUI::getInstance().init(); //create gui
+	engine::GUI::getInstance().setxDisplacement(xDisplace);
 
 	std::shared_ptr<State> menuState = std::make_shared<MenuState>(State::StateType::STATE_MENU);
 	std::shared_ptr<State> gameplayState = std::make_shared<GameplayState>(State::StateType::STATE_GAMEPLAY);
@@ -106,7 +122,7 @@ bool Game::init()
 
 	
 	//sm.playSound("testSound");
-	//sm.setMusic("testMusic");
+	sm.setMusic("backgroundMusic");
 
 	return true;
 }
