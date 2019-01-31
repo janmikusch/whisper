@@ -29,7 +29,7 @@ void EnemyMoveComponent::update(const float fDeltaTimeSeconds)
 
 	auto animComponent = m_parent->getComponent<AnimationComponent>();
 
-	const float speed = 100.0f;
+	const float speed = 20.0f;
 	sf::Vector2f movement = sf::Vector2f(0, 0);
 
 	if(m_target != nullptr)
