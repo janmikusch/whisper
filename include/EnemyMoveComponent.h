@@ -20,6 +20,7 @@ public:
 	void setFightingState(bool isFighting) { m_isFighting = isFighting; };
 	void setStandingAnimation();
 
+	void setIdle();
 	void setTarget(std::shared_ptr<GameObject> target) { m_target = target; };
 
 private:
