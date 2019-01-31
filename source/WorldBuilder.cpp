@@ -144,6 +144,7 @@ std::vector<std::shared_ptr<GameObject>> WorldBuilder::loadWorld(const string& f
 				sf::FloatRect box{ static_cast<float>(object->x), static_cast<float>(object->y), static_cast<float>(object->width), static_cast<float>(object->height) };
 
 				std::shared_ptr<GameObject> character = m_gameObjectCreator.createCharacter(box, id, position);
+
 				objects.push_back(character);
 			}
 			else if( object->type == "button")

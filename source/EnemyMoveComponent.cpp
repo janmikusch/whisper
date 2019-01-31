@@ -13,12 +13,14 @@
 #include "RandomNumber.h"
 #include <SFML/Audio.hpp>
 #include "AudioManager.h"
+#include "RoomManager.h"
 
 EnemyMoveComponent::EnemyMoveComponent(const std::shared_ptr<GameObject>& parent, std::shared_ptr<GameObject> target, int character_id): Component(parent), m_target(target)
 {
 	m_characterId = character_id;
 	m_direction = Direction::DOWN;
 	m_state = AnimationState::IDLE;
+	m_initialPos = m_parent->getPosition();
 }
 
 void EnemyMoveComponent::update(const float fDeltaTimeSeconds)
@@ -34,7 +36,7 @@ void EnemyMoveComponent::update(const float fDeltaTimeSeconds)
 		movement = m_target->getPosition() - m_parent->getPosition();
 
 	float length = std::sqrt((movement.x * movement.x) + (movement.y * movement.y));
-	if (isFighting && length > 0.1f)
+	if (isFighting && length > 0.1f && RoomManager::getInstance().getLives() > 0)
 	{
 		std::cout << movement.x << " " << movement.y << std::endl;
 
@@ -60,6 +62,7 @@ void EnemyMoveComponent::draw()
 
 void EnemyMoveComponent::init()
 {
+	m_parent->setPosition(m_initialPos);
 }
 
 void EnemyMoveComponent::dontCollide(sf::Vector2f& movement)
@@ -130,6 +133,7 @@ void EnemyMoveComponent::dontCollide(sf::Vector2f& movement)
 
 		if (PhysicsManager::getInstance().AABBvsAABB(charBoundingBox, otherBoundingBox, normal, penetration))
 		{
+			RoomManager::getInstance().resetCurrentRoom();
 			EventBus::getInstance().notify(engine::EventType::DAMAGETAKEN, std::shared_ptr<engine::GameEvent>());
 		}
 	}

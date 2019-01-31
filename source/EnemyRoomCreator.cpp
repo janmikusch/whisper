@@ -10,12 +10,13 @@ void EnemyRoomCreator::createObjectsForEnemyRoom(std::vector<std::shared_ptr<Gam
 
 	for (auto o : GameObjectManager::getInstance().getList())
 	{
+		std::cout << o->getName() << std::endl;
 		if (o->getName() == "hero")
 			target = o;
 	}
 
-	sf::FloatRect rectW = sf::FloatRect(0, 0, 120, 128);
-	std::shared_ptr<GameObject> enemyWater = GameObjectCreator::getInstance().createEnemy(rectW, engine::Element::WATER, target, 1, sf::Vector2f(130, 130));
+	sf::FloatRect rectW = sf::FloatRect(100, 100, 120, 128);
+	std::shared_ptr<GameObject> enemyWater = GameObjectCreator::getInstance().createEnemy(rectW, engine::Element::WATER, target, 1, sf::Vector2f(rectW.left, rectW.top));
 	room_objects.push_back(enemyWater);
 
 	sf::FloatRect rectF = sf::FloatRect(600, 130, 120, 128);

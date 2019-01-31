@@ -26,4 +26,5 @@ private:
 	AnimationState m_state;
 	std::shared_ptr<GameObject> m_target;
 	bool isFighting = true;
+	sf::Vector2f m_initialPos;
 };
