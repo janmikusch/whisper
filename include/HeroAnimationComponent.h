@@ -22,6 +22,7 @@ private:
 	sf::Vector2f m_diplace = sf::Vector2f(-64, 0);
 	std::map<std::string, sf::FloatRect> attackRects;
 	std::shared_ptr<GameObject> checkCollisions(sf::FloatRect aabb, std::vector<std::shared_ptr<GameObject>> objects);
+	std::shared_ptr<GameObject> checkCollisionsWithEnemies(sf::FloatRect aabb, std::vector<std::shared_ptr<GameObject>> objects);
 	float m_countdown = 0.0f;
 	bool m_toggleAble = true;
 };

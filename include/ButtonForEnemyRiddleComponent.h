@@ -30,4 +30,5 @@ protected:
 	float m_timer = 0.0f;
 	std::vector<std::shared_ptr<GameObject>> m_enemies;
 	std::vector<std::shared_ptr<GameObject>>::iterator nextEnemy;
+	bool m_wasPressed = false;
 };
