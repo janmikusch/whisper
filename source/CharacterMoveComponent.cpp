@@ -55,7 +55,7 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 
 			if (im.isKeyPressed("Attack", 0))
 			{
-         				setFightAnimation();
+          				setFightAnimation();
 
 				int i = engine::Random::getIntBetween(0, 5);
 				switch (i)

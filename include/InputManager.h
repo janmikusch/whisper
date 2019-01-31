@@ -30,6 +30,7 @@ public:
 	StickDirection getLeftJoystickDownAxis();
 	bool isJoystickButtonDown(JoystickButton b);
 	bool isJoystickButtonPressed(JoystickButton b);
+	bool itemExist(std::string name, int playerIdx);
 
 private:
 	InputManager();
@@ -44,7 +45,6 @@ private:
 
 	StickDirection lastDirection;
 
-	bool itemExist(std::string name, int playerIdx);
 
 	int buttonToId(JoystickButton b);
 };
