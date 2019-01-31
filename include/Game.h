@@ -23,4 +23,5 @@ private:
 	const std::string m_gameName = "Whisper";
 	const int m_height = 704;
 	const int m_width = 960;
+	
 };

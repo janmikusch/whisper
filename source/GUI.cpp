@@ -91,6 +91,11 @@ tgui::Gui& GUI::getGui()
 	return m_gui;
 }
 
+void GUI::setxDisplacement(float xDisplace)
+{
+	m_xDisplace = xDisplace;
+}
+
 GUI::GUI(std::shared_ptr<sf::RenderWindow> window):m_gui(*window)
 {
 }
@@ -186,15 +191,22 @@ void GUI::createGameplayGui()
 {
 	m_gui.removeAllWidgets();
 
+
+	tgui::Layout2d lay = tgui::Layout2d(engine::Window::getInstance().getWindow()->getView().getSize().x, engine::Window::getInstance().getWindow()->getView().getSize().y);
+	tgui::Panel::Ptr panel = tgui::Panel::create(lay);
+	panel->setPosition(m_xDisplace, 0);
+	panel->getRenderer()->setBackgroundColor(tgui::Color::Transparent);
+	m_gui.add(panel);
+
 	//pausemenue
 	{
 		tgui::Panel::Ptr pausemenu = tgui::Panel::create();
 		pausemenu->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(1));
-		pausemenu->setSize("60%", "40%");
-		pausemenu->setPosition("20%", "30%");
+		pausemenu->setSize("70%", "50%");
+		pausemenu->setPosition("18%", "40%");
 		auto bgcolor = tgui::Color(8, 43, 43, 255);
 		pausemenu->getRenderer()->setBackgroundColor(bgcolor);
-		m_gui.add(pausemenu, "pausemenu");
+		panel->add(pausemenu, "pausemenu");
 
 
 		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
@@ -229,11 +241,11 @@ void GUI::createGameplayGui()
 	{
 		tgui::Panel::Ptr gameovermenu = tgui::Panel::create();
 		gameovermenu->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(1));
-		gameovermenu->setSize("60%", "40%");
-		gameovermenu->setPosition("20%", "30%");
+		gameovermenu->setSize("70%", "50%");
+		gameovermenu->setPosition("18%", "40%");
 		auto bgcolor = tgui::Color(8, 43, 43, 255);
 		gameovermenu->getRenderer()->setBackgroundColor(bgcolor);
-		m_gui.add(gameovermenu, "gameover");
+		panel->add(gameovermenu, "gameover");
 
 
 		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
@@ -260,11 +272,11 @@ void GUI::createGameplayGui()
 	{
 		tgui::Panel::Ptr gamecomplete = tgui::Panel::create();
 		gamecomplete->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(1));
-		gamecomplete->setSize("60%", "40%");
-		gamecomplete->setPosition("20%", "30%");
+		gamecomplete->setSize("70%", "50%");
+		gamecomplete->setPosition("18%", "40%");
 		auto bgcolor = tgui::Color(8, 43, 43, 255);
 		gamecomplete->getRenderer()->setBackgroundColor(bgcolor);
-		m_gui.add(gamecomplete, "gamecomplete");
+		panel->add(gamecomplete, "gamecomplete");
 
 
 		tgui::VerticalLayout::Ptr layout = tgui::VerticalLayout::create();
@@ -287,24 +299,25 @@ void GUI::createGameplayGui()
 		layout->insertSpace(1, 0.3f);
 	}
 
+
 	TextureManager::getInstance().loadTexture("heart.png");
 	sf::Texture& heartTexture = TextureManager::getInstance().getTexture("heart.png");
 	tgui::Picture::Ptr heart = tgui::Picture::create(heartTexture);
-	heart->setPosition({ "5%", "1%" });
-	m_gui.add(heart,"heart1");
+	heart->setPosition({ "5%", "2%" });
+	panel->add(heart,"heart1");
 
 	TextureManager::getInstance().loadTexture("heart.png");
 	tgui::Picture::Ptr heart2 = tgui::Picture::create(heartTexture);
-	heart2->setPosition({ "5% + width * 1", "1%" });
-	m_gui.add(heart2, "heart2");
+	heart2->setPosition({ "5% + width * 1", "2%" });
+	panel->add(heart2, "heart2");
 
 	TextureManager::getInstance().loadTexture("heart.png");
 	tgui::Picture::Ptr heart3 = tgui::Picture::create(heartTexture);
-	heart3->setPosition({ "5% + width * 2", "1%" });
-	m_gui.add(heart3, "heart3");
+	heart3->setPosition({ "5% + width * 2", "2%" });
+	panel->add(heart3, "heart3");
 
 	tgui::Label::Ptr rooms = tgui::Label::create("Rooms left: XXX");
-	rooms->setTextSize(20);
-	rooms->setPosition({ "95% - width", "1%" });
-	m_gui.add(rooms, "roomsleft");
+	rooms->setTextSize(30);
+	rooms->setPosition({ "95% - width", "2%" });
+	panel->add(rooms, "roomsleft");
 }
