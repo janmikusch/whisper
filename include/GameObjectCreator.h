@@ -36,6 +36,7 @@ public:
 	std::shared_ptr<GameObject> createButtonForLavaRiddle(sf::Vector2f position);
 	std::shared_ptr<GameObject> createWaterForLavaRiddle(sf::Vector2f position);
 
+	std::shared_ptr<GameObject> createButtonForEnemyRiddle(sf::Vector2f position);
 private:
 	GameObjectCreator() = default;
 };

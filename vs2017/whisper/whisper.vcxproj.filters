@@ -303,6 +303,9 @@
     <ClCompile Include="..\..\source\EnemyRoomCreator.cpp">
       <Filter>Source Files\Room</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\ButtonForEnemyRiddleComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">
@@ -523,6 +526,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\EnemyRoomCreator.h">
       <Filter>Header Files\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ButtonForEnemyRiddleComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

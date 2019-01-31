@@ -13,6 +13,7 @@
 #include "RandomNumber.h"
 #include <SFML/Audio.hpp>
 #include "AudioManager.h"
+#include "RoomManager.h"
 
 CharacterMoveComponent::CharacterMoveComponent(const std::shared_ptr<GameObject>& parent, int character_id): Component(parent)
 {
@@ -28,7 +29,7 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 
 	setMoveBehaviour();
 
-	if(m_moveBehaviour)
+	if(m_moveBehaviour && RoomManager::getInstance().getLives() > 0)
 	{	
 		if (m_state != AnimationState::ATTACK)
 		{

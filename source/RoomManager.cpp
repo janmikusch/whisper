@@ -90,8 +90,8 @@ void RoomManager::createRooms()
 
 	ButtonRoomCreator::createObjectsForButtonRoom(roomObjects_00, engine::Random::getIntBetween(3,6));
 	TorchRoomCreator::createObjectsForTorchRoom(roomObjects_02);
-	LabyrinthCreator::createObjectsForLabyrinthRoom(roomObjects_11);
-	EnemyRoomCreator::createObjectsForEnemyRoom(roomObjects_12);
+	LabyrinthCreator::createObjectsForLabyrinthRoom(roomObjects_12);
+	EnemyRoomCreator::createObjectsForEnemyRoom(roomObjects_11);
 
 
 	room_00->setRoomObjects(roomObjects_00);

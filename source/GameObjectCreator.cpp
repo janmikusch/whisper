@@ -26,6 +26,7 @@
 #include "ButtonForLavaRiddleComponent.h"
 #include "WaterComponent.h"
 #include "EnemyMoveComponent.h"
+#include "ButtonForEnemyRiddleComponent.h"
 
 GameObjectCreator& GameObjectCreator::getInstance()
 {
@@ -693,6 +694,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, 
 	enemy->addComponent(std::make_shared<EnemyMoveComponent>(enemy, target, id));
 
 	int elementOffset = 0;
+	int standOffset = 0;
 
 	switch (e)
 	{
@@ -704,9 +706,11 @@ std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, 
 		break;
 	case engine::Element::AIR:
 		elementOffset = 720;
+		standOffset = 384;
 		break;
 	case engine::Element::EARTH:
 		elementOffset = 1080;
+		standOffset = 384;
 		break;
 	default:
 		sf::err() << "Element not defined";
@@ -760,6 +764,13 @@ std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, 
 
 	animComp->addAnimation(idle, "idle");
 
+
+	Animation stand;
+	stand.setSpriteSheet(texture);
+	stand.addFrame(sf::IntRect(120 + elementOffset, standOffset, 120, 128));
+
+	animComp->addAnimation(stand, "stand");
+
 	animComp->setAnimation("idle");
 
 	sf::Vector2f displacement(35, 65);
@@ -779,4 +790,33 @@ std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, 
 #endif
 
 	return enemy;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createButtonForEnemyRiddle(sf::Vector2f position)
+{
+	sf::FloatRect rect = sf::FloatRect(position, sf::Vector2f(54, 56));
+	sf::Vector2f displacement = sf::Vector2f(5, 0);
+
+	TextureManager::getInstance().loadTexture("button_red.png");
+	sf::Texture& texture = TextureManager::getInstance().getTexture("button_red.png");
+
+	std::shared_ptr<GameObject> button = std::make_shared<GameObject>(position, "buttonForEnemyRiddle");
+
+	std::shared_ptr<ColliderComponent> collider = std::make_shared<ColliderComponent>(button, rect, true, displacement);
+	std::shared_ptr<Rigidbody> rigidbody = std::make_shared<Rigidbody>(button, 1, false, true);
+	std::shared_ptr<ButtonForEnemyRiddleComponent> buttonComp = std::make_shared<ButtonForEnemyRiddleComponent>(button, Layer::BACKGROUND3, texture, engine::Color::GREEN, 1);
+
+	button->addComponent(collider);
+	button->addComponent(rigidbody);
+	button->addComponent(buttonComp);
+
+#ifdef _DEBUG
+	auto boundingbox = std::make_shared <BoundingboxComponent>(button, rect, Layer::DEBUG_BOUNDINGBOX);
+	boundingbox->setDisplacement(displacement);
+	button->addComponent(boundingbox);
+#endif
+
+	rigidbody->addObserver(*buttonComp);
+
+	return button;
 }
