@@ -10,6 +10,8 @@
 #include "ColliderComponent.h"
 #include"TorchAnimationComponent.h"
 #include "EnemyMoveComponent.h"
+#include "GameObjectManager.h"
+#include "ButtonForEnemyRiddleComponent.h"
 
 HeroAnimationComponent::HeroAnimationComponent(std::shared_ptr<GameObject> parent, Layer layer, float animationTime) :
 	AnimationComponent(parent, layer, animationTime)
@@ -81,7 +83,10 @@ void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 	std::shared_ptr<GameObject> hitEnemy = checkCollisionsWithEnemies(currentAttack, roomObjects);
 
 	if (hitEnemy != nullptr)
+	{
 		hitEnemy->getComponent<EnemyMoveComponent>()->setIdle();
+		GameObjectManager::getInstance().getFirstGameObject("buttonForEnemyRiddle")->getComponent<ButtonForEnemyRiddleComponent>()->enemyAttacked(hitEnemy);
+	}
 
 	m_animatedSprite.setRotation(m_parent->getRotation());
 	m_animatedSprite.setOrigin(m_parent->getOrigin());

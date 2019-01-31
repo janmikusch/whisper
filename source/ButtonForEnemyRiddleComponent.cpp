@@ -27,9 +27,6 @@ void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std
 	if (collidedWith.getName() != "hero")
 		return;
 
-	if (m_wasPressed)
-		return;
-
 	ButtonComponent::onNotify(collidedWith, gameEvent);
 	auto cge = std::static_pointer_cast<engine::CollisionGameEvent>(gameEvent);
 
@@ -52,8 +49,6 @@ void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std
 
 			nextEnemy = m_enemies.begin();
 			enemiesLoaded = true;
-			areAttacking = true;
-			nextEnemy = m_enemies.begin();
 		}
 	}
 	if (cge != nullptr && cge->type == engine::CollisionGameEvent::CollisionType::EXIT)
@@ -64,7 +59,8 @@ void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std
 				o->getComponent<EnemyMoveComponent>()->setFightingState(true);
 		}
 
-		m_wasPressed = true;
+		areAttacking = true;
+		nextEnemy = m_enemies.begin();
 	}
 }
 
