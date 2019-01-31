@@ -300,6 +300,9 @@
     <ClCompile Include="..\..\source\EnemyMoveComponent.cpp">
       <Filter>Source Files\GameObject\Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\EnemyRoomCreator.cpp">
+      <Filter>Source Files\Room</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">
@@ -517,6 +520,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\EnemyMoveComponent.h">
       <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\EnemyRoomCreator.h">
+      <Filter>Header Files\Room</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

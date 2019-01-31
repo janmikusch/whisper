@@ -12,6 +12,7 @@
 #include "ButtonRoomCreator.h"
 #include "TorchRoomCreator.h"
 #include "LabyrinthCreator.h"
+#include "EnemyRoomCreator.h"
 
 RoomManager::RoomManager() :EventObserver()
 {
@@ -90,6 +91,7 @@ void RoomManager::createRooms()
 	ButtonRoomCreator::createObjectsForButtonRoom(roomObjects_00, engine::Random::getIntBetween(3,6));
 	TorchRoomCreator::createObjectsForTorchRoom(roomObjects_02);
 	LabyrinthCreator::createObjectsForLabyrinthRoom(roomObjects_11);
+	EnemyRoomCreator::createObjectsForEnemyRoom(roomObjects_12);
 
 
 	room_00->setRoomObjects(roomObjects_00);
@@ -185,6 +187,11 @@ int RoomManager::countNotCompleted()
 		}
 	}
 	return unsolved;
+}
+
+void RoomManager::resetCurrentRoom()
+{
+	m_currentRoom->resetRoom();
 }
 
 void RoomManager::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent)

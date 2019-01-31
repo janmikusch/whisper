@@ -34,7 +34,7 @@ void EnemyMoveComponent::update(const float fDeltaTimeSeconds)
 		movement = m_target->getPosition() - m_parent->getPosition();
 
 	float length = std::sqrt((movement.x * movement.x) + (movement.y * movement.y));
-	if (isFighting)
+	if (isFighting && length > 0.1f)
 	{
 		std::cout << movement.x << " " << movement.y << std::endl;
 
@@ -95,6 +95,43 @@ void EnemyMoveComponent::dontCollide(sf::Vector2f& movement)
 
 		if(PhysicsManager::getInstance().AABBvsAABB(charBoundingBox, otherBoundingBox, normal, penetration))
 			movement += normal * penetration;
+	}
+	for (auto it : GameObjectManager::getInstance().getGameObjectList("enemy"))
+	{
+		if (it == m_parent)
+			continue;
+
+		auto charBoundingBox = m_parent->getComponent<ColliderComponent>()->getShape();
+		auto otherBoundingBox = it->getComponent<ColliderComponent>()->getShape();
+
+		charBoundingBox.width += movement.x;
+		charBoundingBox.height += movement.y;
+		charBoundingBox.top += movement.y;
+		charBoundingBox.left += movement.x;
+
+		sf::Vector2f normal;
+		float penetration;
+
+		if (PhysicsManager::getInstance().AABBvsAABB(charBoundingBox, otherBoundingBox, normal, penetration))
+			movement += normal * penetration;
+	}
+	for (auto it : GameObjectManager::getInstance().getGameObjectList("hero"))
+	{
+		auto charBoundingBox = m_parent->getComponent<ColliderComponent>()->getShape();
+		auto otherBoundingBox = it->getComponent<ColliderComponent>()->getShape();
+
+		charBoundingBox.width += movement.x;
+		charBoundingBox.height += movement.y;
+		charBoundingBox.top += movement.y;
+		charBoundingBox.left += movement.x;
+
+		sf::Vector2f normal;
+		float penetration;
+
+		if (PhysicsManager::getInstance().AABBvsAABB(charBoundingBox, otherBoundingBox, normal, penetration))
+		{
+			EventBus::getInstance().notify(engine::EventType::DAMAGETAKEN, std::shared_ptr<engine::GameEvent>());
+		}
 	}
 }
 

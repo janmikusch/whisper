@@ -39,7 +39,7 @@ private:
 	float m_invMass;
 	bool m_useGravity = true;
 	const sf::Vector2f m_gravity{ 0.0f, 9.f };
-	const float m_speedMultiplier = 100.0f;
+	const float m_speedMultiplier = 150.0f;
 	const float m_minVelocity = 0.0001f;
 	bool m_isStatic = true;
 	bool m_isGrounded = false;
