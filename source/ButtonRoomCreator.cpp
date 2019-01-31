@@ -47,7 +47,7 @@ void ButtonRoomCreator::createTorches(std::vector<std::shared_ptr<GameObject>>& 
 	int randomMax = 8;
 
 	int random = engine::Random::getIntBetween(randomMin, randomMax);
-	sf::Vector2u winSize = engine::Window::getInstance().getWindow()->getSize();
+	sf::Vector2f winSize{ 960, 704 };
 	int torchWidth = 64;
 
 
