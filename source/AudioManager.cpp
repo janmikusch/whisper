@@ -170,7 +170,7 @@ int AudioManager::getBufferCounter()
 {
 	if (++buffercounter >= m_sound.size())
 		buffercounter = 0;
-	sf::err() << buffercounter << std::endl;
+
 	return buffercounter;
 }
 

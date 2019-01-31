@@ -20,6 +20,8 @@ public:
 	void update(const float fDeltaTimeSeconds) override;
 	void init() override;
 
+	void enemyAttacked(std::shared_ptr<GameObject> enemy);
+
 protected:
 	sf::Sprite m_buttonPressed;
 	sf::Sprite m_buttonReleased;
@@ -29,7 +31,16 @@ protected:
 	int m_id; 
 	float m_timer = 0.0f;
 	std::vector<std::shared_ptr<GameObject>> m_enemies;
-	std::vector<std::shared_ptr<GameObject>>::iterator nextEnemy;
+	std::vector<int>::iterator nextEnemy;
 
 	bool enemiesLoaded;
+	bool areAttacking;
+
+	std::vector<int> spawningSequence;
+	std::vector<int> attackingSequence;
+
+
+	void calcAttackingSequence();
+
+	int getCorrectElement(int lives, int element);
 };
