@@ -202,8 +202,12 @@ void GUI::update(const float fDeltaTimeSeconds)
 				iTimer = 0;
 				EventBus::getInstance().notify(engine::GAMEOVER, make_shared<GameEvent>());
 			}
+
+			int minutes = iTimer / 60;
+			int seconds = iTimer - minutes * 60;
+
 			auto timerLabel = m_gui.get<tgui::Label>("timer");
-			timerLabel->setText("Time Left:"+std::to_string(iTimer));
+			timerLabel->setText("Time left: "+std::to_string(minutes) + ":" + std::to_string(seconds));
 
 		}
 	}
