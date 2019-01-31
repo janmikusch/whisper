@@ -24,6 +24,12 @@ ButtonForEnemyRiddleComponent::ButtonForEnemyRiddleComponent(std::shared_ptr<Gam
 
 void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> gameEvent)
 {
+	if (collidedWith.getName() != "hero")
+		return;
+
+	if (m_wasPressed)
+		return;
+
 	ButtonComponent::onNotify(collidedWith, gameEvent);
 	auto cge = std::static_pointer_cast<engine::CollisionGameEvent>(gameEvent);
 
@@ -55,6 +61,8 @@ void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std
 			if (o->getName() == "enemy")
 				o->getComponent<EnemyMoveComponent>()->setFightingState(true);
 		}
+
+		m_wasPressed = true;
 	}
 }
 

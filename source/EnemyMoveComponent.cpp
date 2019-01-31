@@ -58,9 +58,7 @@ void EnemyMoveComponent::init()
 {
 	m_parent->setPosition(m_initialPos);
 	m_isFighting = false;
-	auto animComponent = m_parent->getComponent<AnimationComponent>();
-	animComponent->setAnimation("idle");
-	
+	setIdle();	
 }
 
 void EnemyMoveComponent::dontCollide(sf::Vector2f& movement)
@@ -177,4 +175,11 @@ void EnemyMoveComponent::setStandingAnimation()
 {
 	auto animComponent = m_parent->getComponent<AnimationComponent>();
 	animComponent->setAnimation("stand");
+}
+
+void EnemyMoveComponent::setIdle()
+{
+	auto animComponent = m_parent->getComponent<AnimationComponent>();
+	animComponent->setAnimation("idle");
+	m_isFighting = false;
 }
