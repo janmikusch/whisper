@@ -34,8 +34,13 @@ protected:
 	std::vector<int>::iterator nextEnemy;
 
 	bool enemiesLoaded;
-
 	bool areAttacking;
 
-	std::vector<int> enemySequence;
+	std::vector<int> spawningSequence;
+	std::vector<int> attackingSequence;
+
+
+	void calcAttackingSequence();
+
+	int getCorrectElement(int lives, int element);
 };

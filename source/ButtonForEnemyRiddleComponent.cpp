@@ -45,18 +45,9 @@ void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std
 
 			unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 			std::default_random_engine e(seed);
-			std::shuffle(enemySequence.begin(), enemySequence.end(),e);
+			std::shuffle(spawningSequence.begin(), spawningSequence.end(),e);
 
-
-			sf::err() << "sequence:";
-			//REMOVE AFTER
-			for(auto it:enemySequence)
-			{
-				sf::err() << std::to_string(it);
-			}
-
-
-			nextEnemy = enemySequence.begin();
+			nextEnemy = spawningSequence.begin();
 			enemiesLoaded = true;
 		}
 	}
@@ -69,7 +60,9 @@ void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std
 		}
 
 		areAttacking = true;
-		nextEnemy = enemySequence.begin();
+		calcAttackingSequence();
+		spawningSequence.clear();
+		nextEnemy = attackingSequence.begin();
 	}
 }
 
@@ -84,13 +77,13 @@ void ButtonForEnemyRiddleComponent::update(const float fDeltaTimeSeconds)
 	{
 			m_timer += fDeltaTimeSeconds;
 
-		if (m_timer > 1.0f && nextEnemy != enemySequence.end())
+		if (m_timer > 1.0f && nextEnemy != spawningSequence.end())
 		{
 			m_enemies[(*nextEnemy)]->getComponent<EnemyMoveComponent>()->setStandingAnimation();
 			m_timer = 0;
 			nextEnemy++;
 
-			if (nextEnemy == enemySequence.end())
+			if (nextEnemy == spawningSequence.end())
 			{
 				areAttacking = true;
 			}
@@ -105,28 +98,89 @@ void ButtonForEnemyRiddleComponent::init()
 	enemiesLoaded = false;
 	areAttacking = false;
 
-	enemySequence.clear();
-	enemySequence.push_back(0);
-	enemySequence.push_back(1);
-	enemySequence.push_back(2);
-	enemySequence.push_back(3);
+	spawningSequence.clear();
+	spawningSequence.push_back(0);
+	spawningSequence.push_back(1);
+	spawningSequence.push_back(2);
+	spawningSequence.push_back(3);
 }
 
 void ButtonForEnemyRiddleComponent::enemyAttacked(std::shared_ptr<GameObject> enemy)
 {
-	if(areAttacking && nextEnemy != enemySequence.end())
+	if(areAttacking && nextEnemy != attackingSequence.end())
 	{
 		if(enemy == m_enemies[*nextEnemy])
 		{
 			nextEnemy++;
-			if(nextEnemy == enemySequence.end())
+			if(nextEnemy == attackingSequence.end())
 				EventBus::getInstance().notify(engine::EventType::ROOMUNLOCKED, std::shared_ptr<engine::GameEvent>());			
 		}
 		else
 		{
 			RoomManager::getInstance().resetCurrentRoom();
 			EventBus::getInstance().notify(engine::EventType::DAMAGETAKEN, std::shared_ptr<engine::GameEvent>());
-			nextEnemy = enemySequence.end();
+			nextEnemy = spawningSequence.end();
 		}
 	}
+}
+
+void ButtonForEnemyRiddleComponent::calcAttackingSequence()
+{
+	// Wasser, Feuer, Wind, Erde
+	attackingSequence = std::vector<int>();
+
+	int lives = RoomManager::getInstance().getLives();
+	for(auto it:spawningSequence)
+	{
+		attackingSequence.push_back(getCorrectElement(lives, it));
+	}
+}
+
+int ButtonForEnemyRiddleComponent::getCorrectElement(int lives, int element)
+{
+	//3 lives
+	switch (lives)
+	{
+	case 3:
+		switch (element)
+		{
+		case 0: // Wasser
+			return 3;
+		case 1: // Feuer
+			return 2;
+		case 2: // Wind
+			return 0;
+		case 3: // Erde
+			return 1;
+		}
+		break;
+	case 2:
+		switch (element)
+		{
+		case 0: // Wasser
+			return 1;
+		case 1: // Feuer
+			return 0;
+		case 2: // Wind
+			return 2;
+		case 3: // Erde
+			return 3;
+		}
+		break;
+	case 1:
+		switch (element)
+		{
+		case 0: // Wasser
+			return 1;
+		case 1: // Feuer
+			return 0;
+		case 2: // Wind
+			return 3;
+		case 3: // Erde
+			return 2;
+		}
+		break;
+	}
+	sf::err() << "ERR, cannot calc element" << std::endl;
+	return -1;
 }
