@@ -48,11 +48,6 @@ void EnemyMoveComponent::update(const float fDeltaTimeSeconds)
 		dontCollide(movement);
 		m_parent->move(movement);
 	}
-	else
-	{
-		m_state = AnimationState::IDLE;
-		animComponent->setAnimation("idle");
-	}
 }
 
 void EnemyMoveComponent::draw()
@@ -63,7 +58,9 @@ void EnemyMoveComponent::init()
 {
 	m_parent->setPosition(m_initialPos);
 	m_isFighting = false;
-	m_state = AnimationState::IDLE;
+	auto animComponent = m_parent->getComponent<AnimationComponent>();
+	animComponent->setAnimation("idle");
+	
 }
 
 void EnemyMoveComponent::dontCollide(sf::Vector2f& movement)
@@ -174,4 +171,10 @@ void EnemyMoveComponent::setAnimation(sf::Vector2f movement)
 			}
 		}
 	}
+}
+
+void EnemyMoveComponent::setStandingAnimation()
+{
+	auto animComponent = m_parent->getComponent<AnimationComponent>();
+	animComponent->setAnimation("stand");
 }

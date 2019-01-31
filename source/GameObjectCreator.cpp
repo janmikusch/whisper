@@ -679,6 +679,7 @@ std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, 
 	enemy->addComponent(std::make_shared<EnemyMoveComponent>(enemy, target, id));
 
 	int elementOffset = 0;
+	int standOffset = 0;
 
 	switch (e)
 	{
@@ -690,9 +691,11 @@ std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, 
 		break;
 	case engine::Element::AIR:
 		elementOffset = 720;
+		standOffset = 384;
 		break;
 	case engine::Element::EARTH:
 		elementOffset = 1080;
+		standOffset = 384;
 		break;
 	default:
 		sf::err() << "Element not defined";
@@ -745,6 +748,13 @@ std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, 
 	idle.addFrame(sf::IntRect(120 + elementOffset, 896, 120, 128));
 
 	animComp->addAnimation(idle, "idle");
+
+
+	Animation stand;
+	stand.setSpriteSheet(texture);
+	stand.addFrame(sf::IntRect(120 + elementOffset, standOffset, 120, 128));
+
+	animComp->addAnimation(stand, "stand");
 
 	animComp->setAnimation("idle");
 

@@ -25,6 +25,14 @@ void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std
 	ButtonComponent::onNotify(collidedWith, gameEvent);
 	auto cge = std::static_pointer_cast<engine::CollisionGameEvent>(gameEvent);
 
+	if (cge != nullptr && cge->type == engine::CollisionGameEvent::CollisionType::ENTER)
+	{
+		for (auto o : RoomManager::getInstance().getCurrentRoomObjects())
+		{
+			if (o->getName() == "enemy")
+				o->getComponent<EnemyMoveComponent>()->setStandingAnimation();
+		}
+	}
 	if (cge != nullptr && cge->type == engine::CollisionGameEvent::CollisionType::EXIT)
 	{
 		for (auto o : RoomManager::getInstance().getCurrentRoomObjects())
