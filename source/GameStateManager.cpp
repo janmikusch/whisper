@@ -3,10 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include "RenderManager.h"
 #include "GameplayState.h"
+#include "GUI.h"
 
 void GameStateManager::update(const float fDeltaTimeSeconds)
 {
 	// handle State Changes
+
+	engine::GUI::getInstance().update();
 
 	State::StateType new_state = m_states[m_currentState]->update(fDeltaTimeSeconds);
 

@@ -4,11 +4,14 @@
 #include <map>
 #include <vector>
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Joystick.hpp>
 
 class InputManager
 {
-	bool itemExist(std::string name, int playerIdx);
 public:
+	enum StickDirection {NONE,LEFT, RIGHT, UP, DOWN};
+	enum JoystickButton {A,B,X,Y,LB,RB,BACK,START};
+
 	static InputManager& getInstance();
 	bool isKeyDown(sf::Keyboard::Key keyCode);
 	bool isKeyUp(sf::Keyboard::Key keyCode);
@@ -23,7 +26,11 @@ public:
 	void bind(std::string name, sf::Keyboard::Key keyCode, int playerIdx);
 	void unbind(std::string name, int playerIdx);
 
-	std::map<int, bool> m_pressedLastFrame;
+	StickDirection getLeftJoystickAxis();
+	StickDirection getLeftJoystickDownAxis();
+	bool isJoystickButtonDown(JoystickButton b);
+	bool isJoystickButtonPressed(JoystickButton b);
+
 private:
 	InputManager();
 	~InputManager() = default;
@@ -31,6 +38,14 @@ private:
 	InputManager& operator=(InputManager const&) = delete;
 
 	std::vector<std::map<std::string, sf::Keyboard::Key>> m_keyMap;
+	std::map<JoystickButton, bool> m_pressedLastJSButton;
 
+	std::map<int, bool> m_pressedLastFrame;
+
+	StickDirection lastDirection;
+
+	bool itemExist(std::string name, int playerIdx);
+
+	int buttonToId(JoystickButton b);
 };
 
