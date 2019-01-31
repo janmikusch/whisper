@@ -38,8 +38,6 @@ void EnemyMoveComponent::update(const float fDeltaTimeSeconds)
 	float length = std::sqrt((movement.x * movement.x) + (movement.y * movement.y));
 	if (isFighting && length > 0.1f && RoomManager::getInstance().getLives() > 0)
 	{
-		std::cout << movement.x << " " << movement.y << std::endl;
-
 		m_state = AnimationState::WALK;
 
 		movement = movement / length; //normalize

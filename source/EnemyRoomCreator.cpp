@@ -10,7 +10,6 @@ void EnemyRoomCreator::createObjectsForEnemyRoom(std::vector<std::shared_ptr<Gam
 
 	for (auto o : GameObjectManager::getInstance().getList())
 	{
-		std::cout << o->getName() << std::endl;
 		if (o->getName() == "hero")
 			target = o;
 	}
@@ -19,15 +18,15 @@ void EnemyRoomCreator::createObjectsForEnemyRoom(std::vector<std::shared_ptr<Gam
 	std::shared_ptr<GameObject> enemyWater = GameObjectCreator::getInstance().createEnemy(rectW, engine::Element::WATER, target, 1, sf::Vector2f(rectW.left, rectW.top));
 	room_objects.push_back(enemyWater);
 
-	sf::FloatRect rectF = sf::FloatRect(600, 130, 120, 128);
-	std::shared_ptr<GameObject> enemyFire = GameObjectCreator::getInstance().createEnemy(rectF, engine::Element::FIRE, target, 2, sf::Vector2f(600, 130));
+	sf::FloatRect rectF = sf::FloatRect(700, 100, 120, 128);
+	std::shared_ptr<GameObject> enemyFire = GameObjectCreator::getInstance().createEnemy(rectF, engine::Element::FIRE, target, 2, sf::Vector2f(rectF.left, rectF.top));
 	room_objects.push_back(enemyFire);
 
-	sf::FloatRect rectA = sf::FloatRect(130, 500, 120, 128);
-	std::shared_ptr<GameObject> enemyAir = GameObjectCreator::getInstance().createEnemy(rectA, engine::Element::AIR, target, 3, sf::Vector2f(130, 500));
+	sf::FloatRect rectA = sf::FloatRect(100, 400, 120, 128);
+	std::shared_ptr<GameObject> enemyAir = GameObjectCreator::getInstance().createEnemy(rectA, engine::Element::AIR, target, 3, sf::Vector2f(rectA.left, rectA.top));
 	room_objects.push_back(enemyAir);
 
-	sf::FloatRect rectE = sf::FloatRect(600, 500, 120, 128);
-	std::shared_ptr<GameObject> enemyEarth = GameObjectCreator::getInstance().createEnemy(rectE, engine::Element::EARTH, target, 4, sf::Vector2f(600, 500));
+	sf::FloatRect rectE = sf::FloatRect(700, 400, 120, 128);
+	std::shared_ptr<GameObject> enemyEarth = GameObjectCreator::getInstance().createEnemy(rectE, engine::Element::EARTH, target, 4, sf::Vector2f(rectE.left, rectE.top));
 	room_objects.push_back(enemyEarth);
 }
