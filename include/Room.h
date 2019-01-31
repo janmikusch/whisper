@@ -21,6 +21,8 @@ public:
 	void addRoomObjectsToGame();
 	void removeRoomObjectsFromGame();
 
+	void resetRoom();
+
 	std::string getName() { return m_name; };
 
 	bool isCompleted() { return m_completed; };

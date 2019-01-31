@@ -70,8 +70,6 @@ void GameplayState::init()
 
 	engine::GUI::getInstance().init(m_type);
 
-	RoomManager::getInstance().init();
-
 	GameObjectManager& objManager = GameObjectManager::getInstance();
 
 	WorldBuilder::loadTextures("room.tmx");
@@ -99,6 +97,8 @@ void GameplayState::init()
 	{
 		it->init();
 	}
+
+	RoomManager::getInstance().init();
 }
 
 void GameplayState::exit()

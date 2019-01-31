@@ -83,6 +83,14 @@ void Room::addRoomObjectsToGame()
 	}
 }
 
+void Room::resetRoom()
+{
+	for (auto it : m_roomObjects)
+	{
+		it->init();
+	}
+}
+
 void Room::removeRoomObjectsFromGame()
 {
 	GameObjectManager& gom = GameObjectManager::getInstance();
