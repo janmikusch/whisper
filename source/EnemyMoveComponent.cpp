@@ -51,6 +51,7 @@ void EnemyMoveComponent::update(const float fDeltaTimeSeconds)
 	else
 	{
 		m_state = AnimationState::IDLE;
+		animComponent->setAnimation("idle");
 	}
 }
 
