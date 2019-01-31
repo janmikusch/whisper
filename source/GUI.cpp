@@ -5,6 +5,8 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "RoomManager.h"
+#include "InputManager.h"
+#include <stdbool.h>
 
 using namespace engine;
 
@@ -33,17 +35,164 @@ void GUI::init(GameplayState::StateType type)
 	{
 	case State::STATE_MENU:
 		createMenuGui();
+		inMenu = true;
+		inCredits = false;
 		break;
 	case State::STATE_GAMEPLAY:
 		createGameplayGui();
+		inMenu = false;
+		inCredits = false;
+		inGameCompleteSceen = false;
+		inGameOverMenu = false;
+		inPauseMenu = false;
 		m_hearts = 3;
 		break;
 	}
+
 }
 
 void GUI::draw()
 {
 	m_gui.draw();
+}
+
+void GUI::update()
+{
+	auto stickDir = InputManager::getInstance().getLeftJoystickDownAxis();
+
+	if(inMenu)
+	{
+		if(inCredits)
+		{
+			if (stickDir == InputManager::StickDirection::DOWN)
+			{
+				auto con = m_gui.get<tgui::Container>("CreditScreen");
+				con->focusNextWidget();
+			}
+			else if (stickDir == InputManager::StickDirection::UP)
+			{
+				auto con = m_gui.get<tgui::Container>("CreditScreen");
+				con->focusPreviousWidget();
+			}
+			if(InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
+			{
+				m_gui.get("CreditScreen")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+				inCredits = false;
+			}
+		}
+		else
+		{
+			if(stickDir == InputManager::StickDirection::DOWN)
+			{
+				auto con = m_gui.get<tgui::Container>("menuButtons");
+				con->focusNextWidget();
+			}
+			else if (stickDir == InputManager::StickDirection::UP)
+			{
+				auto con = m_gui.get<tgui::Container>("menuButtons");
+				con->focusPreviousWidget();
+			}
+			else if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
+			{
+				tgui::Button::Ptr startButton = m_gui.get<tgui::Button>("startButton");
+				tgui::Button::Ptr creditsButton = m_gui.get<tgui::Button>("creditsButton");
+				tgui::Button::Ptr quitButton = m_gui.get<tgui::Button>("quitButton");
+
+				if(startButton->isFocused())
+				{
+					EventBus::getInstance().notify(engine::GAMESTART, make_shared<GameEvent>());
+				}
+				if (creditsButton->isFocused())
+				{
+					inCredits = true;
+					m_gui.get("CreditScreen")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+				}
+				if (quitButton->isFocused())
+				{
+					engine::Window::getInstance().getWindow()->close();
+				}
+
+			}
+		}
+	}
+	else
+	{
+		if (inPauseMenu)
+		{
+			if (stickDir == InputManager::StickDirection::DOWN)
+			{
+				auto con = m_gui.get<tgui::Container>("pausemenu");
+				con->focusNextWidget();
+			}
+			else if (stickDir == InputManager::StickDirection::UP)
+			{
+				auto con = m_gui.get<tgui::Container>("pausemenu");
+				con->focusPreviousWidget();
+			}
+			if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
+			{
+				tgui::Button::Ptr btn_continue = m_gui.get<tgui::Button>("btn_continue");
+				tgui::Button::Ptr giveupButton = m_gui.get<tgui::Button>("btn_quit");
+
+				if (btn_continue->isFocused())
+				{
+					m_gui.get("pausemenu")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+					inPauseMenu = false;
+				}
+				if (giveupButton->isFocused())
+				{
+					inPauseMenu = false;
+					m_gui.get("pausemenu")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+					EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
+				}
+			}
+			else if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::START))
+			{
+				m_gui.get("pausemenu")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+				inPauseMenu = false;
+			}
+
+		}
+		else if(inGameOverMenu)
+		{
+			if (stickDir == InputManager::StickDirection::DOWN)
+			{
+				auto con = m_gui.get<tgui::Container>("gameover");
+				con->focusNextWidget();
+			}
+			else if (stickDir == InputManager::StickDirection::UP)
+			{
+				auto con = m_gui.get<tgui::Container>("gameover");
+				con->focusPreviousWidget();
+			}
+			if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
+			{
+				m_gui.get("gameover")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+				inGameOverMenu = false;
+				EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
+			}
+		}
+		else if(inGameCompleteSceen)
+		{
+			if (stickDir == InputManager::StickDirection::DOWN)
+			{
+				auto con = m_gui.get<tgui::Container>("gamecomplete");
+				con->focusNextWidget();
+			}
+			else if (stickDir == InputManager::StickDirection::UP)
+			{
+				auto con = m_gui.get<tgui::Container>("gamecomplete");
+				con->focusPreviousWidget();
+			}
+			if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
+			{
+				m_gui.get("gamecomplete")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+				inGameCompleteSceen = false;
+				EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
+			}
+		}
+	}
+
 }
 
 void GUI::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent)
@@ -52,14 +201,17 @@ void GUI::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> ga
 	if(type == EventType::GAMEPAUSE)
 	{
 		m_gui.get("pausemenu")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
+		inPauseMenu = true;
 	}
 	if (type == EventType::GAMEOVER)
 	{
 		m_gui.get("gameover")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
+		inGameOverMenu = true;
 	}
 	if (type == EventType::GAMECOMPLETE)
 	{
 		m_gui.get("gamecomplete")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
+		inGameCompleteSceen = true;
 	}
 	if (type == engine::EventType::DAMAGETAKEN)
 	{
@@ -117,8 +269,12 @@ void GUI::createMenuGui()
 	tgui::Button::Ptr creditsClose = tgui::Button::create("Back");
 	creditsClose->setTextSize(30);
 	creditsClose->setPosition({ "98% - width", "2%" });
-	creditsClose->connect("pressed", [&]() { m_gui.get("CreditScreen")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100)); });
-	credits->add(creditsClose);
+	creditsClose->connect("pressed", [&]()
+	{
+		m_gui.get("CreditScreen")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
+		inCredits = false;
+	});
+	credits->add(creditsClose,"creditsClose");
 
 	{
 		tgui::Label::Ptr title = tgui::Label::create("Credits");
@@ -151,7 +307,7 @@ void GUI::createMenuGui()
 
 
 	tgui::Label::Ptr label = tgui::Label::create("Whisper");
-	label->setTextSize(150);
+	label->setTextSize(170);
 	label->setInheritedFont(FontManager::getInstance().getFont("Neverwinter"));
 	label->setPosition({ "50% - width / 2", "10%" });
 
@@ -168,7 +324,11 @@ void GUI::createMenuGui()
 
 	tgui::Button::Ptr creditsButton = tgui::Button::create("Credits");
 	creditsButton->setTextSize(50);
-	creditsButton->connect("pressed", [&]() { m_gui.get("CreditScreen")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100)); });
+	creditsButton->connect("pressed", [&]()
+	{
+		m_gui.get("CreditScreen")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100)); 
+		inCredits = true;
+	});
 
 	tgui::Button::Ptr quitButton = tgui::Button::create("Quit");	
 	quitButton->setTextSize(50);
@@ -177,10 +337,10 @@ void GUI::createMenuGui()
 	m_gui.add(panel);
 	m_gui.add(credits, "CreditScreen");
 	panel->add(label);
-	panel->add(layout);
-	layout->add(startButton);
-	layout->add(creditsButton);
-	layout->add(quitButton);
+	panel->add(layout,"menuButtons");
+	layout->add(startButton,"startButton");
+	layout->add(creditsButton,"creditsButton");
+	layout->add(quitButton,"quitButton");
 
 	layout->insertSpace(1, 0.15f);
 	layout->insertSpace(3, 0.15f);
@@ -227,12 +387,12 @@ void GUI::createGameplayGui()
 				m_gui.get("pausemenu")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
 				EventBus::getInstance().notify(engine::GAMECONTINUE, make_shared<GameEvent>());
 			});
-		layout->add(btn_continue);
+		layout->add(btn_continue,"btn_continue");
 
 		tgui::Button::Ptr btn_quit = tgui::Button::create("Give Up");
 		btn_quit->setTextSize(30);
 		btn_quit->connect("pressed", [&]() { EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>()); });
-		layout->add(btn_quit);
+		layout->add(btn_quit,"btn_quit");
 
 		layout->insertSpace(1, 0.3f);
 	}
@@ -262,7 +422,11 @@ void GUI::createGameplayGui()
 
 		tgui::Button::Ptr btn_quit = tgui::Button::create("Back to Menu");
 		btn_quit->setTextSize(30);
-		btn_quit->connect("pressed", [&]() { EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>()); });
+		btn_quit->connect("pressed", [&]()
+		{
+			EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
+			inGameOverMenu = false;
+		});
 		layout->add(btn_quit);
 
 		layout->insertSpace(1, 0.3f);
@@ -293,7 +457,11 @@ void GUI::createGameplayGui()
 
 		tgui::Button::Ptr btn_quit = tgui::Button::create("Back to Menu");
 		btn_quit->setTextSize(30);
-		btn_quit->connect("pressed", [&]() { EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>()); });
+		btn_quit->connect("pressed", [&]()
+		{
+			EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
+			inGameCompleteSceen = false;
+		});
 		layout->add(btn_quit);
 
 		layout->insertSpace(1, 0.3f);

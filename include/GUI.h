@@ -14,6 +14,7 @@ namespace engine
 		void init();
 		void init(GameplayState::StateType type);
 		void draw();
+		void update();
 
 		void onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent) override;
 
@@ -30,5 +31,11 @@ namespace engine
 
 		int m_hearts = 3;
 		float m_xDisplace;
+
+		bool inMenu = true;
+		bool inCredits = false;
+		bool inPauseMenu = false;
+		bool inGameOverMenu = false;
+		bool inGameCompleteSceen = false;
 	};
 }
