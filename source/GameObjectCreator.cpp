@@ -676,21 +676,21 @@ std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, 
 	enemy->addComponent(animComp);
 	enemy->addComponent(std::make_shared<CharacterMoveComponent>(enemy, id));
 
-	float elementOffset;
+	int elementOffset = 0;
 
 	switch (e)
 	{
 	case engine::Element::WATER:
-		elementOffset = 0.0f;
+		elementOffset = 0;
 		break;
 	case engine::Element::FIRE:
-		elementOffset = 360.0f;
+		elementOffset = 360;
 		break;
 	case engine::Element::AIR:
-		elementOffset = 720.0f;
+		elementOffset = 720;
 		break;
 	case engine::Element::EARTH:
-		elementOffset = 1080.0f;
+		elementOffset = 1080;
 		break;
 	default:
 		sf::err() << "Element not defined";
@@ -746,10 +746,10 @@ std::shared_ptr<GameObject> GameObjectCreator::createEnemy(sf::FloatRect& aabb, 
 
 	animComp->setAnimation("idle");
 
-	sf::Vector2f displacement(27, 65);
+	sf::Vector2f displacement(35, 65);
 
 	aabb.height -= 65;
-	aabb.width -= 57;
+	aabb.width -= 70;
 
 	auto rigidbody = std::make_shared<Rigidbody>(enemy, 1, false, false);
 	auto collider = std::make_shared<ColliderComponent>(enemy, aabb, false, displacement);
