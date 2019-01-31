@@ -29,4 +29,16 @@ void EnemyRoomCreator::createObjectsForEnemyRoom(std::vector<std::shared_ptr<Gam
 	sf::FloatRect rectE = sf::FloatRect(710, 410, 120, 128);
 	std::shared_ptr<GameObject> enemyEarth = GameObjectCreator::getInstance().createEnemy(rectE, engine::Element::EARTH, target, 4, sf::Vector2f(rectE.left, rectE.top));
 	room_objects.push_back(enemyEarth);
+
+	sf::Vector2f winSize{ 960, 704 };
+
+	int borderSize = 120;
+	int buttonWidth = 64;
+
+	float rangeX = winSize.x - 2 * borderSize;
+	float rangeY = winSize.y - 2 * borderSize;
+
+	sf::Vector2f position = sf::Vector2f(rangeX * 0.68 - buttonWidth / 2, rangeY * 0.75 - buttonWidth / 2);
+	std::shared_ptr<GameObject> button = GameObjectCreator::getInstance().createButtonForEnemyRiddle(position);
+	room_objects.push_back(button);
 }

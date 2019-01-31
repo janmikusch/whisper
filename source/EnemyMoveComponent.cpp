@@ -61,6 +61,8 @@ void EnemyMoveComponent::draw()
 void EnemyMoveComponent::init()
 {
 	m_parent->setPosition(m_initialPos);
+	m_isFighting = false;
+	m_state = AnimationState::IDLE;
 }
 
 void EnemyMoveComponent::dontCollide(sf::Vector2f& movement)
@@ -131,7 +133,6 @@ void EnemyMoveComponent::dontCollide(sf::Vector2f& movement)
 
 		if (PhysicsManager::getInstance().AABBvsAABB(charBoundingBox, otherBoundingBox, normal, penetration))
 		{
-			m_isFighting = false;
 			RoomManager::getInstance().resetCurrentRoom();
 			EventBus::getInstance().notify(engine::EventType::DAMAGETAKEN, std::shared_ptr<engine::GameEvent>());
 		}
