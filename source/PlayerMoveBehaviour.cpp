@@ -13,22 +13,22 @@ sf::Vector2f PlayerMoveBehaviour::getMovement()
 
 	sf::Vector2f movement{0,0};
 
-	if (im.isKeyPressed("Up", 0))
+	if (im.isKeyPressed("Up", 0) || im.getLeftJoystickAxis()== InputManager::StickDirection::UP)
 	{
 		movement.y -= 1;
 	}
 
-	if (im.isKeyPressed("Right", 0))
+	if (im.isKeyPressed("Right", 0) || im.getLeftJoystickAxis() == InputManager::StickDirection::RIGHT)
 	{
 		movement.x += 1;
 	}
 
-	if (im.isKeyPressed("Down", 0))
+	if (im.isKeyPressed("Down", 0) || im.getLeftJoystickAxis() == InputManager::StickDirection::DOWN)
 	{
 		movement.y += 1;
 	}
 
-	if (im.isKeyPressed("Left", 0))
+	if (im.isKeyPressed("Left", 0) || im.getLeftJoystickAxis() == InputManager::StickDirection::LEFT)
 	{
 		movement.x -= 1;
 	}

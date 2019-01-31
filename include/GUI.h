@@ -14,6 +14,7 @@ namespace engine
 		void init();
 		void init(GameplayState::StateType type);
 		void draw();
+		void update(const float fDeltaTimeSeconds);
 
 		void onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent) override;
 
@@ -30,5 +31,14 @@ namespace engine
 
 		int m_hearts = 3;
 		float m_xDisplace;
+
+		bool inMenu = true;
+		bool inCredits = false;
+		bool inPauseMenu = false;
+		bool inGameOverMenu = false;
+		bool inGameCompleteSceen = false;
+
+		const float timer_max = 300;
+		float timer = 0;
 	};
 }

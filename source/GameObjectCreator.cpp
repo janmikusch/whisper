@@ -383,7 +383,22 @@ std::shared_ptr<GameObject> GameObjectCreator::createFade(sf::Vector2f position)
 {
 	std::shared_ptr<GameObject> fader = std::make_shared<GameObject>(position, "fade");
 
-	fader->addComponent(std::make_shared<FadeComponent>(fader, Layer::FOREGROUND3));
+	auto fadeComp = std::make_shared<FadeComponent>(fader, Layer::FOREGROUND3);
+	fadeComp->setColor(sf::Color::Black);
+	fader->addComponent(fadeComp);
+	
+	return fader;
+}
+
+std::shared_ptr<GameObject> GameObjectCreator::createDmgFade(sf::Vector2f position)
+{
+	std::shared_ptr<GameObject> fader = std::make_shared<GameObject>(position, "fade");
+
+	auto fadeComp = std::make_shared<FadeComponent>(fader, Layer::FOREGROUND3);
+	fadeComp->setColor(sf::Color::Red);
+	fadeComp->addToEventBus(engine::EventType::DAMAGETAKEN);
+	fader->addComponent(fadeComp);
+
 	return fader;
 }
 
