@@ -31,9 +31,11 @@ protected:
 	int m_id; 
 	float m_timer = 0.0f;
 	std::vector<std::shared_ptr<GameObject>> m_enemies;
-	std::vector<std::shared_ptr<GameObject>>::iterator nextEnemy;
+	std::vector<int>::iterator nextEnemy;
 
 	bool enemiesLoaded;
 
 	bool areAttacking;
+
+	std::vector<int> enemySequence;
 };

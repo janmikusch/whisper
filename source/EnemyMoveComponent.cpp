@@ -175,6 +175,7 @@ void EnemyMoveComponent::setStandingAnimation()
 {
 	auto animComponent = m_parent->getComponent<AnimationComponent>();
 	animComponent->setAnimation("stand");
+	m_state = AnimationState::STAND;
 }
 
 void EnemyMoveComponent::setIdle()
@@ -182,4 +183,5 @@ void EnemyMoveComponent::setIdle()
 	auto animComponent = m_parent->getComponent<AnimationComponent>();
 	animComponent->setAnimation("idle");
 	m_isFighting = false;
+	m_state = AnimationState::IDLE;
 }

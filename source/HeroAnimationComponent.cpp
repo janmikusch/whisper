@@ -137,7 +137,11 @@ std::shared_ptr<GameObject> HeroAnimationComponent::checkCollisionsWithEnemies(s
 		float p;
 
 		if (PhysicsManager::getInstance().AABBvsAABB(aabb, o->getComponent<ColliderComponent>()->getShape(), n, p))
-			return o;
+		{
+			if(o->getComponent<EnemyMoveComponent>()->getState() == EnemyMoveComponent::AnimationState::WALK)
+				return o;
+		}
+			
 	}
 	return nullptr;
 }
