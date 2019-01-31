@@ -17,6 +17,8 @@ public:
 	explicit ButtonForEnemyRiddleComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, engine::Color c, int id);
 
 	void onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> event) override;
+	void update(const float fDeltaTimeSeconds) override;
+	void init() override;
 
 protected:
 	sf::Sprite m_buttonPressed;
@@ -25,4 +27,7 @@ protected:
 	engine::Color m_color;
 	bool m_isPressed = false; 
 	int m_id; 
+	float m_timer = 0.0f;
+	std::vector<std::shared_ptr<GameObject>> m_enemies;
+	std::vector<std::shared_ptr<GameObject>>::iterator nextEnemy;
 };
