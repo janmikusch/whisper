@@ -8,6 +8,8 @@
 #include "EnemyMoveComponent.h"
 #include <random>
 #include <chrono>
+#include "RandomNumber.h"
+#include "AudioManager.h"
 
 ButtonForEnemyRiddleComponent::ButtonForEnemyRiddleComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, engine::Color c, int id) :
 	ButtonComponent(parent, layer, texture, c, id)
@@ -24,10 +26,14 @@ ButtonForEnemyRiddleComponent::ButtonForEnemyRiddleComponent(std::shared_ptr<Gam
 
 void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> gameEvent)
 {
+	ButtonComponent::onNotify(collidedWith, gameEvent);
+
 	if (collidedWith.getName() != "hero")
 		return;
 
-	ButtonComponent::onNotify(collidedWith, gameEvent);
+	if (RoomManager::getInstance().getCurrentRoom()->isCompleted())
+		return;
+
 	auto cge = std::static_pointer_cast<engine::CollisionGameEvent>(gameEvent);
 
 	if (cge != nullptr && cge->type == engine::CollisionGameEvent::CollisionType::ENTER)
@@ -53,6 +59,9 @@ void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std
 	}
 	if (cge != nullptr && cge->type == engine::CollisionGameEvent::CollisionType::EXIT)
 	{
+		if (areAttacking)
+			return;
+
 		for (auto o : RoomManager::getInstance().getCurrentRoomObjects())
 		{
 			if (o->getName() == "enemy")
@@ -83,9 +92,27 @@ void ButtonForEnemyRiddleComponent::update(const float fDeltaTimeSeconds)
 			m_timer = 0;
 			nextEnemy++;
 
-			if (nextEnemy == spawningSequence.end())
+
+			int i = engine::Random::getIntBetween(0, 9);
+			switch (i)
 			{
-				areAttacking = true;
+			case 0:
+				AudioManager::getInstance().playSound("enemySpawn1");
+				break;
+			case 1:
+				AudioManager::getInstance().playSound("enemySpawn2");
+				break;
+			case 2:
+				AudioManager::getInstance().playSound("enemySpawn3");
+				break;
+			case 3:
+				AudioManager::getInstance().playSound("enemySpawn4");
+				break;
+			case 4:
+				AudioManager::getInstance().playSound("enemySpawn5");
+				break;
+			default:
+				AudioManager::getInstance().playSound("enemySpawn6");
 			}
 
 		}
@@ -115,7 +142,29 @@ void ButtonForEnemyRiddleComponent::enemyAttacked(std::shared_ptr<GameObject> en
 		{
 			nextEnemy++;
 			if(nextEnemy == attackingSequence.end())
-				EventBus::getInstance().notify(engine::EventType::ROOMUNLOCKED, std::shared_ptr<engine::GameEvent>());			
+				EventBus::getInstance().notify(engine::EventType::ROOMUNLOCKED, std::shared_ptr<engine::GameEvent>());
+
+			int i = engine::Random::getIntBetween(0, 9);
+			switch (i)
+			{
+			case 0:
+				AudioManager::getInstance().playSound("enemyHit1");
+				break;
+			case 1:
+				AudioManager::getInstance().playSound("enemyHit2");
+				break;
+			case 2:
+				AudioManager::getInstance().playSound("enemyHit3");
+				break;
+			case 3:
+				AudioManager::getInstance().playSound("enemyHit4");
+				break;
+			case 4:
+				AudioManager::getInstance().playSound("enemyHit5");
+				break;
+			default:
+				AudioManager::getInstance().playSound("enemyHit6");
+			}
 		}
 		else
 		{

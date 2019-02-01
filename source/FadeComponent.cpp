@@ -28,7 +28,7 @@ void FadeComponent::init()
 {
 	m_rect.setFillColor(sf::Color{ m_rect.getFillColor().r,m_rect.getFillColor().g,m_rect.getFillColor().b,255 });
 
-	m_alpha = 255.0f;
+	m_alpha = 0.0f;
 }
 
 void FadeComponent::setPosition(const sf::Vector2f& position)
@@ -69,6 +69,11 @@ void FadeComponent::rotate(float angle)
 void FadeComponent::setColor(sf::Color c)
 {
 	m_rect.setFillColor(c);
+}
+
+void FadeComponent::setAlpha(float a)
+{
+	m_alpha = a;
 }
 
 void FadeComponent::setSpeed(float speed)

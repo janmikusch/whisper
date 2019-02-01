@@ -21,6 +21,8 @@ HeroAnimationComponent::HeroAnimationComponent(std::shared_ptr<GameObject> paren
 
 void HeroAnimationComponent::update( const float fDeltaTimeSeconds)
 {
+
+
 	m_frameTime = m_frameClock.restart();
 	std::vector<std::shared_ptr<GameObject>> roomObjects = RoomManager::getInstance().getCurrentRoomObjects();
 

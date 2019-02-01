@@ -65,7 +65,7 @@ void AnimatedSprite::pause()
 void AnimatedSprite::stop()
 {
 	m_isPaused = true;
-	m_currentFrame = 0;
+	m_currentFrame = m_animation->getSize()-1;
 	setFrame(m_currentFrame);
 }
 

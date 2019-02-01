@@ -123,6 +123,7 @@ bool Game::init()
 	
 	//sm.playSound("testSound");
 	sm.setMusic("backgroundMusic");
+	sm.setLoop(true);
 
 	return true;
 }

@@ -72,10 +72,10 @@ void ButtonComponent::rotate(float angle)
 
 void ButtonComponent::onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> gameEvent)
 {
-	if(collidedWith.getName() != "hero")
+	/*if(collidedWith.getName() != "hero")
 	{
 		return;
-	}
+	}*/
 
 	std::shared_ptr<engine::CollisionGameEvent> cge = std::static_pointer_cast<engine::CollisionGameEvent>(gameEvent);
 

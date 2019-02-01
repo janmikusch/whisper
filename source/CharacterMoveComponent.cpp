@@ -29,7 +29,22 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 
 	setMoveBehaviour();
 
-	if(m_moveBehaviour && RoomManager::getInstance().getLives() > 0)
+	if (RoomManager::getInstance().getLives() == 0 )
+	{
+		if (!m_isDead)
+		{
+			m_state = AnimationState::DEATH;
+			animComponent->setAnimation("death");
+			m_isDead = true;
+		}
+
+		if (animComponent->isFinished())
+		{
+			animComponent->stop();
+			m_state = AnimationState::ISDEAD;
+		}
+	}
+	else if(m_moveBehaviour && RoomManager::getInstance().getLives() > 0)
 	{	
 		if (m_state != AnimationState::ATTACK)
 		{
@@ -54,7 +69,7 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 				setStandingAnimation();
 			}
 
-			if (im.isKeyPressed("Attack", 0) || im.isJoystickButtonPressed(InputManager::JoystickButton::A) || im.isJoystickButtonPressed(InputManager::JoystickButton::B))
+			if (im.isKeyPressed("Attack", 0) || im.isJoystickButtonPressed(InputManager::JoystickButton::B))
 			{
           				setFightAnimation();
 
@@ -99,6 +114,7 @@ void CharacterMoveComponent::init()
 	{
 		m_moveBehaviour = std::make_shared<PlayerMoveBehaviour>(PlayerMoveBehaviour{});
 	}
+	m_isDead = false;
 }
 
 /// set MoveBehaviour if toggle Button is Pressed

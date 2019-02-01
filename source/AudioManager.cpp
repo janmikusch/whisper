@@ -5,6 +5,7 @@
 #include "AssetsManager.h"
 #include "RandomNumber.h"
 #include "RoomManager.h"
+#include <immintrin.h>
 
 AudioManager::AudioManager():m_volume(100.0f)
 {
@@ -76,6 +77,11 @@ void AudioManager::stopMusic()
 	m_music.stop();
 }
 
+void AudioManager::setLoop(bool b)
+{
+	m_music.setLoop(b);
+}
+
 void AudioManager::pauseMusic()
 {
 	m_music.stop();
@@ -127,6 +133,16 @@ void AudioManager::onNotify(engine::EventType type, std::shared_ptr<engine::Game
 	if(type==engine::EventType::ROOMUNLOCKED)
 	{
 		
+	}
+	if(type==engine::EventType::GAMECOMPLETE)
+	{
+		setMusic("victoryMusic");
+		m_music.setLoop(false);
+	}
+	if(type==engine::EventType::GAMEQUIT)
+	{
+		setMusic("backgroundMusic");
+		m_music.setLoop(true);
 	}
 	if(type==engine::EventType::GAMEOVER)
 	{
@@ -183,4 +199,6 @@ void AudioManager::init()
 	EventBus::getInstance().addObserver(engine::EventType::DAMAGETAKEN, this);
 	EventBus::getInstance().addObserver(engine::EventType::GAMEOVER, this);
 	EventBus::getInstance().addObserver(engine::EventType::ROOMUNLOCKED, this);
+	EventBus::getInstance().addObserver(engine::EventType::GAMEQUIT, this);
+	EventBus::getInstance().addObserver(engine::EventType::GAMECOMPLETE, this);
 }

@@ -8,7 +8,7 @@ class CharacterMoveComponent: public Component
 {
 public:
 	enum Direction { UP, DOWN, LEFT, RIGHT };
-	enum AnimationState { WALK, STAND, ATTACK};
+	enum AnimationState { WALK, STAND, ATTACK, DEATH, ISDEAD};
 
 	explicit CharacterMoveComponent(const std::shared_ptr<GameObject>& parent, int character_id = 1);
 
@@ -27,4 +27,5 @@ private:
 	std::shared_ptr<CharacterMoveBehaviour> m_moveBehaviour;
 	int m_characterId;
 	AnimationState m_state;
+	bool m_isDead = false;
 };
