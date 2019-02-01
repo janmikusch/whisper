@@ -13,6 +13,7 @@
 #include "TorchRoomCreator.h"
 #include "LabyrinthCreator.h"
 #include "EnemyRoomCreator.h"
+#include <stdbool.h>
 
 RoomManager::RoomManager() :EventObserver()
 {
@@ -88,10 +89,94 @@ void RoomManager::createRooms()
 	roomObjects_11.push_back(fader);
 	roomObjects_12.push_back(fader);
 
-	ButtonRoomCreator::createObjectsForButtonRoom(roomObjects_00, engine::Random::getIntBetween(3,6));
-	TorchRoomCreator::createObjectsForTorchRoom(roomObjects_02);
-	LabyrinthCreator::createObjectsForLabyrinthRoom(roomObjects_12);
-	EnemyRoomCreator::createObjectsForEnemyRoom(roomObjects_11);
+	int i;
+
+	//create random rooms
+	i = engine::Random::getIntBetween(0, 3);
+
+	switch (i)
+	{
+	case 0:
+		ButtonRoomCreator::createObjectsForButtonRoom(roomObjects_00, engine::Random::getIntBetween(3, 6));
+		break;
+	case 1:
+		TorchRoomCreator::createObjectsForTorchRoom(roomObjects_00);
+		break;
+	case 2:
+		LabyrinthCreator::createObjectsForLabyrinthRoom(roomObjects_00);
+		break;
+	default:
+		EnemyRoomCreator::createObjectsForEnemyRoom(roomObjects_00);
+	}
+
+	i = engine::Random::getIntBetween(0, 3);
+
+	switch (i)
+	{
+	case 0:
+		ButtonRoomCreator::createObjectsForButtonRoom(roomObjects_02, engine::Random::getIntBetween(3, 6));
+		break;
+	case 1:
+		TorchRoomCreator::createObjectsForTorchRoom(roomObjects_02);
+		break;
+	case 2:
+		LabyrinthCreator::createObjectsForLabyrinthRoom(roomObjects_02);
+		break;
+	default:
+		EnemyRoomCreator::createObjectsForEnemyRoom(roomObjects_02);
+	}
+
+	i = engine::Random::getIntBetween(0, 3);
+
+	switch (i)
+	{
+	case 0:
+		ButtonRoomCreator::createObjectsForButtonRoom(roomObjects_10, engine::Random::getIntBetween(3, 6));
+		break;
+	case 1:
+		TorchRoomCreator::createObjectsForTorchRoom(roomObjects_10);
+		break;
+	case 2:
+		LabyrinthCreator::createObjectsForLabyrinthRoom(roomObjects_10);
+		break;
+	default:
+		EnemyRoomCreator::createObjectsForEnemyRoom(roomObjects_10);
+	}
+
+	i = engine::Random::getIntBetween(0, 3);
+
+	switch (i)
+	{
+	case 0:
+		ButtonRoomCreator::createObjectsForButtonRoom(roomObjects_11, engine::Random::getIntBetween(3, 6));
+		break;
+	case 1:
+		TorchRoomCreator::createObjectsForTorchRoom(roomObjects_11);
+		break;
+	case 2:
+		LabyrinthCreator::createObjectsForLabyrinthRoom(roomObjects_11);
+		break;
+	default:
+		EnemyRoomCreator::createObjectsForEnemyRoom(roomObjects_11);
+	}
+
+	i = engine::Random::getIntBetween(0, 3);
+
+	switch (i)
+	{
+	case 0:
+		ButtonRoomCreator::createObjectsForButtonRoom(roomObjects_12, engine::Random::getIntBetween(3, 6));
+		break;
+	case 1:
+		TorchRoomCreator::createObjectsForTorchRoom(roomObjects_12);
+		break;
+	case 2:
+		LabyrinthCreator::createObjectsForLabyrinthRoom(roomObjects_12);
+		break;
+	default:
+		EnemyRoomCreator::createObjectsForEnemyRoom(roomObjects_12);
+	}
+
 
 
 	room_00->setRoomObjects(roomObjects_00);
