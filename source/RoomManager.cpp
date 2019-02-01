@@ -92,7 +92,7 @@ void RoomManager::createRooms()
 	int i;
 
 	//create random rooms
-	i = 3;//engine::Random::getIntBetween(0, 3);
+	i = engine::Random::getIntBetween(0, 3);
 
 	switch (i)
 	{
