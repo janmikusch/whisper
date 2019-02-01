@@ -26,10 +26,14 @@ ButtonForEnemyRiddleComponent::ButtonForEnemyRiddleComponent(std::shared_ptr<Gam
 
 void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std::shared_ptr<engine::GameEvent> gameEvent)
 {
+	ButtonComponent::onNotify(collidedWith, gameEvent);
+
 	if (collidedWith.getName() != "hero")
 		return;
 
-	ButtonComponent::onNotify(collidedWith, gameEvent);
+	if (RoomManager::getInstance().getCurrentRoom()->isCompleted())
+		return;
+
 	auto cge = std::static_pointer_cast<engine::CollisionGameEvent>(gameEvent);
 
 	if (cge != nullptr && cge->type == engine::CollisionGameEvent::CollisionType::ENTER)
@@ -55,6 +59,9 @@ void ButtonForEnemyRiddleComponent::onNotify(const GameObject& collidedWith, std
 	}
 	if (cge != nullptr && cge->type == engine::CollisionGameEvent::CollisionType::EXIT)
 	{
+		if (areAttacking)
+			return;
+
 		for (auto o : RoomManager::getInstance().getCurrentRoomObjects())
 		{
 			if (o->getName() == "enemy")
@@ -106,11 +113,6 @@ void ButtonForEnemyRiddleComponent::update(const float fDeltaTimeSeconds)
 				break;
 			default:
 				AudioManager::getInstance().playSound("enemySpawn6");
-			}
-
-			if (nextEnemy == spawningSequence.end())
-			{
-				areAttacking = true;
 			}
 
 		}
