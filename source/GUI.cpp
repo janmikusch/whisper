@@ -251,8 +251,22 @@ void GUI::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> ga
 	if(type == engine::EventType::ROOMCOUNTCHANGED)
 	{
 		int count = RoomManager::getInstance().countNotCompleted();
-		std::string text = "Rooms left: ";
-		m_gui.get<tgui::Label>("roomsleft")->setText(text + std::to_string(count));
+		sf::Texture& keyTexture = TextureManager::getInstance().getTexture("key_t.png");
+
+		switch (count)
+		{
+		case 0:
+			m_gui.get<tgui::Picture>("lock1")->getRenderer()->setTexture(keyTexture);
+		case 1:
+			m_gui.get<tgui::Picture>("lock2")->getRenderer()->setTexture(keyTexture);
+		case 2:
+			m_gui.get<tgui::Picture>("lock3")->getRenderer()->setTexture(keyTexture);
+		case 3:
+			m_gui.get<tgui::Picture>("lock4")->getRenderer()->setTexture(keyTexture);
+		case 4:
+			m_gui.get<tgui::Picture>("lock5")->getRenderer()->setTexture(keyTexture);
+		}
+
 	}
 
 }
@@ -494,25 +508,45 @@ void GUI::createGameplayGui()
 	heart->setPosition({ "5%", "2%" });
 	panel->add(heart,"heart1");
 
-	TextureManager::getInstance().loadTexture("heart.png");
 	tgui::Picture::Ptr heart2 = tgui::Picture::create(heartTexture);
 	heart2->setPosition({ "5% + width * 1", "2%" });
 	panel->add(heart2, "heart2");
 
-	TextureManager::getInstance().loadTexture("heart.png");
 	tgui::Picture::Ptr heart3 = tgui::Picture::create(heartTexture);
 	heart3->setPosition({ "5% + width * 2", "2%" });
 	panel->add(heart3, "heart3");
 
-	tgui::Label::Ptr rooms = tgui::Label::create("Rooms left: 5");
-	rooms->setTextSize(30);
-	rooms->setPosition({ "95% - width", "2%" });
-	panel->add(rooms, "roomsleft");
+
+
+	TextureManager::getInstance().loadTexture("key_t.png");
+	TextureManager::getInstance().loadTexture("lock_t.png");
+	sf::Texture& lockTexture = TextureManager::getInstance().getTexture("lock_t.png");
+
+	tgui::Picture::Ptr lock1 = tgui::Picture::create(lockTexture);
+	lock1->setPosition({ "95% - width * 0", "2%" });
+	panel->add(lock1, "lock1");
+
+	tgui::Picture::Ptr lock2 = tgui::Picture::create(lockTexture);
+	lock2->setPosition({ "95% - width * 1", "2%" });
+	panel->add(lock2, "lock2");
+
+	tgui::Picture::Ptr lock3 = tgui::Picture::create(lockTexture);
+	lock3->setPosition({ "95% - width * 2", "2%" });
+	panel->add(lock3, "lock3");
+
+	tgui::Picture::Ptr lock4 = tgui::Picture::create(lockTexture);
+	lock4->setPosition({ "95% - width * 3", "2%" });
+	panel->add(lock4, "lock4");
+
+	tgui::Picture::Ptr lock5 = tgui::Picture::create(lockTexture);
+	lock5->setPosition({ "95% - width * 4", "2%" });
+	panel->add(lock5, "lock5");
+
 
 
 	//Timer
 	tgui::Label::Ptr timerLabel = tgui::Label::create("XX");
-	timerLabel->setPosition({ "95% - width", "4% + height" });
-	timerLabel->setTextSize(30);
+	timerLabel->setPosition({ "5%", "5% + height" });
+	timerLabel->setTextSize(40);
 	panel->add(timerLabel, "timer");
 }

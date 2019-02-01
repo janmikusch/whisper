@@ -3,6 +3,7 @@
 #include "GameObjectManager.h"
 #include "EventBus.h"
 #include "AudioManager.h"
+#include "FadeComponent.h"
 
 Room::Room(std::string name): m_name(name),m_completed(false)
 {
@@ -81,6 +82,10 @@ void Room::addRoomObjectsToGame()
 	{
 		it->init();
 		gom.add(it);
+		if(it->getName()=="roomFader")
+		{
+			it->getComponent<FadeComponent>()->setAlpha(255);
+		}
 	}
 }
 
