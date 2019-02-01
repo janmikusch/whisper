@@ -214,6 +214,24 @@ std::shared_ptr<GameObject> GameObjectCreator::createCharacter(sf::FloatRect& aa
 
 	animComp->addAnimation(fightRight, "fightRight");
 
+
+	Animation death;
+	death.setSpriteSheet(texture);
+	death.addFrame(sf::IntRect(0, 1280, 64, 64));
+	death.addFrame(sf::IntRect(64, 1280, 64, 64));
+	death.addFrame(sf::IntRect(128, 1280, 64, 64));
+	death.addFrame(sf::IntRect(192, 1280, 64, 64));
+	death.addFrame(sf::IntRect(256, 1280, 64, 64));
+	death.addFrame(sf::IntRect(320, 1280, 64, 64));
+
+	animComp->addAnimation(death, "death");
+
+
+	Animation isDead;
+	isDead.setSpriteSheet(texture);
+	isDead.addFrame(sf::IntRect(320, 1280, 64, 64));
+
+	animComp->addAnimation(isDead, "isDead");
 	animComp->setAnimation("standingDown");
 
 	sf::Vector2f displacement(18, 40);
