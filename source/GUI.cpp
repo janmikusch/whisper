@@ -7,6 +7,7 @@
 #include "RoomManager.h"
 #include "InputManager.h"
 #include <stdbool.h>
+#include "AudioManager.h"
 
 using namespace engine;
 
@@ -68,16 +69,19 @@ void GUI::update(const float fDeltaTimeSeconds)
 			{
 				auto con = m_gui.get<tgui::Container>("CreditScreen");
 				con->focusNextWidget();
+				AudioManager::getInstance().playSound("guiButton");
 			}
 			else if (stickDir == InputManager::StickDirection::UP)
 			{
 				auto con = m_gui.get<tgui::Container>("CreditScreen");
 				con->focusPreviousWidget();
+				AudioManager::getInstance().playSound("guiButton");
 			}
 			if(InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
 			{
 				m_gui.get("CreditScreen")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
 				inCredits = false;
+				AudioManager::getInstance().playSound("guiButton");
 			}
 		}
 		else
@@ -86,17 +90,21 @@ void GUI::update(const float fDeltaTimeSeconds)
 			{
 				auto con = m_gui.get<tgui::Container>("menuButtons");
 				con->focusNextWidget();
+				AudioManager::getInstance().playSound("guiButton");
 			}
 			else if (stickDir == InputManager::StickDirection::UP)
 			{
 				auto con = m_gui.get<tgui::Container>("menuButtons");
 				con->focusPreviousWidget();
+				AudioManager::getInstance().playSound("guiButton");
 			}
 			else if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
 			{
 				tgui::Button::Ptr startButton = m_gui.get<tgui::Button>("startButton");
 				tgui::Button::Ptr creditsButton = m_gui.get<tgui::Button>("creditsButton");
 				tgui::Button::Ptr quitButton = m_gui.get<tgui::Button>("quitButton");
+
+				AudioManager::getInstance().playSound("guiButton");
 
 				if(startButton->isFocused())
 				{
@@ -124,11 +132,13 @@ void GUI::update(const float fDeltaTimeSeconds)
 			{
 				auto con = m_gui.get<tgui::Container>("pausemenu");
 				con->focusNextWidget();
+				AudioManager::getInstance().playSound("guiButton");
 			}
 			else if (stickDir == InputManager::StickDirection::UP)
 			{
 				auto con = m_gui.get<tgui::Container>("pausemenu");
 				con->focusPreviousWidget();
+				AudioManager::getInstance().playSound("guiButton");
 			}
 			if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
 			{
@@ -146,11 +156,13 @@ void GUI::update(const float fDeltaTimeSeconds)
 					m_gui.get("pausemenu")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
 					EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
 				}
+				AudioManager::getInstance().playSound("guiButton");
 			}
 			else if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::START))
 			{
 				m_gui.get("pausemenu")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
 				inPauseMenu = false;
+				AudioManager::getInstance().playSound("guiButton");
 			}
 
 		}
@@ -160,17 +172,20 @@ void GUI::update(const float fDeltaTimeSeconds)
 			{
 				auto con = m_gui.get<tgui::Container>("gameover");
 				con->focusNextWidget();
+				AudioManager::getInstance().playSound("guiButton");
 			}
 			else if (stickDir == InputManager::StickDirection::UP)
 			{
 				auto con = m_gui.get<tgui::Container>("gameover");
 				con->focusPreviousWidget();
+				AudioManager::getInstance().playSound("guiButton");
 			}
 			if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
 			{
 				m_gui.get("gameover")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
 				inGameOverMenu = false;
 				EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
+				AudioManager::getInstance().playSound("guiButton");
 			}
 		}
 		else if(inGameCompleteSceen)
@@ -179,17 +194,20 @@ void GUI::update(const float fDeltaTimeSeconds)
 			{
 				auto con = m_gui.get<tgui::Container>("gamecomplete");
 				con->focusNextWidget();
+				AudioManager::getInstance().playSound("guiButton");
 			}
 			else if (stickDir == InputManager::StickDirection::UP)
 			{
 				auto con = m_gui.get<tgui::Container>("gamecomplete");
 				con->focusPreviousWidget();
+				AudioManager::getInstance().playSound("guiButton");
 			}
 			if (InputManager::getInstance().isJoystickButtonDown(InputManager::JoystickButton::A))
 			{
 				m_gui.get("gamecomplete")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
 				inGameCompleteSceen = false;
 				EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
+				AudioManager::getInstance().playSound("guiButton");
 			}
 		}
 		else
@@ -304,6 +322,7 @@ void GUI::createMenuGui()
 	creditsClose->setPosition({ "98% - width", "2%" });
 	creditsClose->connect("pressed", [&]()
 	{
+		AudioManager::getInstance().playSound("guiButton");
 		m_gui.get("CreditScreen")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100));
 		inCredits = false;
 	});
@@ -353,19 +372,28 @@ void GUI::createMenuGui()
 
 	tgui::Button::Ptr startButton = tgui::Button::create("Start");
 	startButton->setTextSize(50);
-	startButton->connect("pressed", [&]() { EventBus::getInstance().notify(engine::GAMESTART, make_shared<GameEvent>()); });
+	startButton->connect("pressed", [&]() 
+		{
+		AudioManager::getInstance().playSound("guiButton"); 
+		EventBus::getInstance().notify(engine::GAMESTART, make_shared<GameEvent>()); 
+		});
 
 	tgui::Button::Ptr creditsButton = tgui::Button::create("Credits");
 	creditsButton->setTextSize(50);
 	creditsButton->connect("pressed", [&]()
 	{
+		AudioManager::getInstance().playSound("guiButton");
 		m_gui.get("CreditScreen")->showWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(100)); 
 		inCredits = true;
 	});
 
 	tgui::Button::Ptr quitButton = tgui::Button::create("Quit");	
 	quitButton->setTextSize(50);
-	quitButton->connect("pressed", [&]() { engine::Window::getInstance().getWindow()->close(); });
+	quitButton->connect("pressed", [&]()
+	{
+		AudioManager::getInstance().playSound("guiButton");
+		engine::Window::getInstance().getWindow()->close();
+	});
 
 	m_gui.add(panel);
 	m_gui.add(credits, "CreditScreen");
@@ -418,6 +446,7 @@ void GUI::createGameplayGui()
 		btn_continue->setTextSize(30);
 		btn_continue->connect("pressed", [&]()
 			{
+				AudioManager::getInstance().playSound("guiButton");
 				m_gui.get("pausemenu")->hideWithEffect(tgui::ShowAnimationType::Fade, sf::milliseconds(10));
 				EventBus::getInstance().notify(engine::GAMECONTINUE, make_shared<GameEvent>());
 			});
@@ -425,7 +454,11 @@ void GUI::createGameplayGui()
 
 		tgui::Button::Ptr btn_quit = tgui::Button::create("Give Up");
 		btn_quit->setTextSize(30);
-		btn_quit->connect("pressed", [&]() { EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>()); });
+		btn_quit->connect("pressed", [&]()
+		{
+			AudioManager::getInstance().playSound("guiButton");
+			EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
+		});
 		layout->add(btn_quit,"btn_quit");
 
 		layout->insertSpace(1, 0.3f);
@@ -458,6 +491,7 @@ void GUI::createGameplayGui()
 		btn_quit->setTextSize(30);
 		btn_quit->connect("pressed", [&]()
 		{
+			AudioManager::getInstance().playSound("guiButton");
 			EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
 			inGameOverMenu = false;
 		});
@@ -493,6 +527,7 @@ void GUI::createGameplayGui()
 		btn_quit->setTextSize(30);
 		btn_quit->connect("pressed", [&]()
 		{
+			AudioManager::getInstance().playSound("guiButton");
 			EventBus::getInstance().notify(engine::GAMEQUIT, make_shared<GameEvent>());
 			inGameCompleteSceen = false;
 		});
