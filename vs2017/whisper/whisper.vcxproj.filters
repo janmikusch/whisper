@@ -521,14 +521,14 @@
     <ClInclude Include="..\..\include\Element.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\EnemyMoveComponent.h">
-      <Filter>Header Files\GameObject\Components\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\EnemyRoomCreator.h">
       <Filter>Header Files\Room</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\ButtonForEnemyRiddleComponent.h">
       <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\EnemyMoveComponent.h">
+      <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -54,7 +54,7 @@ void CharacterMoveComponent::update(const float fDeltaTimeSeconds)
 				setStandingAnimation();
 			}
 
-			if (im.isKeyPressed("Attack", 0) || im.isJoystickButtonPressed(InputManager::JoystickButton::A) || im.isJoystickButtonPressed(InputManager::JoystickButton::B))
+			if (im.isKeyPressed("Attack", 0) || im.isJoystickButtonPressed(InputManager::JoystickButton::B))
 			{
           				setFightAnimation();
 

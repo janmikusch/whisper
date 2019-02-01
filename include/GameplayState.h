@@ -16,4 +16,5 @@ public:
 	void pause(bool b) { m_pause = b; };
 private:
 	bool m_pause;
+	double playTime = 0;
 };

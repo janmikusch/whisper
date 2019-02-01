@@ -25,6 +25,7 @@ public:
 	void rotate(float angle) override;
 
 	void setColor(sf::Color c);
+	void setAlpha(float a);;
 	void setSpeed(float speed);
 	void onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent) override;
 	void addToEventBus(engine::EventType e);
