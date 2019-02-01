@@ -56,6 +56,7 @@ public:
 	sf::Time getFrameTime() const;
 	void setFrame(std::size_t newFrame, bool resetTime = true);
 	bool isFinished() { return m_isFinished; };
+	std::size_t getCurrentFrame() { return m_currentFrame; };
 
 private:
 	const Animation* m_animation;

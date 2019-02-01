@@ -34,6 +34,8 @@ public:
 
 	bool isFinished() { return m_animatedSprite.isFinished(); };
 
+	void stop() { m_animatedSprite.stop(); };
+
 protected:
 	sf::Clock m_frameClock;
 	sf::Time m_frameTime;
