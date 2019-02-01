@@ -22,11 +22,11 @@ public:
 	int getLives() { return m_lives; };
 	std::vector<std::shared_ptr<GameObject>> getCurrentRoomObjects() { return m_currentRoom->getRoomObjects(); };
 	void resetCurrentRoom();
+
 private:
 	RoomManager();
 
 	std::shared_ptr<Room> m_currentRoom;
 	std::vector<std::shared_ptr<Room>> m_rooms{};
 
-	int m_lives = 3;
-};
+	int m_lives = 3;};
