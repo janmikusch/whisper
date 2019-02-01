@@ -22,6 +22,21 @@
 		<item name="attack5" file="attack_voice\voice_female_c_attack_05.wav" />
 		<item name="attack6" file="attack_voice\voice_female_c_attack_06.wav" />
 		
+		<item name="enemySpawn1" file="enemy_spawn\goblin_fairy_attack_special_01.wav" />
+		<item name="enemySpawn2" file="enemy_spawn\goblin_fairy_attack_special_02.wav" />
+		<item name="enemySpawn3" file="enemy_spawn\goblin_fairy_attack_special_03.wav" />
+		<item name="enemySpawn4" file="enemy_spawn\goblin_fairy_attack_special_04.wav" />
+		<item name="enemySpawn5" file="enemy_spawn\goblin_fairy_attack_special_05.wav" />
+		<item name="enemySpawn6" file="enemy_spawn\goblin_fairy_attack_special_06.wav" />
+		
+		
+		<item name="enemyHit1" file="enemy_hit\voice_fun_creature_small_mutant_voice_emotes_01.wav" />
+		<item name="enemyHit2" file="enemy_hit\voice_fun_creature_small_mutant_voice_emotes_02.wav" />
+		<item name="enemyHit3" file="enemy_hit\voice_fun_creature_small_mutant_voice_emotes_03.wav" />
+		<item name="enemyHit4" file="enemy_hit\voice_fun_creature_small_mutant_voice_emotes_04.wav" />
+		<item name="enemyHit5" file="enemy_hit\voice_fun_creature_small_mutant_voice_emotes_05.wav" />
+		<item name="enemyHit6" file="enemy_hit\voice_fun_creature_small_mutant_voice_emotes_06.wav" />
+		
 		<item name="igniteFlame" file="gas_med_flame_ignite_02.wav" />
 		<item name="extinguishFlame" file="fuse_stop_burn_out_bomb_dynamite_02.wav" />
 		<item name="pressButton" file="switch_button_push_on_off_23.wav" />

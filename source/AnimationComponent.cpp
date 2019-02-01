@@ -97,10 +97,12 @@ void AnimationComponent::draw()
 	}
 
 	engine::Window::getInstance().getWindow()->draw(m_animatedSprite);
-	//RenderManagerInstance.AddRenderable(m_layer,SpriteRenderer{&m_sprite});
+
+#ifdef _DEBUG
 	sf::VertexArray lines(sf::Points, 1);
 	lines.append(sf::Vertex{ m_parent->getPosition() });
 	engine::Window::getInstance().getWindow()->draw(lines);
+#endif
 }
 
 void AnimationComponent::setLoop(bool loop)

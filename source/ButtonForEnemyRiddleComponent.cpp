@@ -8,6 +8,8 @@
 #include "EnemyMoveComponent.h"
 #include <random>
 #include <chrono>
+#include "RandomNumber.h"
+#include "AudioManager.h"
 
 ButtonForEnemyRiddleComponent::ButtonForEnemyRiddleComponent(std::shared_ptr<GameObject> parent, Layer layer, sf::Texture& texture, engine::Color c, int id) :
 	ButtonComponent(parent, layer, texture, c, id)
@@ -83,6 +85,29 @@ void ButtonForEnemyRiddleComponent::update(const float fDeltaTimeSeconds)
 			m_timer = 0;
 			nextEnemy++;
 
+
+			int i = engine::Random::getIntBetween(0, 9);
+			switch (i)
+			{
+			case 0:
+				AudioManager::getInstance().playSound("enemySpawn1");
+				break;
+			case 1:
+				AudioManager::getInstance().playSound("enemySpawn2");
+				break;
+			case 2:
+				AudioManager::getInstance().playSound("enemySpawn3");
+				break;
+			case 3:
+				AudioManager::getInstance().playSound("enemySpawn4");
+				break;
+			case 4:
+				AudioManager::getInstance().playSound("enemySpawn5");
+				break;
+			default:
+				AudioManager::getInstance().playSound("enemySpawn6");
+			}
+
 			if (nextEnemy == spawningSequence.end())
 			{
 				areAttacking = true;
@@ -115,7 +140,29 @@ void ButtonForEnemyRiddleComponent::enemyAttacked(std::shared_ptr<GameObject> en
 		{
 			nextEnemy++;
 			if(nextEnemy == attackingSequence.end())
-				EventBus::getInstance().notify(engine::EventType::ROOMUNLOCKED, std::shared_ptr<engine::GameEvent>());			
+				EventBus::getInstance().notify(engine::EventType::ROOMUNLOCKED, std::shared_ptr<engine::GameEvent>());
+
+			int i = engine::Random::getIntBetween(0, 9);
+			switch (i)
+			{
+			case 0:
+				AudioManager::getInstance().playSound("enemyHit1");
+				break;
+			case 1:
+				AudioManager::getInstance().playSound("enemyHit2");
+				break;
+			case 2:
+				AudioManager::getInstance().playSound("enemyHit3");
+				break;
+			case 3:
+				AudioManager::getInstance().playSound("enemyHit4");
+				break;
+			case 4:
+				AudioManager::getInstance().playSound("enemyHit5");
+				break;
+			default:
+				AudioManager::getInstance().playSound("enemyHit6");
+			}
 		}
 		else
 		{
