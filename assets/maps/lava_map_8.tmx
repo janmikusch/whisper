@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="15" height="11" tilewidth="64" tileheight="64" infinite="0" nextlayerid="6" nextobjectid="34">
+ <tileset firstgid="1" name="lava_spritesheet" tilewidth="64" tileheight="64" tilecount="10" columns="5">
+  <image source="../textures/lava_spritesheet.png" width="320" height="128"/>
+ </tileset>
+ <tileset firstgid="11" name="Dungeon_color3" tilewidth="64" tileheight="64" tilecount="256" columns="16">
+  <image source="../textures/Dungeon_color3.png" width="1024" height="1024"/>
+ </tileset>
+ <layer id="1" name="background3" width="15" height="11">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,5,5,5,5,13,13,13,5,4,4,4,0,0,
+0,0,4,5,5,4,4,4,4,4,4,5,4,0,0,
+0,0,13,3,5,4,5,5,4,4,5,5,13,0,0,
+0,0,13,4,4,3,5,5,5,4,4,4,13,0,0,
+0,0,13,4,5,5,3,4,5,4,4,5,13,0,0,
+0,0,4,5,5,4,5,5,5,3,5,5,3,0,0,
+0,0,5,4,4,4,13,13,13,5,4,4,5,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="2" name="background4" width="15" height="11">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,13,13,13,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,
+0,0,13,0,0,0,0,0,0,0,0,0,13,0,0,
+0,0,13,0,0,0,0,0,0,0,0,0,13,0,0,
+0,0,13,0,0,0,0,0,0,0,0,0,13,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,13,13,13,0,0,12,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="5" name="background5" width="15" height="11">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,104,105,106,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,74,0,0,0,0,0,0,0,0,0,72,0,0,
+0,0,90,0,0,0,0,0,0,0,0,0,88,0,0,
+0,0,106,0,0,0,0,0,0,0,0,0,104,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,72,73,74,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="3" name="lava">
+  <object id="1" name="lava" type="lava" x="128" y="128" width="64" height="64"/>
+  <object id="3" name="lava" type="lava" x="192" y="128" width="64" height="64"/>
+  <object id="4" name="lava" type="lava" x="128" y="192" width="64" height="64"/>
+  <object id="5" name="lava" type="lava" x="192" y="256" width="64" height="64"/>
+  <object id="6" name="lava" type="lava" x="320" y="192" width="64" height="64"/>
+  <object id="7" name="lava" type="lava" x="384" y="256" width="64" height="64"/>
+  <object id="8" name="lava" type="lava" x="320" y="320" width="64" height="64"/>
+  <object id="9" name="lava" type="lava" x="384" y="320" width="64" height="64"/>
+  <object id="10" name="lava" type="lava" x="384" y="384" width="64" height="64"/>
+  <object id="11" name="lava" type="lava" x="320" y="384" width="64" height="64"/>
+  <object id="12" name="lava" type="lava" x="192" y="384" width="64" height="64"/>
+  <object id="13" name="lava" type="lava" x="192" y="448" width="64" height="64"/>
+  <object id="14" name="lava" type="lava" x="128" y="448" width="64" height="64"/>
+  <object id="15" name="lava" type="lava" x="128" y="512" width="64" height="64"/>
+  <object id="16" name="lava" type="lava" x="320" y="512" width="64" height="64"/>
+  <object id="17" name="lava" type="lava" x="576" y="512" width="64" height="64"/>
+  <object id="18" name="lava" type="lava" x="768" y="512" width="64" height="64"/>
+  <object id="19" name="lava" type="lava" x="768" y="448" width="64" height="64"/>
+  <object id="20" name="lava" type="lava" x="704" y="384" width="64" height="64"/>
+  <object id="21" name="lava" type="lava" x="704" y="448" width="64" height="64"/>
+  <object id="22" name="lava" type="lava" x="704" y="256" width="64" height="64"/>
+  <object id="23" name="lava" type="lava" x="640" y="192" width="64" height="64"/>
+  <object id="24" name="lava" type="lava" x="704" y="128" width="64" height="64"/>
+  <object id="25" name="lava" type="lava" x="768" y="128" width="64" height="64"/>
+  <object id="26" name="lava" type="lava" x="768" y="192" width="64" height="64"/>
+  <object id="27" name="lava" type="lava" x="512" y="256" width="64" height="64"/>
+  <object id="28" name="lava" type="lava" x="512" y="320" width="64" height="64"/>
+  <object id="29" name="lava" type="lava" x="512" y="384" width="64" height="64"/>
+  <object id="30" name="lava" type="lava" x="576" y="320" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup id="4" name="buttons">
+  <object id="2" name="button" type="button" x="192" y="192" width="64" height="64"/>
+  <object id="31" name="button" type="button" x="192" y="512" width="64" height="64"/>
+  <object id="32" name="button" type="button" x="448" y="320" width="64" height="64"/>
+  <object id="33" name="button" type="button" x="640" y="128" width="64" height="64"/>
+ </objectgroup>
+</map>

@@ -270,6 +270,42 @@
     <ClCompile Include="..\..\source\ButtonComponent.cpp">
       <Filter>Source Files\GameObject\Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\TorchAnimationComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\ButtonRoomComponent.cpp">
+      <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\ButtonRoomCreator.cpp">
+      <Filter>Source Files\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\TorchRoomCreator.cpp">
+      <Filter>Source Files\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\TorchRoomSolverComponent.cpp">
+      <Filter>Source Files\GameObject\Components\GameplayComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\ButtonForLavaRiddleComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\LabyrinthCreator.cpp">
+      <Filter>Source Files\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\LavaComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\WaterComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\EnemyMoveComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\EnemyRoomCreator.cpp">
+      <Filter>Source Files\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\ButtonForEnemyRiddleComponent.cpp">
+      <Filter>Source Files\GameObject\Components\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\targetver.h">
@@ -398,9 +434,6 @@
     <ClInclude Include="..\..\include\PlayerMoveBehaviour.h">
       <Filter>Header Files\GameObject\Behaviour\MoveBehaviour</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\GameStateManager.h">
-      <Filter>Header Files\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\CharacterMoveComponent.h">
       <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
     </ClInclude>
@@ -452,8 +485,50 @@
     <ClInclude Include="..\..\include\ButtonComponent.h">
       <Filter>Header Files\GameObject\Components\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\ButtonColor.h">
+    <ClInclude Include="..\..\include\Color.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\TorchAnimationComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\GameStateManager.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ButtonRoomComponent.h">
+      <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ButtonRoomCreator.h">
+      <Filter>Header Files\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\TorchRoomCreator.h">
+      <Filter>Header Files\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\TorchRoomSolverComponent.h">
+      <Filter>Header Files\GameObject\Components\GameplayComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LavaComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LabyrinthCreator.h">
+      <Filter>Header Files\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ButtonForLavaRiddleComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\WaterComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Element.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\EnemyMoveComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\EnemyRoomCreator.h">
+      <Filter>Header Files\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\ButtonForEnemyRiddleComponent.h">
+      <Filter>Header Files\GameObject\Components\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

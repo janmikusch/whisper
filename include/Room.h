@@ -17,13 +17,17 @@ public:
 	std::shared_ptr<Room> getRoom(Direction dir);
 
 	void setRoomObjects(std::vector< std::shared_ptr<GameObject>> roomObjects);
+	std::vector< std::shared_ptr<GameObject>> getRoomObjects() { return m_roomObjects; };
 	void addRoomObjectsToGame();
 	void removeRoomObjectsFromGame();
+
+	void resetRoom();
 
 	std::string getName() { return m_name; };
 
 	bool isCompleted() { return m_completed; };
-	void setCompleted(bool state = true) { m_completed = state; };
+	void setCompleted(bool state = true);;
+	void setStartRoom();;
 
 private:
 	std::string m_name;

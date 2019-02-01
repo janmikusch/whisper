@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Room.h"
 #include "GameObjectManager.h"
+#include "EventBus.h"
+#include "AudioManager.h"
 
 Room::Room(std::string name): m_name(name),m_completed(false)
 {
@@ -82,6 +84,14 @@ void Room::addRoomObjectsToGame()
 	}
 }
 
+void Room::resetRoom()
+{
+	for (auto it : m_roomObjects)
+	{
+		it->init();
+	}
+}
+
 void Room::removeRoomObjectsFromGame()
 {
 	GameObjectManager& gom = GameObjectManager::getInstance();
@@ -89,4 +99,19 @@ void Room::removeRoomObjectsFromGame()
 	{
 		gom.remove(it);
 	}
+}
+
+void Room::setCompleted(bool state)
+{
+	if(state == true && m_completed == false)
+	{
+		AudioManager::getInstance().playSound("success");
+	}
+	m_completed = state;
+	EventBus::getInstance().notify(engine::EventType::ROOMCOUNTCHANGED, std::shared_ptr<engine::GameEvent>());
+}
+
+void Room::setStartRoom()
+{
+	m_completed = true;
 }

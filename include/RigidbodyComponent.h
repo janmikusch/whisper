@@ -30,8 +30,8 @@ public:
 	void addObserver(CollisionObserver& observer);
 	void removeObserver(CollisionObserver& observer);
 
-	float getMass() { return m_mass; };
-	float getInvMass() { return m_invMass; };
+	float getMass() { return !m_isStatic ? m_mass : 0; };
+	float getInvMass() { return !m_isStatic ? m_invMass : 0; };
 	bool isStatic() { return m_isStatic; }
 	void setGrounded(bool isGrounded) { m_isGrounded = isGrounded; };
 private:
@@ -39,7 +39,7 @@ private:
 	float m_invMass;
 	bool m_useGravity = true;
 	const sf::Vector2f m_gravity{ 0.0f, 9.f };
-	const float m_speedMultiplier = 100.0f;
+	const float m_speedMultiplier = 150.0f;
 	const float m_minVelocity = 0.0001f;
 	bool m_isStatic = true;
 	bool m_isGrounded = false;

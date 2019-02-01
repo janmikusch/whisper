@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <iostream>
 
 ////////////////////////////////////////////////////////////
 //
@@ -171,14 +172,7 @@ void AnimatedSprite::update(sf::Time deltaTime)
 
 				// animation has ended
 				m_currentFrame = 0; // reset to start
-
-				if (!m_isLooped)
-				{
-					m_isPaused = true;
-				}
-
 			}
-
 			// set the current frame, not reseting the time
 			setFrame(m_currentFrame, false);
 		}

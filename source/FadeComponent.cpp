@@ -4,10 +4,9 @@
 #include "window.h"
 
 FadeComponent::FadeComponent(std::shared_ptr<GameObject> parent, Layer layer) :
-	RenderComponent(parent, layer)
+	RenderComponent(parent, layer), EventObserver()
 {
 	m_rect.setSize(sf::Vector2f{ 960, 704 });
-	m_alpha;
 }
 
 void FadeComponent::update(const float
@@ -20,13 +19,14 @@ void FadeComponent::update(const float
 	if(m_alpha > 0) m_alpha -= fDeltaTimeSeconds * m_speed;
 	if(m_alpha < 0)	m_alpha = 0;
 	
-
-	m_rect.setFillColor(sf::Color{ 0,0,0,static_cast<sf::Uint8>(m_alpha) });
+	auto c = m_rect.getFillColor();
+	c.a = static_cast<sf::Uint8>(m_alpha);
+	m_rect.setFillColor(c);
 }
 
 void FadeComponent::init()
 {
-	m_rect.setFillColor(sf::Color{ 0,0,0,255 });
+	m_rect.setFillColor(sf::Color{ m_rect.getFillColor().r,m_rect.getFillColor().g,m_rect.getFillColor().b,255 });
 
 	m_alpha = 255.0f;
 }
@@ -64,6 +64,29 @@ void FadeComponent::scale(const sf::Vector2f& factor)
 void FadeComponent::rotate(float angle)
 {
 	m_rect.rotate(angle);
+}
+
+void FadeComponent::setColor(sf::Color c)
+{
+	m_rect.setFillColor(c);
+}
+
+void FadeComponent::setSpeed(float speed)
+{
+	m_speed = speed;
+}
+
+void FadeComponent::onNotify(engine::EventType type, std::shared_ptr<engine::GameEvent> gameEvent)
+{
+		m_alpha = 255.0f;
+}
+
+void FadeComponent::addToEventBus(engine::EventType e)
+{
+	if(e == engine::EventType::DAMAGETAKEN)
+	{
+		EventBus::getInstance().addObserver(e, this);
+	}
 }
 
 

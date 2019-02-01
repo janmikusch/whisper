@@ -81,6 +81,110 @@ void InputManager::unbind(std::string name, int playerIdx)
 	}
 }
 
+InputManager::StickDirection InputManager::getLeftJoystickAxis()
+{
+	if (!sf::Joystick::isConnected(0))
+		return NONE;
+
+	float xPos = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+	float yPos = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+
+	if (xPos < -0.4)
+		
+	{
+		lastDirection = StickDirection::LEFT;
+		return StickDirection::LEFT;
+	}
+	else if(xPos > 0.4)
+	{
+		lastDirection = StickDirection::RIGHT;
+		return StickDirection::RIGHT;
+	}
+	else if (yPos < -0.4)
+	{
+		lastDirection = StickDirection::UP;
+		return StickDirection::UP;
+	}
+	else if (yPos > 0.4)
+	{
+		lastDirection = StickDirection::DOWN;
+		return StickDirection::DOWN;
+	}
+	else
+	{
+		lastDirection = StickDirection::NONE;
+		return StickDirection::NONE;
+	}
+}
+
+InputManager::StickDirection InputManager::getLeftJoystickDownAxis()
+{
+	if (!sf::Joystick::isConnected(0))
+		return NONE;
+
+	auto last = lastDirection;
+	auto now = getLeftJoystickAxis();
+
+	if (last != now)
+		return now;
+	return NONE;
+}
+
+bool InputManager::isJoystickButtonDown(JoystickButton b)
+{
+	if (!sf::Joystick::isConnected(0))
+		return false;
+
+	auto it = m_pressedLastJSButton.find(b);
+
+	bool wasPressed = it != m_pressedLastJSButton.end() && m_pressedLastJSButton[b];
+	bool isPressed = isJoystickButtonPressed(b);
+
+	if(wasPressed == false)
+	{
+		return isPressed;
+	}
+	return false;
+}
+
+bool InputManager::isJoystickButtonPressed(JoystickButton b)
+{
+	if (!sf::Joystick::isConnected(0))
+		return false;
+
+	bool pressed = false;
+	switch (b)
+	{
+	case A:
+		pressed = sf::Joystick::isButtonPressed(0,buttonToId(b));
+			break;
+	case B:
+		pressed = sf::Joystick::isButtonPressed(0, buttonToId(b));
+		break;
+	case X:
+		pressed = sf::Joystick::isButtonPressed(0, buttonToId(b));
+		break;
+	case Y:
+		pressed = sf::Joystick::isButtonPressed(0, buttonToId(b));
+		break;
+	case LB:
+		pressed = sf::Joystick::isButtonPressed(0, buttonToId(b));
+		break;
+	case RB:
+		pressed = sf::Joystick::isButtonPressed(0, buttonToId(b));
+		break;
+	case BACK:
+		pressed = sf::Joystick::isButtonPressed(0, buttonToId(b));
+		break;
+	case START:
+		pressed = sf::Joystick::isButtonPressed(0, buttonToId(b));
+		break;
+	}
+	m_pressedLastJSButton[b] = pressed;
+
+	return pressed;
+}
+
 
 InputManager::InputManager()
 {
@@ -99,4 +203,30 @@ bool InputManager::itemExist(std::string name, int playerIdx)
 	}
 
 	return exists;
+}
+
+int InputManager::buttonToId(JoystickButton b)
+{
+
+	switch (b)
+	{
+	case A:
+		return 0;
+	case B:
+		return 1;
+	case X:
+		return 2;
+	case Y:
+		return 3;
+	case LB:
+		return 4;
+	case RB:
+		return 5;
+	case BACK:
+		return 6;
+	case START:
+		return 7;
+	default:
+		return false;
+	}
 }
