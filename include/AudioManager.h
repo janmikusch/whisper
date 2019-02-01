@@ -21,6 +21,7 @@ public:
 	void playMusic();
 	void pauseMusic();
 	void stopMusic();
+	void setLoop(bool b);
 
 	void loadMusicFromAudioXml();
 	void loadSoundsFromAudioXml();

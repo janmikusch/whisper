@@ -44,5 +44,6 @@
 	</sounds>
 	<music>
 		<item name="backgroundMusic" file="thetimehascome.ogg" />
+		<item name="victoryMusic" file="3 Open Surge score jingle - C.ogg" />
 	</music>
 </audio>
