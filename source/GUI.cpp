@@ -28,6 +28,8 @@ void GUI::init()
 	EventBus::getInstance().addObserver(engine::EventType::DAMAGETAKEN, this);
 	EventBus::getInstance().addObserver(engine::EventType::ROOMCOUNTCHANGED, this);
 	EventBus::getInstance().addObserver(engine::EventType::GAMECOMPLETE, this);
+
+	timer = 0;
 }
 
 void GUI::init(GameplayState::StateType type)
@@ -47,6 +49,7 @@ void GUI::init(GameplayState::StateType type)
 		inGameOverMenu = false;
 		inPauseMenu = false;
 		m_hearts = 3;
+		timer = 0;
 		break;
 	}
 

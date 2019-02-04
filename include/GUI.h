@@ -38,7 +38,7 @@ namespace engine
 		bool inGameOverMenu = false;
 		bool inGameCompleteSceen = false;
 
-		const float timer_max = 300;
+		const float timer_max = 420;
 		float timer = 0;
 	};
 }
