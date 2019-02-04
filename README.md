@@ -1,8 +1,8 @@
 # Whisper
 
 Whisper is a Game Project of https://github.com/janmikusch & https://github.com/robinunger.
-A Game Engine was build through our 3rd Semester at the Salzburg University of applied Sciences.
-With this engine we created Whisper in our 5-days project-week
+A Game Engine was built throughout our 3rd Semester at the Salzburg University of Applied Sciences.
+With this engine we created Whisper in our 5-days project-week.
 
 ## GAMEPLAY
 Whisper is a two-player cooperative game.
