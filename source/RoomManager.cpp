@@ -242,19 +242,19 @@ void RoomManager::changeRoom(Room::Direction dir)
 	{
 	case Room::TOP:
 		newPos.x = 448;
-		newPos.y = 512;
+		newPos.y = 512 + 0;
 		break;
 	case Room::RIGHT:
-		newPos.x = 128 - 10;
-		newPos.y = 320 - 16;
+		newPos.x = 128 - 16;
+		newPos.y = 320 - 20;
 		break;
 	case Room::BOTTOM:
 		newPos.x = 448;
-		newPos.y = 128 - 20;
+		newPos.y = 128 - 40;
 		break;
 	case Room::LEFT:
-		newPos.x = 768 + 10;
-		newPos.y = 320 - 16;
+		newPos.x = 768 + 16;
+		newPos.y = 320 - 20;
 		break;
 	}
 

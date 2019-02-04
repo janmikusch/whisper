@@ -28,6 +28,8 @@ void GUI::init()
 	EventBus::getInstance().addObserver(engine::EventType::DAMAGETAKEN, this);
 	EventBus::getInstance().addObserver(engine::EventType::ROOMCOUNTCHANGED, this);
 	EventBus::getInstance().addObserver(engine::EventType::GAMECOMPLETE, this);
+
+	timer = 0;
 }
 
 void GUI::init(GameplayState::StateType type)
@@ -47,6 +49,7 @@ void GUI::init(GameplayState::StateType type)
 		inGameOverMenu = false;
 		inPauseMenu = false;
 		m_hearts = 3;
+		timer = 0;
 		break;
 	}
 
@@ -223,9 +226,20 @@ void GUI::update(const float fDeltaTimeSeconds)
 
 			int minutes = iTimer / 60;
 			int seconds = iTimer - minutes * 60;
+			std::string string_seconds = "0" + std::to_string(seconds);
+			if (seconds < 10)
+				string_seconds = "0" + std::to_string(seconds);
+			else
+				string_seconds = std::to_string(seconds);
 
 			auto timerLabel = m_gui.get<tgui::Label>("timer");
-			timerLabel->setText("Time left: "+std::to_string(minutes) + ":" + std::to_string(seconds));
+
+			if(minutes == 0)
+			{
+				timerLabel->getRenderer()->setTextColor(tgui::Color::Red);
+			}
+
+			timerLabel->setText("Time left: "+std::to_string(minutes) + ":" + string_seconds);
 
 		}
 	}

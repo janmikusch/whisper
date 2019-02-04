@@ -89,23 +89,29 @@ InputManager::StickDirection InputManager::getLeftJoystickAxis()
 	float xPos = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 	float yPos = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
 
-	if (xPos < -0.4)
+#ifdef _DEBUG
+	sf::err() << "X:" << xPos << " Y:" << yPos << std::endl;
+#endif
+
+	float max = 100;
+
+	if (xPos < max * -0.5)
 		
 	{
 		lastDirection = StickDirection::LEFT;
 		return StickDirection::LEFT;
 	}
-	else if(xPos > 0.4)
+	else if(xPos > max * 0.5)
 	{
 		lastDirection = StickDirection::RIGHT;
 		return StickDirection::RIGHT;
 	}
-	else if (yPos < -0.4)
+	else if (yPos < max *  -0.5)
 	{
 		lastDirection = StickDirection::UP;
 		return StickDirection::UP;
 	}
-	else if (yPos > 0.4)
+	else if (yPos > max * 0.5)
 	{
 		lastDirection = StickDirection::DOWN;
 		return StickDirection::DOWN;
